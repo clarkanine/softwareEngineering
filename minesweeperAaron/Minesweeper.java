@@ -1,3 +1,10 @@
+/*
+  Coding Dream Team
+  Aaron Clark
+  Software Engineering
+  April 5, 2016
+*/
+
 import java.io.*;
 import java.util.*;
 

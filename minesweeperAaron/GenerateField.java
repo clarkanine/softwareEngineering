@@ -1,3 +1,20 @@
+/*
+  Coding Dream Team
+  Aaron Clark
+  Software Engineering
+  April 5, 2016
+*/
+
+
+// README: To use this program, run it with
+//         a redirection to an output file.
+//         Usage: java GenerateField > output.txt
+//         once running, two ints are required.
+//         The first will be the number of rows,
+//         the second will be the number of cols.
+//         EX: 7 <Enter> 9 <Enter> will create
+//         a 7 x 9 randomized field.
+
 import java.util.*;
 import java.io.*;
 
@@ -11,7 +28,7 @@ public class GenerateField
 	Random gen = new Random();
 	double num;
 
-	double bombRate = .30;
+	double bombRate = .30; // 30% bomb rate
 
 	rows = user.nextInt();
 	cols = user.nextInt();

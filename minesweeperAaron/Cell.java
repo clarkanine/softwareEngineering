@@ -1,3 +1,9 @@
+/*
+  Coding Dream Team
+  Aaron Clark
+  Software Engineering
+  April 5, 2016
+*/
 
 
 public class Cell
