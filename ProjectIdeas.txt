@@ -1,0 +1,62 @@
+/////////////////////////////////////
+GameCharacter{}
+Villain extends GameCharacter{}
+DarkKnight
+Goblin
+Troll
+(J) Necromancer
+(J) Assassin
+(J) Death walker
+Hero extends GameCharacter{}
+Elf
+Pyromancer
+WhiteKnight
+
+////////////////////////////////////
+Weapon() Method: attack()
+
+Axe
+AxeAttackBehavior()
+AxeDefendBehavior()
+
+Longsword
+LongswordAttackBehavior()
+LongswordDefendBehavior()
+
+Bow & Arrow
+BowAttackBehavior()
+
+///////////////////////////////////////
+Item Method: use(GameCharacter), sell()
+
+Health Potion
+UsePotionBehavior()
+SellPotionBehavior()
+
+Unwinding Clock (get to attack 2x in a row)
+UseClockBehavior()
+
+Throwing knife (stuns enemy until next attack)
+UseKnifeBehavior()
+
+///////////////////////////////////////
+Clothing
+
+Light feather breastplate
+Attack speed increase
+
+Dragon bone bracers
+Physical damage boost
+
+Monocle
+Attack accuracy boost
+
+///////////////////////////////////////
+Terrain
+
+Swamp
+Poison damage increase
+Forest
+Elf boost all stats
+Castle
+Knight boost all stats

@@ -1,0 +1,14 @@
+To create a repo
+1. Make a folder/dir
+2. navigate to it
+3. git init
+
+To check status
+$ git status
+
+Committing to the repo
+is a 2 step process
+1. $ git add <files> 
+places files in staging area git is now watching those files
+2. $ git commit 
+requires you to enter a message
