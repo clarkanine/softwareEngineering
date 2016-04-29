@@ -38,7 +38,7 @@ public class GameCharacterTest
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		player = new PlayerCharacter();
+		player = new ConcreteGameCharacter();
 	}
 	
 	@After
