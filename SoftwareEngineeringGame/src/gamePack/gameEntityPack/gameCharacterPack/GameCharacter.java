@@ -6,7 +6,8 @@ import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
 
-public interface GameCharacter extends GameEntity {
+public interface GameCharacter extends GameEntity 
+{	
 	
 	public double getAccel();
 	void setAccel(double accel);
@@ -18,7 +19,7 @@ public interface GameCharacter extends GameEntity {
 	void setStrength(double strength);
 	
 	public double getWeight();
-	void setWeight();
+	void setWeight(double weight);
 	
 	public double getHealth();
 	void setHealth(double health);
