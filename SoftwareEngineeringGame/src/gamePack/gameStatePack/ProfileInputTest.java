@@ -18,7 +18,7 @@ public class ProfileInputTest {
 	static Scanner scanner;
 	static PrintStream printStream;
 	static PrintStream errorLog;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		InputStream in = System.in;
@@ -32,52 +32,51 @@ public class ProfileInputTest {
 		}
 		gameState = new ProfileInput(scanner, printStream, errorLog);
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		//scanner.close();
 	}
-	
+
 	@Test
 	public void testReadWord() {
-		System.out.println("type \"word\" with a single trailing space and press enter");
+		System.out.println("type \"word\" with a single trailing space and return");
 		String res = ((ProfileInput) gameState).readWord();
 		assertEquals("word",res);
 		scanner.nextLine();
-		
-		System.out.println("type \"word\" with a single trailing space and press enter");
+
+		System.out.println("type \"word\" with a single trailing space and return");
 		res = ((ProfileInput) gameState).readWord();
 		scanner.nextLine();
 		assertEquals("word",res);
 	}
-	
+
 	@Test
 	public void testReadLine() {
-		System.out.println("type \"word\" with no trailing space and press enter");
+		System.out.println("type \"word\" with or without trailing space and return");
 		String res = ((ProfileInput) gameState).readLine();
 		assertEquals("word",res);
-		
+
 	}
 
 	@Test
 	public void testReadInt() {
-		System.out.println("type \"2\" followed by any garbage and press enter");
+		System.out.println("type \"2\" followed by any garbage and return");
 		String res = Integer.toString(((ProfileInput) gameState).readInt());
 		assertEquals("2",res);
-		
+
 	}
-	
+
 	@Test
 	public void testReadChar() {
-		System.out.println("type \"a\" followed by any garbage and press enter");
+		System.out.println("type \"a\" followed by any garbage and return");
 		String res = Character.toString(((ProfileInput) gameState).readChar());
 		assertEquals("a",res);
-		
+
 	}
-	
+
 	@Test
 	public void testOpenMenu() {
 		((ProfileInput) gameState).openMenu();
-		
 	}
 }
