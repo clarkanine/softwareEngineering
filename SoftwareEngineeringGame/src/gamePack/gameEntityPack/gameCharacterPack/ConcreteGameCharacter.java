@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 
-public class PlayerCharacter implements GameCharacter
+public class ConcreteGameCharacter implements GameCharacter
 {
 	private double accel;
 	private String name;
@@ -21,14 +22,12 @@ public class PlayerCharacter implements GameCharacter
 	@Override
 	public String getName()
 	{
-		
 		return name;
 	}
 
 	@Override
 	public void setName(String name)
 	{
-		
 		this.name = name;
 	}
 
@@ -48,8 +47,7 @@ public class PlayerCharacter implements GameCharacter
 	@Override
 	public void updateView()
 	{
-		// TODO Auto-generated method stub
-		
+		System.out.println("View has been updated");	
 	}
 
 	@Override
