@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
-import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 
 public class ConcreteGameCharacter implements GameCharacter
 {
