@@ -2,6 +2,7 @@ package gamePack.gameEntityPack.gameCharacterPack;
 
 import static org.junit.Assert.*;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -15,7 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.ConcreteArtifact;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.*;
@@ -50,45 +50,30 @@ public class GameCharacterTest
 	@Test
 	public void testAccel()
 	{
-		double res;
-		System.out.print("Enter 6.00 for acceleration: ");
-		res = scanner.nextDouble();
 		
-		player.setAccel(res);
+		player.setAccel(6.00);
 		assertEquals(6.00, player.getAccel(), .08);
 	}
 	
 	@Test
 	public void testMaxSpeed()
 	{
-		double res;
-		System.out.print("Enter 23.23 for speed: ");
-		res = scanner.nextDouble();
-		
-		player.setMaxSpeed(res);
+		player.setMaxSpeed(23.23);
 		assertEquals(23.23, player.getMaxSpeed(), .08);
 	}
 	
 	@Test
 	public void testWeight()
-	{
-		double res;
-		System.out.print("Enter 100.34 for weight: ");
-		res = scanner.nextDouble();
-		
-		player.setWeight(res);
+	{	
+		player.setWeight(100.34);
 		assertEquals(100.34, player.getWeight(), .08);
 	}
 	
 	@Test
 	public void testHealth()
 	{
-		double res;
-		System.out.println(("Enter 90.0 for health: "));
-		res = scanner.nextDouble();
-		
-		player.setHealth(res);
-		assertEquals(90.0, player.getHealth(), .08);
+		player.setHealth(90);
+		assertEquals(90, player.getHealth());
 	}
 	
 	@Test
@@ -118,6 +103,19 @@ public class GameCharacterTest
 		player.setArtifacts(art);
 		
 		assertEquals(art, player.getArtifacts() );
+	}
+	
+	@Test 
+	public void testStrength()
+	{
+		player.setStrength(100);
+		assertEquals(100, player.getStrength() );
+	}
+	
+	@Test 
+	public void testLoad()
+	{
+		
 	}
 
 }

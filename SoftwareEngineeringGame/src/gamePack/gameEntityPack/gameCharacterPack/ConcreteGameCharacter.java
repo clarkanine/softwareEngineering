@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
-import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 
 public class ConcreteGameCharacter implements GameCharacter
 {
@@ -12,7 +11,7 @@ public class ConcreteGameCharacter implements GameCharacter
 	private String name;
 	private String view;
 	private double maxSpeed;
-	private double strength;
+	private int strength;
 	private double weight;
 	private int health;
 	private ArrayList<GameArtifact> items;
@@ -107,14 +106,14 @@ public class ConcreteGameCharacter implements GameCharacter
 	}
 
 	@Override
-	public double getStrength()
+	public int getStrength()
 	{
 		// TODO Auto-generated method stub
 		return strength;
 	}
 
 	@Override
-	public void setStrength(double strength)
+	public void setStrength(int strength)
 	{
 		this.strength = strength;
 		
@@ -134,16 +133,16 @@ public class ConcreteGameCharacter implements GameCharacter
 	}
 
 	@Override
-	public double getHealth()
+	public int getHealth()
 	{
 		// TODO Auto-generated method stub
-		return (double) health;
+		return health;
 	}
 
 	@Override
-	public void setHealth(double health)
+	public void setHealth(int health)
 	{
-		this.health = (int) health;
+		this.health = health;
 		
 	}
 

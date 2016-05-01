@@ -14,22 +14,24 @@ public class ConcretePlayer implements GamePlayer
 	private String profile;
 	private String stats;
 	private double maxSpeed;
-	private double strength;
+	private int strength;
 	private double weight;
 	private int health;
 	private ArrayList<GameArtifact> items;
 	private ArrayList<GameBehavior> behaviors;
 	@Override
+	
 	public double getAccel()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return accel;
 	}
 
 	@Override
 	public void setAccel(double accel)
 	{
 		// TODO Auto-generated method stub
+		this.accel = accel;
 
 	}
 
@@ -37,35 +39,36 @@ public class ConcretePlayer implements GamePlayer
 	public double getMaxSpeed()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return maxSpeed;
 	}
 
 	@Override
 	public void setMaxSpeed(double maxSpeed)
 	{
 		// TODO Auto-generated method stub
+		this.maxSpeed = maxSpeed;
 
 	}
 
 	@Override
-	public double getStrength()
+	public int getStrength()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return strength;
 	}
 
 	@Override
-	public void setStrength(double strength)
+	public void setStrength(int strength)
 	{
 		// TODO Auto-generated method stub
-
+		this.strength = strength;
 	}
 
 	@Override
 	public double getWeight()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return weight;
 	}
 
 	@Override
@@ -76,14 +79,14 @@ public class ConcretePlayer implements GamePlayer
 	}
 
 	@Override
-	public double getHealth()
+	public int getHealth()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return health;
 	}
 
 	@Override
-	public void setHealth(double health)
+	public void setHealth(int health)
 	{
 		this.health = health;
 
@@ -93,27 +96,28 @@ public class ConcretePlayer implements GamePlayer
 	public ArrayList<GameBehavior> getBehaviors()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return this.behaviors;
 	}
 
 	@Override
 	public void setBehaviors(ArrayList<GameBehavior> behaviors)
 	{
 		// TODO Auto-generated method stub
-
+		this.behaviors = behaviors;
 	}
 
 	@Override
 	public ArrayList<GameArtifact> getArtifacts()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return items;
 	}
 
 	@Override
 	public void setArtifacts(ArrayList<GameArtifact> artifacts)
 	{
 		// TODO Auto-generated method stub
+		this.items = artifacts;
 
 	}
 
@@ -121,13 +125,14 @@ public class ConcretePlayer implements GamePlayer
 	public String getName()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setName(String name)
 	{
 		// TODO Auto-generated method stub
+		this.name = name;
 
 	}
 
@@ -135,13 +140,14 @@ public class ConcretePlayer implements GamePlayer
 	public String getView()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return view;
 	}
 
 	@Override
 	public void setView(String view)
 	{
 		// TODO Auto-generated method stub
+		this.view = view;
 
 	}
 
@@ -149,6 +155,7 @@ public class ConcretePlayer implements GamePlayer
 	public void updateView()
 	{
 		// TODO Auto-generated method stub
+		System.out.println("updated view");
 
 	}
 
@@ -156,6 +163,7 @@ public class ConcretePlayer implements GamePlayer
 	public void spawn()
 	{
 		// TODO Auto-generated method stub
+		System.out.println("spawned");
 
 	}
 
@@ -163,13 +171,14 @@ public class ConcretePlayer implements GamePlayer
 	public void kill()
 	{
 		// TODO Auto-generated method stub
-
+		System.out.println("killed");
 	}
 
 	@Override
 	public void save()
 	{
 		// TODO Auto-generated method stub
+		System.out.println("Saved");
 
 	}
 
@@ -177,6 +186,7 @@ public class ConcretePlayer implements GamePlayer
 	public void load()
 	{
 		// TODO Auto-generated method stub
+		System.out.println("Loaded");
 
 	}
 
@@ -184,13 +194,14 @@ public class ConcretePlayer implements GamePlayer
 	public String getProfileInfo()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return profile;
 	}
 
 	@Override
 	public void setProfileInfo(String info)
 	{
 		// TODO Auto-generated method stub
+		profile = info;
 
 	}
 
@@ -198,13 +209,14 @@ public class ConcretePlayer implements GamePlayer
 	public String getStats()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return stats;
 	}
 
 	@Override
 	public void setStats(String stats)
 	{
 		// TODO Auto-generated method stub
+		this.stats = stats;
 
 	}
 

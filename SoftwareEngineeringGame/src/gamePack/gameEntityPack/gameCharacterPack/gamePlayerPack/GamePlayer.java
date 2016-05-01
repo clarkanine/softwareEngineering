@@ -1,7 +1,6 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
 
-import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 
 public interface GamePlayer extends GameCharacter {

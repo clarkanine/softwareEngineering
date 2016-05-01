@@ -15,14 +15,14 @@ public interface GameCharacter extends GameEntity
 	public double getMaxSpeed();
 	void setMaxSpeed(double maxSpeed);
 	
-	public double getStrength();
-	void setStrength(double strength);
+	public int getStrength();
+	void setStrength(int strength);
 	
 	public double getWeight();
 	void setWeight(double weight);
 	
-	public double getHealth();
-	void setHealth(double health);
+	public int getHealth();
+	void setHealth(int health);
 
     public ArrayList<GameBehavior> getBehaviors();
     void setBehaviors(ArrayList<GameBehavior> behaviors);
