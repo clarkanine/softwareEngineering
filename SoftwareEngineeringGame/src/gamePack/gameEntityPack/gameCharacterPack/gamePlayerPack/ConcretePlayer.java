@@ -8,19 +8,22 @@ import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
 public class ConcretePlayer implements GamePlayer
 {
 
+	
 	private double accel;
+	private String profileName;
 	private String name;
 	private String view;
 	private String profile;
 	private String stats;
 	private double maxSpeed;
 	private int strength;
+	private int exp;
 	private double weight;
 	private int health;
 	private ArrayList<GameArtifact> items;
 	private ArrayList<GameBehavior> behaviors;
-	@Override
 	
+	@Override
 	public double getAccel()
 	{
 		// TODO Auto-generated method stub
@@ -218,6 +221,30 @@ public class ConcretePlayer implements GamePlayer
 		// TODO Auto-generated method stub
 		this.stats = stats;
 
+	}
+
+	@Override
+	public int getExp()
+	{
+		// TODO Auto-generated method stub
+		return exp;
+	}
+
+	@Override
+	public void setExp(int exp)
+	{
+		this.exp = exp;
+		
+	}
+	
+	public String getProfileName()
+	{
+		return profileName;
+	}
+	
+	public void setProfileName(String profName)
+	{
+		this.profileName = profName;
 	}
 
 }

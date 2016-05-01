@@ -12,6 +12,9 @@ public interface GameCharacter extends GameEntity
 	public double getAccel();
 	void setAccel(double accel);
 	
+	public int getExp();
+	void setExp(int exp);
+	
 	public double getMaxSpeed();
 	void setMaxSpeed(double maxSpeed);
 	

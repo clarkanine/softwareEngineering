@@ -112,6 +112,13 @@ public class GameCharacterTest
 		assertEquals(100, player.getStrength() );
 	}
 	
+	@Test
+	public void testExp()
+	{
+		player.setExp(3000);
+		assertEquals( 3000, player.getExp() );
+	}
+	
 	@Test 
 	public void testLoad()
 	{

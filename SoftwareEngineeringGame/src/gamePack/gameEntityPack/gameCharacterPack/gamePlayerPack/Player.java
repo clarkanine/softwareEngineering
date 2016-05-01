@@ -1,7 +1,6 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteGameCharacter;
-import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 
 public class Player extends ConcreteGameCharacter implements GamePlayer
 {

@@ -12,6 +12,7 @@ public class ConcreteGameCharacter implements GameCharacter
 	private String view;
 	private double maxSpeed;
 	private int strength;
+	private int exp;
 	private double weight;
 	private int health;
 	private ArrayList<GameArtifact> items;
@@ -171,6 +172,20 @@ public class ConcreteGameCharacter implements GameCharacter
 	public void setArtifacts(ArrayList<GameArtifact> artifacts)
 	{
 		this.items = artifacts;
+		
+	}
+
+	@Override
+	public int getExp()
+	{
+		// TODO Auto-generated method stub
+		return exp;
+	}
+
+	@Override
+	public void setExp(int exp)
+	{
+		this.exp = exp;
 		
 	}
 
