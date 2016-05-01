@@ -29,6 +29,7 @@ public interface GameCharacter extends GameEntity
 
     public ArrayList<GameArtifact> getArtifacts();
     void setArtifacts(ArrayList<GameArtifact> artifacts);
+    
 	
 	
 	
