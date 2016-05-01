@@ -10,12 +10,13 @@ public class ConcreteGameEnemy implements GameEnemy
 
 	private double Accel;
 	private double maxSpeed;
-	private double strength;
+	private int strength;
 	private double weight;
-	private double hp;
+	private int hp;
 	private String name;
 	private String view;
 	private int difficulty;
+	private int exp;
 	private ArrayList<GameBehavior> behavior;
 	private ArrayList<GameArtifact> artifacts;
 	
@@ -44,13 +45,13 @@ public class ConcreteGameEnemy implements GameEnemy
 	}//end setMaxSpeed
 	
 	@Override
-	public double getStrength() 
+	public int getStrength() 
 	{
 		return this.strength;
 	}//end getStrength
 
 	@Override
-	public void setStrength(double strength) 
+	public void setStrength(int strength) 
 	{
 		this.strength = strength;
 	}//end setStrength
@@ -66,18 +67,6 @@ public class ConcreteGameEnemy implements GameEnemy
 	{
 		this.weight = weight;
 	}//end setWeight
-
-	@Override
-	public double getHealth() 
-	{
-		return this.hp;
-	}//end getHealth
-
-	@Override
-	public void setHealth(double health) 
-	{
-		this.hp = health;
-	}//end setHealth
 
 	@Override
 	public ArrayList<GameBehavior> getBehaviors() 
@@ -166,6 +155,30 @@ public class ConcreteGameEnemy implements GameEnemy
 	public void setDifficulty(int diff)
 	{
 		this.difficulty = diff;
+	}
+
+	@Override
+	public int getExp() 
+	{
+		return this.exp;
+	}
+
+	@Override
+	public void setExp(int exp) 
+	{
+		this.exp = exp;
+	}
+
+	@Override
+	public int getHealth() 
+	{
+		return this.hp;
+	}
+
+	@Override
+	public void setHealth(int hp) 
+	{
+		this.hp = hp;
 	}
 
 }

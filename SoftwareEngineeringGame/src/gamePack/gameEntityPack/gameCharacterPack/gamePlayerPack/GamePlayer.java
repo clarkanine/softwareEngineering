@@ -1,9 +1,9 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
 
-import gamePack.gameEntityPack.GameEntity;
+import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 
-public interface GamePlayer extends GameEntity {
+public interface GamePlayer extends GameCharacter {
 	public String getProfileInfo();
 	public void setProfileInfo(String info); //name, config, lastSavedateTime...
 	
