@@ -10,9 +10,9 @@ public class ConcreteGameEnemy implements GameEnemy
 
 	private double Accel;
 	private double maxSpeed;
-	private double strength;
+	private int strength;
 	private double weight;
-	private double hp;
+	private int hp;
 	private String name;
 	private String view;
 	private int difficulty;
@@ -28,6 +28,10 @@ public class ConcreteGameEnemy implements GameEnemy
 	@Override
 	public void setAccel(double accel) 
 	{
+		if(accel < 0)
+		{
+			throw new IllegalArgumentException("accel can't be negative");
+		}
 		this.Accel = accel;
 	}//end setAccel
 
@@ -40,17 +44,21 @@ public class ConcreteGameEnemy implements GameEnemy
 	@Override
 	public void setMaxSpeed(double maxSpeed)
 	{
+		if(maxSpeed < 0)
+		{
+			throw new IllegalArgumentException("maxSpeed can't be negative");
+		}
 		this.maxSpeed = maxSpeed;	
 	}//end setMaxSpeed
 	
 	@Override
-	public double getStrength() 
+	public int getStrength() 
 	{
 		return this.strength;
 	}//end getStrength
 
 	@Override
-	public void setStrength(double strength) 
+	public void setStrength(int strength) 
 	{
 		this.strength = strength;
 	}//end setStrength
@@ -68,13 +76,13 @@ public class ConcreteGameEnemy implements GameEnemy
 	}//end setWeight
 
 	@Override
-	public double getHealth() 
+	public int getHealth() 
 	{
 		return this.hp;
 	}//end getHealth
 
 	@Override
-	public void setHealth(double health) 
+	public void setHealth(int health) 
 	{
 		this.hp = health;
 	}//end setHealth
@@ -167,5 +175,21 @@ public class ConcreteGameEnemy implements GameEnemy
 	{
 		this.difficulty = diff;
 	}
+
+	@Override
+	public int getExp()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setExp(int exp)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }
