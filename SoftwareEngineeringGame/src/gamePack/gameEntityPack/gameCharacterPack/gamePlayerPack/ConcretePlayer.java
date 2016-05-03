@@ -2,13 +2,12 @@ package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
 import java.util.ArrayList;
 
+import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
 
 public class ConcretePlayer implements GamePlayer
 {
-
-	
 	private double accel;
 	private String profileName;
 	private String name;
@@ -20,8 +19,11 @@ public class ConcretePlayer implements GamePlayer
 	private int exp;
 	private double weight;
 	private int health;
-	private ArrayList<GameArtifact> items;
-	private ArrayList<GameBehavior> behaviors;
+	//private AttackBehavior currentAttack;
+	
+	private ArrayList<GameEntity> entities;
+	//private ArrayList<GameArtifact> items;
+	//private ArrayList<GameBehavior> behaviors;
 	
 	@Override
 	public double getAccel()
@@ -98,29 +100,62 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public ArrayList<GameBehavior> getBehaviors()
 	{
-		// TODO Auto-generated method stub
-		return this.behaviors;
+		ArrayList<GameBehavior> behavs = new ArrayList<>();
+		GameBehavior curr;
+		
+		
+		for( GameEntity entity : entities)
+		{
+			if( entity instanceof GameBehavior )
+			{
+				curr = (GameBehavior) entity;
+				behavs.add(curr);
+			}
+		}
+			
+		return behavs;
 	}
 
+	
 	@Override
 	public void setBehaviors(ArrayList<GameBehavior> behaviors)
 	{
-		// TODO Auto-generated method stub
-		this.behaviors = behaviors;
+		//this.behaviors = behaviors;
+	}
+	
+	public void addBehavior(GameBehavior behavior)
+	{
+		entities.add(behavior);
 	}
 
 	@Override
 	public ArrayList<GameArtifact> getArtifacts()
 	{
-		// TODO Auto-generated method stub
-		return items;
+		ArrayList<GameArtifact> artifacts = new ArrayList<>();
+		GameArtifact curr;
+		
+		
+		for( GameEntity entity : entities)
+		{
+			if( entity instanceof GameArtifact )
+			{
+				curr = (GameArtifact) entity;
+				artifacts.add(curr);
+			}
+		}
+			
+		return artifacts;
+	}
+	
+	public void addArtifact(GameArtifact artifact)
+	{
+		entities.add(artifact);
 	}
 
 	@Override
 	public void setArtifacts(ArrayList<GameArtifact> artifacts)
 	{
-		// TODO Auto-generated method stub
-		this.items = artifacts;
+		//this.items = artifacts;
 
 	}
 
@@ -247,4 +282,8 @@ public class ConcretePlayer implements GamePlayer
 		this.profileName = profName;
 	}
 
+	public void attack()
+	{
+		//currentAttack.executeBehavior();
+	}
 }
