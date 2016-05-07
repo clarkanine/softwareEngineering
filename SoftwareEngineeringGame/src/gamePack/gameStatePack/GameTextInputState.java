@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
+
 public interface GameTextInputState extends GameState {
 	static PrintStream printStream = new PrintStream(System.out);
 	static Scanner scanner = new Scanner(System.in);
@@ -109,5 +111,10 @@ public interface GameTextInputState extends GameState {
 	void openMenu();
 	void closeMenu();
 	//etc
+
+	public void setScanner(Scanner scanner);
+
+	public void setPlayer(GamePlayer player);
+
 
 }

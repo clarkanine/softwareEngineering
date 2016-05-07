@@ -2,6 +2,7 @@ package gamePack.gameStatePack;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
+import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
 
 public class StartGame implements GameInitialState {
 
@@ -63,8 +64,10 @@ public class StartGame implements GameInitialState {
 
 	@Override
 	public void run(GameStateContext gameStateContext) {
+		DefaultWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
+		DefaultWindow.main(null);
 		GameState gameState = new ProfileInput();
-		System.out.println(gameStateContext.getState().getClass().getSimpleName());
+		
 		gameStateContext.setState(gameState);
 		gameStateContext.run();
 	}

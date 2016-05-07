@@ -1,4 +1,4 @@
-package gamePack.gameStatePack;
+package gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack;
 
 import static org.junit.Assert.*;
 
@@ -10,13 +10,13 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class StartMenuTest {
+public class ConcreteGameEnemyTest 
+{
 
-	static GameStateContext gameStateContext;
+	static ConcreteGameEnemy enemy;
 	static Scanner scanner;
 	static PrintStream printStream;
 	static PrintStream errorLog;
@@ -32,17 +32,21 @@ public class StartMenuTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		gameStateContext = new GameStateContext();
+		enemy = new ConcreteGameEnemy();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		//scanner.close();
 	}
-
+	
 	@Test
-	public void testRun() {
-		gameStateContext.run();
+	public void testDifficulty() 
+	{
+		System.out.println("Enter difficulty value 10");
+		enemy.setDifficulty( scanner.nextInt() );
+		
+		assertEquals( 10, enemy.getDifficulty() );
 	}
 
 }

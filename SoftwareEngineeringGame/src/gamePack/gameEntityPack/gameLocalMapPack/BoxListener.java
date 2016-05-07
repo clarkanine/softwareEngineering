@@ -1,4 +1,4 @@
-package clickableGrid;
+package gamePack.gameEntityPack.gameLocalMapPack;
 
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import gamePack.gameStatePack.DefaultMapState;
+
 //Class that defines what happens (i.e: the color changes) when a panel is clicked
 public class BoxListener extends MouseAdapter
 {
+	
 	//static int [][] clicks = new int[100][42];
 	private static Integer playerClickX;
 	private static Integer playerClickY;
@@ -21,23 +24,23 @@ public class BoxListener extends MouseAdapter
 	private static JPanel clickedBox; 
 
 	public synchronized static int getPlayerClickX() {
-			return BoxListener.playerClickX;
+		return BoxListener.playerClickX;
 	}
 
 
 	public synchronized static void setPlayerClickX(int playerClickX) {
-			BoxListener.playerClickX = playerClickX;
+		BoxListener.playerClickX = playerClickX;
 	}
 
 
 
 	public synchronized static int getPlayerClickY() {
-			return BoxListener.playerClickY;
+		return BoxListener.playerClickY;
 	}
 
 
 	public synchronized static void setPlayerClickY(int playerClickY) {
-			BoxListener.playerClickY = playerClickY;
+		BoxListener.playerClickY = playerClickY;
 	}
 
 
@@ -75,6 +78,7 @@ public class BoxListener extends MouseAdapter
 	{
 		setClickedBox((JPanel)me.getSource());
 		setClicked(true);
+		setInPursuit(true);
 		/*
 		try {
 			Thread.sleep(1000);
@@ -98,8 +102,9 @@ public class BoxListener extends MouseAdapter
 
 
 	public void movePlayer() {
-		new Thread(new Runnable() {
+		Thread t =new Thread(new Runnable() {
 			public void run() {
+
 				JTextArea textArea_player = (JTextArea) getClickedBox().getParent().getParent().getComponent(0);
 				//playerCurX = textArea_player.getX();
 				//playerCurY = textArea_player.getY();
@@ -117,11 +122,13 @@ public class BoxListener extends MouseAdapter
 							box.setOpaque(false);
 					}
 
+
+					//if(! isInPursuit()) {
 					ArrayList<JTextArea> nearbyEnemies = getNearbyEnemies(textArea_player.getX(), textArea_player.getY(), 150);
 					for(JTextArea textArea_enemy: nearbyEnemies) {
-						setInPursuit(true);
 						pursuePlayer(textArea_enemy, 200);
 					}
+					//}
 					getClickedBox().getParent().getParent().repaint();
 					getClickedBox().getParent().getParent().getParent().repaint();
 					textArea_player.repaint();
@@ -130,6 +137,7 @@ public class BoxListener extends MouseAdapter
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					//this.notify();
 				}
 
 
@@ -138,11 +146,14 @@ public class BoxListener extends MouseAdapter
 				getClickedBox().getParent().getParent().getParent().repaint();
 				textArea_player.repaint();
 			}
-		}).start();
+		});
+		if(DefaultMapState.mapIsVisible())
+			t.start();
+		
 	}
 
 	public void pursuePlayer(JTextArea textArea_enemy, int radius) {
-		new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 			public void run() {
 				JTextArea textArea_player = (JTextArea) getClickedBox().getParent().getParent().getComponent(0);
 				//JTextArea textArea_enemy = (JTextArea) clickedBox.getParent().getParent().getComponent(1);
@@ -152,6 +163,7 @@ public class BoxListener extends MouseAdapter
 				//				enemyCurY = textArea_enemy.getY();
 				double dx = textArea_player.getX()-textArea_enemy.getX(), dy = textArea_player.getY()-textArea_enemy.getY();
 				int ds = (int)Math.ceil(Math.sqrt(dx*dx+dy*dy));
+				//setInPursuit(true);
 
 				while(ds > 0 && ds < radius && isInPursuit()) {
 
@@ -161,9 +173,19 @@ public class BoxListener extends MouseAdapter
 					textArea_enemy.setLocation((int) (textArea_enemy.getX() + dx/30), (int) (textArea_enemy.getY() + dy/30));
 					textArea_player.repaint();
 					textArea_enemy.repaint();
-					if(ds < 50 && isInPursuit()) {
-						System.out.println(textArea_enemy.getName()+ " got you!");
-						System.exit(-1);
+
+
+					if(ds < 50) {
+						setInPursuit(false);
+						//System.out.println(textArea_enemy.getName()+ " got you!");
+						DefaultWindow.updateTextArea(textArea_enemy.getName()+ " got you!\n");
+//						textArea_enemy.getParent().getParent().setVisible(false);
+//						textArea_enemy.setVisible(false);
+//						textArea_player.setVisible(false);
+						//textArea_player.getParent().getComponent(0).setVisible(false);
+						DefaultMapState.setMapIsVisible(false);
+						//System.exit(0);
+						break;
 					}
 					try {
 						Thread.sleep(100);
@@ -172,11 +194,13 @@ public class BoxListener extends MouseAdapter
 					}
 				}
 
-				setInPursuit(false);
+
 				textArea_player.repaint();
 				textArea_enemy.repaint();
 			}
-		}).start();
+		});
+		if(isInPursuit())
+			t.start();
 	}
 
 	ArrayList<JPanel> getNearbyBoxes(int refX, int refY, int radius) {
@@ -293,7 +317,7 @@ public class BoxListener extends MouseAdapter
 						if(box.isOpaque())
 							box.setOpaque(false);
 					}
-					
+
 					ArrayList<JTextArea> nearbyEnemies = getNearbyEnemies(textArea_player.getX(), textArea_player.getY(), 100);
 					for(JTextArea textArea_enemy: nearbyEnemies) {
 							inPursuit = true;
@@ -308,8 +332,8 @@ public class BoxListener extends MouseAdapter
 						e.printStackTrace();
 					}
 				}
-				
-				
+
+
 				clicked = false;
 				clickedBox.getParent().getParent().repaint();
 				clickedBox.getParent().getParent().getParent().repaint();
@@ -317,7 +341,7 @@ public class BoxListener extends MouseAdapter
 			}
 		}).start();
 	}
-	
+
 	public synchronized void pursuePlayer(JTextArea textArea_enemy, int radius) {
 		new Thread(new Runnable() {
 			public void run() {
@@ -331,7 +355,7 @@ public class BoxListener extends MouseAdapter
 				int ds = (int)Math.ceil(Math.sqrt(dx*dx+dy*dy));
 
 				while(ds > 0 && ds < radius && inPursuit) {
-					
+
 					dx = textArea_player.getX()-textArea_enemy.getX();
 					dy = textArea_player.getY()-textArea_enemy.getY();
 					ds = (int)Math.ceil(Math.sqrt(dx*dx+dy*dy));
@@ -348,7 +372,7 @@ public class BoxListener extends MouseAdapter
 						e.printStackTrace();
 					}
 				}
-				
+
 				inPursuit = false;
 				textArea_player.repaint();
 				textArea_enemy.repaint();
@@ -367,7 +391,7 @@ public class BoxListener extends MouseAdapter
 		}
 		return nearbyBoxs;
 	}
-	
+
 	private ArrayList<JTextArea> getNearbyEnemies(int refX, int refY, int radius) {
 		ArrayList<JTextArea> nearbyEnemies = new ArrayList<>();
 		for(Component c: clickedBox.getParent().getParent().getComponents()) {
@@ -379,8 +403,8 @@ public class BoxListener extends MouseAdapter
 		}
 		return nearbyEnemies;
 	}
-	
+
 
 }
 
-*/
+ */
