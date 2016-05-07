@@ -12,5 +12,5 @@ public class Snake extends ConcreteGameEnemy
 		this.setStrength(7);
 		this.setView("../views/snake");
 		this.setWeight(0);
-	}
-}
+	}//end snake
+}//end class
