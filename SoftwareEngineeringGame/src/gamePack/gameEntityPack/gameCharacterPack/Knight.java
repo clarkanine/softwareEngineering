@@ -4,6 +4,11 @@ public class Knight extends ConcreteGameCharacter
 {
 	public Knight()
 	{
+
+	}
+	
+	public void setDefault()
+	{
 		this.setAccel(10);
 		this.setExp(10);
 		this.setHealth(10);

@@ -6,5 +6,5 @@ public interface GameBehavior extends GameEntity{
 	public String getBehavior();
 	void setBehavior(GameBehavior behavior);
 	
-	void executeBehavior();
+	public void executeBehavior();
 }
