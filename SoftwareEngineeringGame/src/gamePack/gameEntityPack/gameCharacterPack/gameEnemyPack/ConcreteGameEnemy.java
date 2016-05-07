@@ -29,6 +29,10 @@ public class ConcreteGameEnemy implements GameEnemy
 	@Override
 	public void setAccel(double accel) 
 	{
+		if(accel < 0)
+		{
+			throw new IllegalArgumentException("accel can't be negative");
+		}
 		this.Accel = accel;
 	}//end setAccel
 
@@ -41,6 +45,10 @@ public class ConcreteGameEnemy implements GameEnemy
 	@Override
 	public void setMaxSpeed(double maxSpeed)
 	{
+		if(maxSpeed < 0)
+		{
+			throw new IllegalArgumentException("maxSpeed can't be negative");
+		}
 		this.maxSpeed = maxSpeed;	
 	}//end setMaxSpeed
 	
@@ -69,6 +77,21 @@ public class ConcreteGameEnemy implements GameEnemy
 	}//end setWeight
 
 	@Override
+<<<<<<< HEAD
+=======
+	public int getHealth() 
+	{
+		return this.hp;
+	}//end getHealth
+
+	@Override
+	public void setHealth(int health) 
+	{
+		this.hp = health;
+	}//end setHealth
+
+	@Override
+>>>>>>> 68a0ca0680ed1fec3e33bc5d234c4e351df78b6a
 	public ArrayList<GameBehavior> getBehaviors() 
 	{
 		return this.behavior;
@@ -158,6 +181,7 @@ public class ConcreteGameEnemy implements GameEnemy
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int getExp() 
 	{
 		return this.exp;
@@ -180,5 +204,21 @@ public class ConcreteGameEnemy implements GameEnemy
 	{
 		this.hp = hp;
 	}
+=======
+	public int getExp()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setExp(int exp)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+
+>>>>>>> 68a0ca0680ed1fec3e33bc5d234c4e351df78b6a
 
 }

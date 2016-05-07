@@ -188,5 +188,20 @@ public class ConcreteGameCharacter implements GameCharacter
 		this.exp = exp;
 		
 	}
+<<<<<<< HEAD
+=======
+	
+	public void setDefault()
+	{
+		this.setAccel(0);
+		this.setExp(0);
+		this.setHealth(0);
+		this.setMaxSpeed(0);
+		this.setName("");
+		this.setStrength(0);
+		this.setView("");
+		this.setWeight(0);
+	}
+>>>>>>> 68a0ca0680ed1fec3e33bc5d234c4e351df78b6a
 
 }
