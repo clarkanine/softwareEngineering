@@ -12,4 +12,5 @@ public interface GameState {
 	void exitGame();
 	void exitGame(GamePlayer player);
 	void enterState(GameState state);
+	void run(GameStateContext gameStateContext);
 }

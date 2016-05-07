@@ -11,42 +11,64 @@ import java.util.Scanner;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import clickableGrid.Main;
+import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
 
 public class StartMenu implements GameTextInputState {
-	private Scanner scanner = new Scanner(System.in);
-	private PrintStream printStream = new PrintStream(System.out);
+	private GamePlayer player;
+	private Scanner scanner;
+	private PrintStream printStream;
 	private PrintStream gameErrorLog;
 	private PrintStream profileOutputStream;
 	private Scanner profileInputStream;
+	private GameStateContext gameStateContext;
 
 	public StartMenu(Scanner scanner, OutputStream printStream) {
-		this.scanner = scanner;
-		this.printStream = new PrintStream(printStream);
+		this.setScanner(scanner);
+		this.setPrintStream(new PrintStream(printStream));
 		try {
-			this.gameErrorLog = new PrintStream(new File("GameData/ProfileInputErrorLog_"+System.currentTimeMillis()));
+			this.setGameErrorLog(new PrintStream(new File("GameData/StartMenuErrorLog_"+System.currentTimeMillis())));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public StartMenu(Scanner scanner, OutputStream printStream, PrintStream gameErrorLog) {
-		this.scanner = scanner;
-		this.printStream = new PrintStream(printStream);
-		this.gameErrorLog = gameErrorLog;
+	public StartMenu(Scanner scanner, OutputStream printStream, PrintStream gameErrorLog, GamePlayer player) {
+		this.setScanner(scanner);
+		this.setPrintStream(new PrintStream(printStream));
+		this.setGameErrorLog(gameErrorLog);
+		this.setPlayer(player);
+	}
+	
+	public StartMenu() {
+		this.setScanner(new Scanner(System.in));
+		this.setPrintStream(new PrintStream(System.out));
+		try {
+			this.setGameErrorLog(new PrintStream(new File("GameData/StartMenuErrorLog_"+System.currentTimeMillis())));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
+	public void run(GameStateContext gameStateContext) {
+		this.gameStateContext = gameStateContext;
+		DefaultWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
+		this.openMenu();
+		//gameStateContext.setState(new EndGame());
+		gameStateContext.run();
+	}
+	
+	@Override
 	public String readWord() {
-		printStream.println("ProfileInput.readWord()");
-		String res = scanner.next().trim();
+		//getPrintStream().println("ProfileInput.readWord()");
+		String res = getScanner().next().trim();
 		return res;
 	}
 
 	@Override
 	public String readLine() {
 		//printStream.println("ProfileInput.readLine()");
-		String res = scanner.nextLine().trim();
+		String res = getScanner().nextLine().trim();
 		return res;
 	}
 
@@ -54,21 +76,21 @@ public class StartMenu implements GameTextInputState {
 	public int readInt() {
 		int num=0;
 		boolean parsedInt = true;
-		String something = scanner.nextLine();
+		String something = getScanner().nextLine();
 		try {
 			num = Integer.parseInt(something);
 		} catch(NumberFormatException nfe) {
-			System.out.println("something didn't parse to an int");
+			DefaultWindow.updateTextArea("something didn't parse to an int");
 			parsedInt = false;
 		}
 		while(! parsedInt){
-			something = scanner.nextLine();
+			something = getScanner().nextLine();
 			try {
 				num = Integer.parseInt(something);
 
 				parsedInt = true;       /*nfe skips this*/
 			} catch(NumberFormatException nfe) {
-				System.out.println("something didn't parse to an int");
+				DefaultWindow.updateTextArea("something didn't parse to an int");
 				parsedInt = false;
 			}
 		}
@@ -79,9 +101,9 @@ public class StartMenu implements GameTextInputState {
 	public char readChar() {
 		char res = '?';
 		try {
-			res = scanner.nextLine().trim().charAt(0);
+			res = getScanner().nextLine().trim().charAt(0);
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace(gameErrorLog);
+			e.printStackTrace(getGameErrorLog());
 		}
 		return res;
 	}
@@ -92,30 +114,38 @@ public class StartMenu implements GameTextInputState {
 
 	@Override
 	public void openMenu() {
-		System.out.println("\n\t\t\t\t_____-----Game-----_____\t\t\t\t\n");
 		int option = 999;	
 		do{
-			System.out.println("\nchoose an option:\n"
+			DefaultWindow.updateTextArea("\n\t\t\t\t_____-----Game-----_____\t\t\t\t\n"
+					+ "\nchoose an option:\n"
 					+ "1)  play game\n"
 					+ "2)  back\n"
-					+ "0)  EXIT");
+					+ "0)  EXIT\n");
 			option = readInt();
 			switch(option){
 			case 1:
-				clickableGrid.Main.main(null);
+				GameMapState mapState = new DefaultMapState();
+				mapState.setPlayer(player);
+				gameStateContext.setState(mapState);
+				//gameStateContext.run();
+				//gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow.main(null);
 				
 				break;
 			case 2:
-				ProfileInput p = new ProfileInput(scanner, printStream);
-				p.openMenu();
+				GameTextInputState profileInput = new ProfileInput();
+				profileInput.setScanner(new Scanner(System.in));
+				profileInput.setPlayer(player);
+				gameStateContext.setState(profileInput);
+				//gameStateContext.run();
 				break;
 			case 0: 
-				System.out.println("\nThank you for playing the game\n\n");
+				gameStateContext.setState(new EndGame());
+				//System.out.println("\nThank you for playing the game\n\n");
 				break;
 			default:
 			}
 		}
-		while(option != 0);
+		while(option != 0 && gameStateContext.getState().getClass().getSimpleName().equals("StartMenu"));
 	}
 
 	public Scanner getScanner() {
@@ -127,7 +157,7 @@ public class StartMenu implements GameTextInputState {
 	}
 
 	public PrintStream getPrintStreamOut() {
-		return printStream;
+		return getPrintStream();
 	}
 
 	public void setPrintStream(PrintStream printStream) {
@@ -195,5 +225,35 @@ public class StartMenu implements GameTextInputState {
 		// TODO Auto-generated method stub
 
 	}
+
+	private PrintStream getPrintStream() {
+		return printStream;
+	}
+
+	private PrintStream getProfileOutputStream() {
+		return profileOutputStream;
+	}
+
+	private void setProfileOutputStream(PrintStream profileOutputStream) {
+		this.profileOutputStream = profileOutputStream;
+	}
+
+	private Scanner getProfileInputStream() {
+		return profileInputStream;
+	}
+
+	private void setProfileInputStream(Scanner profileInputStream) {
+		this.profileInputStream = profileInputStream;
+	}
+
+	public GamePlayer getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(GamePlayer player) {
+		this.player = player;
+	}
+
+
 
 }

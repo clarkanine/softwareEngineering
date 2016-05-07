@@ -7,6 +7,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.ConcretePlayer;
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.KnightPlayer;
+import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
+
 class ProfileSourceHandler {
 
 	/*
@@ -77,7 +82,7 @@ class ProfileSourceHandler {
 	
 	
 	
-	protected static void profileSourceParser(String profileName) {
+	protected static GamePlayer profileSourceParser(String profileName) {
 		
 		profileSourceName = profileName;
 		getConfigString();
@@ -118,7 +123,19 @@ class ProfileSourceHandler {
 		experienceString = experienceString.substring(12, experienceString.length()-1);
 		int experienceInt = Integer.valueOf(experienceString);
 		//System.out.println("newParsedInt:experience: "+experienceInt);
-
+		
+		
+		GamePlayer player = new KnightPlayer();
+		player.setName(profileName);
+		player.setProfileInfo("Knight: "+ characterNameString +" using "+ weaponNameString+"\ndifficulty: "+difficultyInt+"\nxp: "+experienceInt);
+		player.setExp(experienceInt);
+		player.setHealth(100);
+		player.setAccel(100);
+		player.setMaxSpeed(100);
+		player.setStrength(100);
+		player.setWeight(100);
+		DefaultWindow.updateTextArea("Loaded: "+player.getName()+"  "+player.getClass().getSimpleName()+"\n");
+		return player;
 	}
 
 }

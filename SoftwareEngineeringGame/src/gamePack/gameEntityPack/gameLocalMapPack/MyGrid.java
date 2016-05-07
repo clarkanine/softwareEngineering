@@ -1,4 +1,4 @@
-package clickableGrid;
+package gamePack.gameEntityPack.gameLocalMapPack;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,8 +16,11 @@ public class MyGrid extends JPanel {
 	private static final long serialVersionUID = -5542056167547175096L;
 
 		public MyGrid(int row, int col) {
-
-            int count = 0 ; // use to give a name to each box so that you can refer to them later
+			/*if(row<=0)
+				row = 1;
+			if(col<=0)
+				col = 1;*/
+			int count = 0 ; // use to give a name to each box so that you can refer to them later
             setLayout(new GridLayout(row, col));
             //setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -36,6 +39,5 @@ public class MyGrid extends JPanel {
             }
             this.setOpaque(false);
         }
-		
     }
     
