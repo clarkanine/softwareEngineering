@@ -21,6 +21,7 @@ class TextFieldStreamer extends InputStream implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         str = tf.getText() + "\n";
         pos = 0;
+        MainWindow.updateTextArea(str);
         tf.setText("");
         synchronized (this) {
             //maybe this should only notify() as multiple threads may

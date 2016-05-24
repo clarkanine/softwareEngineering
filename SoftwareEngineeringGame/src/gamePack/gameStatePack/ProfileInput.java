@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class ProfileInput implements GameTextInputState {
 	private GamePlayer player = null;
@@ -52,14 +52,14 @@ public class ProfileInput implements GameTextInputState {
 
 	@Override
 	public String readWord() {
-		DefaultWindow.updateTextArea("ProfileInput.readWord()\n");
+		MainWindow.updateTextArea("ProfileInput.readWord()\n");
 		String res = getScanner().next().trim();
 		return res;
 	}
 
 	@Override
 	public String readLine() {
-		//DefaultWindow.updateTextArea("ProfileInput.readLine()\n");
+		//MainWindow.updateTextArea("ProfileInput.readLine()\n");
 		String res = getScanner().nextLine().trim();
 		return res;
 	}
@@ -72,7 +72,7 @@ public class ProfileInput implements GameTextInputState {
 		try {
 			num = Integer.parseInt(something);
 		} catch(NumberFormatException nfe) {
-			DefaultWindow.updateTextArea("something didn't parse to an int\n");
+			MainWindow.updateTextArea("something didn't parse to an int\n");
 			parsedInt = false;
 		}
 		while(! parsedInt){
@@ -82,7 +82,7 @@ public class ProfileInput implements GameTextInputState {
 
 				parsedInt = true;       /*nfe skips this*/
 			} catch(NumberFormatException nfe) {
-				DefaultWindow.updateTextArea("something didn't parse to an int\n");
+				MainWindow.updateTextArea("something didn't parse to an int\n");
 				parsedInt = false;
 			}
 		}
@@ -102,25 +102,25 @@ public class ProfileInput implements GameTextInputState {
 
 	public void createProfile() {
 		boolean profileFound = false;
-		DefaultWindow.updateTextArea("enter new profileName\n");
+		MainWindow.updateTextArea("enter new profileName\n");
 		//getPrintStream().print("-->");
 		String profileName = readLine();
-		DefaultWindow.updateTextArea("enter new characterName\n");
+		MainWindow.updateTextArea("enter new characterName\n");
 		//getPrintStream().print("-->");
 		String characterName = readLine();
 		ArrayList<String> defaultWeaponsList = new ArrayList<>();
 		defaultWeaponsList.add("defaultWeaponName0");
 		defaultWeaponsList.add("defaultWeaponName1");
 		defaultWeaponsList.add("defaultWeaponName2");
-		DefaultWindow.updateTextArea("select a weapon: "+defaultWeaponsList+"\n");
+		MainWindow.updateTextArea("select a weapon: "+defaultWeaponsList+"\n");
 		//getPrintStream().print("-->");
 		String weaponName = readLine();
 		while(! defaultWeaponsList.contains(weaponName)) {
-			DefaultWindow.updateTextArea("select a weapon:\n");
+			MainWindow.updateTextArea("select a weapon:\n");
 			//getPrintStream().print("-->");
 			weaponName = readLine();
 		}
-		DefaultWindow.updateTextArea("enter difficulty\n");
+		MainWindow.updateTextArea("enter difficulty\n");
 		//getPrintStream().print("-->");
 		int difficulty = readInt();
 		int experience = 0;
@@ -129,14 +129,15 @@ public class ProfileInput implements GameTextInputState {
 
 			profileFound = true;    //fnfe skips this line
 		} catch(FileNotFoundException fnfe) {
+			//fnfe.printStackTrace(gameErrorLog);
 			profileFound = false;
 		}
 		finally{
 			if(profileFound)
-				profileOutputStream.close();
+				profileInputStream.close();
 		}
 		while(profileFound){
-			DefaultWindow.updateTextArea("profile source exists\n"
+			MainWindow.updateTextArea("profile source exists\n"
 					+ "enter new profileName\n");
 			//getPrintStream().print("-->");
 			profileName = getScanner().nextLine();
@@ -172,7 +173,7 @@ public class ProfileInput implements GameTextInputState {
 
 	public void loadProfile() {
 		boolean profileFound = false;
-		DefaultWindow.updateTextArea("enter profileName to load\n");
+		MainWindow.updateTextArea("enter profileName to load\n");
 		//getPrintStream().print("-->");
 		String profileName = readLine();
 		String characterName = "";
@@ -192,7 +193,7 @@ public class ProfileInput implements GameTextInputState {
 				profileInputStream.close();
 		}
 		while(!profileFound){
-			DefaultWindow.updateTextArea("profile does not exist"
+			MainWindow.updateTextArea("profile does not exist"
 					+ "enter a profileName to load\n");
 			//getPrintStream().print("-->");
 			profileName = readLine();
@@ -235,7 +236,7 @@ public class ProfileInput implements GameTextInputState {
 		//System.out.println();
 		int option = 999;	
 		do{
-			DefaultWindow.updateTextArea("\n\t\t\t\t_____-----Game-----_____\t\t\t\t\n\n"
+			MainWindow.updateTextArea("\n_____-----Game-----_____\n"
 					+ "Welcome, choose an option:\n"
 					+ "1)  readLine() --> Log\n"
 					+ "2)  Create a new profile\n"
@@ -345,7 +346,7 @@ public class ProfileInput implements GameTextInputState {
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		DefaultWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName());
+		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName());
 		this.openMenu();
 		gameStateContext.run();
 		

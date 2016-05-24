@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class StartMenu implements GameTextInputState {
 	private GamePlayer player;
@@ -52,7 +52,7 @@ public class StartMenu implements GameTextInputState {
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		DefaultWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
+		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
 		this.openMenu();
 		//gameStateContext.setState(new EndGame());
 		gameStateContext.run();
@@ -80,7 +80,7 @@ public class StartMenu implements GameTextInputState {
 		try {
 			num = Integer.parseInt(something);
 		} catch(NumberFormatException nfe) {
-			DefaultWindow.updateTextArea("something didn't parse to an int");
+			MainWindow.updateTextArea("something didn't parse to an int");
 			parsedInt = false;
 		}
 		while(! parsedInt){
@@ -90,7 +90,7 @@ public class StartMenu implements GameTextInputState {
 
 				parsedInt = true;       /*nfe skips this*/
 			} catch(NumberFormatException nfe) {
-				DefaultWindow.updateTextArea("something didn't parse to an int");
+				MainWindow.updateTextArea("something didn't parse to an int");
 				parsedInt = false;
 			}
 		}
@@ -116,7 +116,7 @@ public class StartMenu implements GameTextInputState {
 	public void openMenu() {
 		int option = 999;	
 		do{
-			DefaultWindow.updateTextArea("\n\t\t\t\t_____-----Game-----_____\t\t\t\t\n"
+			MainWindow.updateTextArea("\n_____-----Game-----_____\n"
 					+ "\nchoose an option:\n"
 					+ "1)  play game\n"
 					+ "2)  back\n"

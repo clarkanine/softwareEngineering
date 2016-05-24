@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.ConcretePlayer;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.KnightPlayer;
-import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 class ProfileSourceHandler {
 
@@ -134,7 +134,7 @@ class ProfileSourceHandler {
 		player.setMaxSpeed(100);
 		player.setStrength(100);
 		player.setWeight(100);
-		DefaultWindow.updateTextArea("Loaded: "+player.getName()+"  "+player.getClass().getSimpleName()+"\n");
+		MainWindow.updateTextArea("Loaded: "+player.getName()+"  "+player.getClass().getSimpleName()+"\n");
 		return player;
 	}
 

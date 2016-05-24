@@ -2,11 +2,19 @@ package gamePack.gameStatePack;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class StartGame implements GameInitialState {
 
 	private GameStateContext gameStateContext;
+	@Override
+	public void run(GameStateContext gameStateContext) {
+		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
+		GameState gameState = new ProfileInput();
+		gameStateContext.setState(gameState);
+		gameStateContext.run();
+	}
+	
 
 	@Override
 	public void gameRun() {
@@ -62,15 +70,7 @@ public class StartGame implements GameInitialState {
 
 	}
 
-	@Override
-	public void run(GameStateContext gameStateContext) {
-		DefaultWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
-		DefaultWindow.main(null);
-		GameState gameState = new ProfileInput();
-		
-		gameStateContext.setState(gameState);
-		gameStateContext.run();
-	}
+
 
 	@Override
 	public void gameBuild() {
