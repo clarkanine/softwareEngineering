@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
+import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 
 public class ConcretePlayer implements GamePlayer
 {
@@ -19,7 +20,7 @@ public class ConcretePlayer implements GamePlayer
 	private int exp;
 	private double weight;
 	private int health;
-	//private AttackBehavior currentAttack;
+	private GameBehavior currentAttack;
 	
 	private ArrayList<GameEntity> entities;
 	//private ArrayList<GameArtifact> items;
@@ -72,7 +73,6 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public double getWeight()
 	{
-		// TODO Auto-generated method stub
 		return weight;
 	}
 
@@ -162,14 +162,12 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public String getName()
 	{
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	@Override
 	public void setName(String name)
 	{
-		// TODO Auto-generated method stub
 		this.name = name;
 
 	}
@@ -177,14 +175,12 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public String getView()
 	{
-		// TODO Auto-generated method stub
 		return view;
 	}
 
 	@Override
 	public void setView(String view)
 	{
-		// TODO Auto-generated method stub
 		this.view = view;
 
 	}
@@ -192,7 +188,6 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public void updateView()
 	{
-		// TODO Auto-generated method stub
 		System.out.println("updated view");
 
 	}
@@ -200,7 +195,6 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public void spawn()
 	{
-		// TODO Auto-generated method stub
 		System.out.println("spawned");
 
 	}
@@ -208,14 +202,12 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public void kill()
 	{
-		// TODO Auto-generated method stub
 		System.out.println("killed");
 	}
 
 	@Override
 	public void save()
 	{
-		// TODO Auto-generated method stub
 		System.out.println("Saved");
 
 	}
@@ -223,7 +215,6 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public void load()
 	{
-		// TODO Auto-generated method stub
 		System.out.println("Loaded");
 
 	}
@@ -231,14 +222,12 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public String getProfileInfo()
 	{
-		// TODO Auto-generated method stub
 		return profile;
 	}
 
 	@Override
 	public void setProfileInfo(String info)
 	{
-		// TODO Auto-generated method stub
 		profile = info;
 
 	}
@@ -246,22 +235,18 @@ public class ConcretePlayer implements GamePlayer
 	@Override
 	public String getStats()
 	{
-		// TODO Auto-generated method stub
 		return stats;
 	}
 
 	@Override
 	public void setStats(String stats)
 	{
-		// TODO Auto-generated method stub
 		this.stats = stats;
-
 	}
 
 	@Override
 	public int getExp()
 	{
-		// TODO Auto-generated method stub
 		return exp;
 	}
 
@@ -282,8 +267,22 @@ public class ConcretePlayer implements GamePlayer
 		this.profileName = profName;
 	}
 
-	public void attack()
+	public void attack(GameCharacter target)
 	{
-		//currentAttack.executeBehavior();
+		
 	}
+
+	@Override
+	public GameBehavior getCurrentAttack()
+	{
+		return this.currentAttack;
+	}
+
+	@Override
+	public void setCurrentAttack(GameBehavior atkBehavior)
+	{
+		this.currentAttack = atkBehavior;
+		
+	}
+
 }

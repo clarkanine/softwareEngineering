@@ -1,8 +1,21 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
+import gamePack.gameEntityPack.gameBehaviorPack.KnightAttackBehavior;
+import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+
 public class KnightPlayer extends ConcretePlayer
 {
 	public KnightPlayer()
+	{
+
+	}
+	
+	public void attack(GameCharacter target)
+	{
+		
+	}
+	
+	public void setDefault()
 	{
 		this.setAccel(5.5);
 		this.setName("Godric_The_Brave");
@@ -14,6 +27,6 @@ public class KnightPlayer extends ConcretePlayer
 		this.setWeight(75.5);
 		this.setMaxSpeed(15.9);
 		this.setView("../../views/knight");
-		//AtkBehav.attack();
+		this.setCurrentAttack(new KnightAttackBehavior() );
 	}
 }

@@ -1,4 +1,4 @@
-package clickableGrid;
+package gamePack.gameEntityPack.gameLocalMapPack;
 
 import java.awt.EventQueue;
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ import java.awt.Font;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 
-public class Main {
+public class DefaultWindow {
 
 	private JFrame frame;
 	JLayeredPane layeredPane;
@@ -37,7 +37,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main window = new Main();
+					DefaultWindow window = new DefaultWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class Main {
 	/**
 	 * Create the application.
 	 */
-	public Main() {
+	public DefaultWindow() {
 		initialize();
 //		BoxListener b = new BoxListener();
 //		ArrayList<JPanel> nearbyBoxs = b.getNearbyBoxes(0, 0, 100); 

@@ -1,4 +1,4 @@
-package clickableGrid;
+package gamePack.gameEntityPack.gameLocalMapPack;
 
 import java.awt.Color;
 import java.awt.Dimension;

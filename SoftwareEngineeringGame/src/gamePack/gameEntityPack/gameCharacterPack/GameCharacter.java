@@ -33,9 +33,9 @@ public interface GameCharacter extends GameEntity
     public ArrayList<GameArtifact> getArtifacts();
     void setArtifacts(ArrayList<GameArtifact> artifacts);
     
-	
-	
-	
-	
+    public GameBehavior getCurrentAttack();
+    public void setCurrentAttack(GameBehavior atkBehavior);
+    
+    public void attack(GameCharacter target);
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameBehaviorPack.GameBehavior;
+import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 
 public class ConcreteGameEnemy implements GameEnemy
 {
@@ -185,6 +186,27 @@ public class ConcreteGameEnemy implements GameEnemy
 
 	@Override
 	public void setExp(int exp)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public GameBehavior getCurrentAttack()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCurrentAttack(GameBehavior atkBehavior)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void attack(GameCharacter target)
 	{
 		// TODO Auto-generated method stub
 		

@@ -1,7 +1,5 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
-import gamePack.gameEntityPack.gameCharacterPack.ConcreteGameCharacter;
-
 public class Player extends ConcreteGameCharacter implements GamePlayer
 {	
 	private String profileInfo;
@@ -28,11 +26,11 @@ public class Player extends ConcreteGameCharacter implements GamePlayer
 		
 	}
 
-	@Override
-	public void attack()
-	{
-		
-		
-	}
+//	@Override
+//	public void attack()
+//	{
+//		
+//		
+//	}
 
 }
