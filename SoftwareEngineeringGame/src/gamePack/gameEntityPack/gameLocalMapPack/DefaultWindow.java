@@ -106,7 +106,7 @@ public class DefaultWindow implements GameLocalMap{
 		//frame.toFront();
 
 		makeMapPane();
-		makeTextPane();
+		//makeTextPane();
 		DefaultMapState.setMapIsVisible(false);
 	}
 

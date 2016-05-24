@@ -188,9 +188,7 @@ public class ConcreteGameCharacter implements GameCharacter
 		this.exp = exp;
 		
 	}
-<<<<<<< HEAD
-=======
-	
+
 	public void setDefault()
 	{
 		this.setAccel(0);
@@ -202,6 +200,5 @@ public class ConcreteGameCharacter implements GameCharacter
 		this.setView("");
 		this.setWeight(0);
 	}
->>>>>>> 68a0ca0680ed1fec3e33bc5d234c4e351df78b6a
 
 }

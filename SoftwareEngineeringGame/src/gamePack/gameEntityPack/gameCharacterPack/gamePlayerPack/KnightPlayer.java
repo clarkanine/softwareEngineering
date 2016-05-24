@@ -14,10 +14,7 @@ public class KnightPlayer extends ConcretePlayer
 		this.setWeight(75.5);
 		this.setMaxSpeed(15.9);
 		this.setView("../../views/knight");
-<<<<<<< HEAD
 		
-=======
 		//AtkBehav.attack();
->>>>>>> 68a0ca0680ed1fec3e33bc5d234c4e351df78b6a
 	}
 }
