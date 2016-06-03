@@ -9,5 +9,5 @@ public interface GamePlayer extends GameCharacter {
 	
 	public String getStats();
 	public void setStats(String stats); //survivability, experience, narrative completion, difficulty, handicap...
-	public void attack();
+	//public void attack(GameCharacter target);
 }

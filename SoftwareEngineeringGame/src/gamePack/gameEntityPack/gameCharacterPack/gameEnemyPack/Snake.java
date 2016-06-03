@@ -1,16 +1,21 @@
 package gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack;
 
+import gamePack.gameEntityPack.gameCharacterBehavior.NullAttack;
+import gamePack.gameEntityPack.gameCharacterBehavior.TrollAttack;
+import gamePack.gameEntityPack.gameWeaponPack.BigStick;
+import gamePack.gameEntityPack.gameWeaponPack.NullWeapon;
+
 public class Snake extends ConcreteGameEnemy 
 {
 	public Snake()
 	{
-		this.setAccel(5.0);
-		this.setDifficulty(1);
-		this.setHealth(5);
-		this.setMaxSpeed(10.0);
+		super();
 		this.setName("Snake");
-		this.setStrength(7);
-		this.setView("../views/snake");
-		this.setWeight(0);
+		this.setMaxHealth(20);
+		this.setHealth(20);
+		this.setStrength(5);
+		this.setAttackWeapon(new NullWeapon() );
+		this.setAttack( new NullAttack() );
+		this.addCombatState(new AISingleTarget() );
 	}
 }

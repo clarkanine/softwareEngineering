@@ -1,20 +1,57 @@
 package gamePack.gameEntityPack.gameArtifactPack;
 
+import java.util.Random;
+
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 
-public class ConcreteArtifact implements GameArtifact
-{
 
-	public void use(ConcreteCharacter c)
+public class Potion implements GameArtifact
+{
+	private int numUses, maxUses;
+	private String name;
+	
+	public Potion(int n, String name)
 	{
-		//return 0;
-	}
-	@Override
+		this.numUses = this.maxUses = n;
+		this.name = name;
+	}//end Potion
+	
+	public void use(ConcreteCharacter character)
+	{
+		int val;
+		
+		if(this.numUses > 0)
+		{
+			Random r = new Random();
+			int high = character.getMaxHealth() - character.getHealth();
+			int low = 10;
+			
+			if(high - low == 0)
+				return;
+			
+			
+			val = r.nextInt(Math.abs(high - low) ) + low;
+			character.setHealth( character.getHealth() + Math.abs(val));
+			numUses--;
+		}//end if
+		
+		else
+		{
+			System.out.println("Potion is empty.");
+			//return 0;
+		}//end else
+
+	}//end use
+	
+	public int getNumUses()
+	{
+		return this.numUses;
+	}//end getNumUses
+	
 	public String getName()
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return this.name;
+	}//end getName
 
 	@Override
 	public void setName(String name)
@@ -71,11 +108,11 @@ public class ConcreteArtifact implements GameArtifact
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void restore()
 	{
-		// TODO Auto-generated method stub
+		this.numUses = this.maxUses;
 		
 	}
-
 }

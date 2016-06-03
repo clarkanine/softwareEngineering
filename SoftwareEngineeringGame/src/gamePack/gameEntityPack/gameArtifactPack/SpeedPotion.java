@@ -1,14 +1,38 @@
 package gamePack.gameEntityPack.gameArtifactPack;
 
+import java.util.Random;
+
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 
-public class ConcreteArtifact implements GameArtifact
+public class SpeedPotion implements GameArtifact
 {
-
-	public void use(ConcreteCharacter c)
+	private int numUses;
+	private String name;
+	
+	public SpeedPotion(int n, String name)
 	{
-		//return 0;
-	}
+		this.numUses = n;
+		this.name = name;
+	}//end StrengthPotion
+	
+	public int use(ConcreteCharacter c)
+	{
+		if(this.numUses > 0)
+		{
+			Random r = new Random();
+			int high = 10;
+			int low = 1;
+			
+			return r.nextInt(high - low) + low;
+		}//end if
+		
+		else
+		{
+			System.out.println("Potion is empty!");
+			return 0;
+		}//end else
+	}//end use
+
 	@Override
 	public String getName()
 	{
@@ -71,11 +95,4 @@ public class ConcreteArtifact implements GameArtifact
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void restore()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 }

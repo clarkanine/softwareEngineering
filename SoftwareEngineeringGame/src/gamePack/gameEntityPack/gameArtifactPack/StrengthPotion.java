@@ -1,7 +1,37 @@
-package gamePack.gameEntityPack.gameBehaviorPack;
+package gamePack.gameEntityPack.gameArtifactPack;
 
-public class ConcreteBehavior implements GameBehavior
+import java.util.Random;
+
+import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
+
+public class StrengthPotion implements GameArtifact
 {
+	private int numUses;
+	private String name;
+	
+	public StrengthPotion(int n, String name)
+	{
+		this.numUses = n;
+		this.name = name;
+	}//end StrengthPotion
+	
+	public int use(ConcreteCharacter c)
+	{
+		if(this.numUses > 0)
+		{
+			Random r = new Random();
+			int high = 10;
+			int low = 1;
+			
+			return r.nextInt(high - low) + low;
+		}//end if
+		
+		else
+		{
+			System.out.println("Potion is empty!");
+			return 0;
+		}//end else
+	}//end use
 
 	@Override
 	public String getName()
@@ -65,31 +95,4 @@ public class ConcreteBehavior implements GameBehavior
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public String getBehavior()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setBehavior(GameBehavior behavior)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void executeBehavior()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public String toString()
-	{
-		return "Concrete Behavior 1";
-	}
-
 }
