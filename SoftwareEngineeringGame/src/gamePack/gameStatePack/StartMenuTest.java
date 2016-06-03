@@ -16,7 +16,7 @@ import org.junit.Test;
 
 public class StartMenuTest {
 
-	static GameState gameState;
+	static GameStateContext gameStateContext;
 	static Scanner scanner;
 	static PrintStream printStream;
 	static PrintStream errorLog;
@@ -32,7 +32,7 @@ public class StartMenuTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		gameState = new StartMenu(scanner, printStream, errorLog);
+		gameStateContext = new GameStateContext();
 	}
 
 	@After
@@ -41,8 +41,8 @@ public class StartMenuTest {
 	}
 
 	@Test
-	public void testOpenMenu() {
-		((StartMenu) gameState).openMenu();
+	public void testRun() {
+		gameStateContext.run();
 	}
 
 }

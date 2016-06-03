@@ -15,22 +15,10 @@ import org.junit.Test;
 
 public class ProfileInputTest {
 	static GameState gameState;
-	static Scanner scanner;
-	static PrintStream printStream;
-	static PrintStream errorLog;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		InputStream in = System.in;
-		OutputStream out = System.out;
-		scanner = new Scanner(in);
-		printStream = new PrintStream(out);
-		try {
-			errorLog = new PrintStream(new File("TestLogs/TestProfileInputErrorLog_"+System.currentTimeMillis()));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		gameState = new ProfileInput(scanner, printStream, errorLog);
+		gameState = new ProfileInput();
 	}
 
 	@After
@@ -43,11 +31,11 @@ public class ProfileInputTest {
 		System.out.println("type \"word\" with a single trailing space and return");
 		String res = ((ProfileInput) gameState).readWord();
 		assertEquals("word",res);
-		scanner.nextLine();
+		((ProfileInput) gameState).readLine();
 
 		System.out.println("type \"word\" with a single trailing space and return");
 		res = ((ProfileInput) gameState).readWord();
-		scanner.nextLine();
+		((ProfileInput) gameState).readLine();
 		assertEquals("word",res);
 	}
 

@@ -1,8 +1,14 @@
 package gamePack.gameEntityPack.gameArtifactPack;
 
+import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
+
 public class ConcreteArtifact implements GameArtifact
 {
 
+	public void use(ConcreteCharacter c)
+	{
+		//return 0;
+	}
 	@Override
 	public String getName()
 	{
@@ -61,6 +67,12 @@ public class ConcreteArtifact implements GameArtifact
 
 	@Override
 	public void load()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void restore()
 	{
 		// TODO Auto-generated method stub
 		

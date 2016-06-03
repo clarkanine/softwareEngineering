@@ -2,6 +2,7 @@ package gamePack.gameStatePack;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class EndGame implements GameFinalState {
 
@@ -55,8 +56,9 @@ public class EndGame implements GameFinalState {
 
 	@Override
 	public void run(GameStateContext gameStateContext) {
-		// TODO Auto-generated method stub
-
+		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName() + "\n"
+		+ "\nThank you for playing the game\n\n");
+		System.exit(0);
 	}
 
 	@Override

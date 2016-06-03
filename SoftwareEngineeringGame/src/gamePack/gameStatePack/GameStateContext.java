@@ -2,9 +2,9 @@ package gamePack.gameStatePack;
 
 import java.util.Scanner;
 
-class GameStateContext {
+public class GameStateContext {
     private GameState myState;
-    GameStateContext() {
+    public GameStateContext() {
         this.setState(new StartGame());
     }
 
@@ -17,6 +17,10 @@ class GameStateContext {
         myState = newState;
     }
 
+    public GameState getState() {
+        return myState;
+    }
+    
     public void run() {
         myState.run(this);
     }

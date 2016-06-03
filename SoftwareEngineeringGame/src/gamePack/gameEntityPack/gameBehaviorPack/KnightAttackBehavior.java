@@ -12,7 +12,7 @@ public class KnightAttackBehavior implements GameBehavior
 		atk = (GameCharacter) attacker;
 		def = (GameCharacter) defender;
 		
-		def.setHealth( def.getHealth() - atk.getStrength() );
+		//def.setHealth( def.getHealth() - atk.getStrength() );
 	}
 
 	@Override
