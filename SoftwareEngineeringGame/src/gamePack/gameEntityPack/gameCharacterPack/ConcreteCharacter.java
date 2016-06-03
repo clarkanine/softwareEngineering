@@ -34,6 +34,7 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 	private ArrayList<State> myStates;
 	private ArrayList<GameArtifact> items;
 	private ArrayList<GameCharacter> targets;
+	//private EntityCanvas blah;
 	
 	public ConcreteCharacter()
 	{
