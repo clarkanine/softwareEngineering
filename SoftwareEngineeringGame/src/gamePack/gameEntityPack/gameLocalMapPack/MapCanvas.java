@@ -23,7 +23,7 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 
 
-public class MyCanvas extends Canvas {
+public class MapCanvas extends Canvas {
 
 	private static final long serialVersionUID = 4487681749374778705L;
 	
@@ -32,34 +32,47 @@ public class MyCanvas extends Canvas {
 	Image offscreen;
 	Dimension offscreenSize;
 
-	Graphics2D offGraphics;
+	static Graphics2D offGraphics;
 
-	MyCanvas() {
+	ArrayList<EntityCanvas> entities;
+	int mtCount = 0;
+	MapCanvas(EntityCanvas ... entities) {
+	
 		super();
-		initBg(); 		//read one background +
-		initPlayer(); 	//read three player states +
-		initEnemy(); 	//read three enemy states = 7 images total in tracker
+		 	
+		this.entities = new ArrayList<>();
+		
+		for(EntityCanvas entity: entities) {
+			this.entities.add(entity);
+			entity.initEntity();
+			for(Image entityImage: entity.entityImgs)
+				mt.addImage(entityImage, mtCount++);
+		}
+		
+		initBg();
+
 		try {
-			for(int k = 0; k< 1+playerStates.size()+enemyStates.size(); k++)
+			for(int k = 0; k < mtCount; k++)
 				mt.waitForID(k);
+			
 		} catch (java.lang.InterruptedException e) {
 			System.out.println("Couldn't load one of the images");
 		}
 	}
 
 
-	public static void main(String args[]) {
-		JFrame mainFrame = new JFrame("Graphics demo");
-		mainFrame.getContentPane().add(new MyCanvas());
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-	}
+//	public static void main(String args[]) {
+//		JFrame mainFrame = new JFrame("Graphics demo");
+//		mainFrame.getContentPane().add(new MapCanvas());
+//		mainFrame.pack();
+//		mainFrame.setVisible(true);
+//	}
 
 
 
 
 	public Dimension getPreferredSize() {
-		return new Dimension(400, 400);
+		return new Dimension(1115, 715);
 	}
 
 	public Dimension getMinimumSize() {
@@ -74,7 +87,13 @@ public class MyCanvas extends Canvas {
 		Dimension d = getSize();
 		if ((offscreen == null) || (d.width != offscreenSize.width)
 				|| (d.height != offscreenSize.height)) {
-			offscreen = createImage(d.width, d.height);
+			
+			int w = this.getWidth(), h = this.getHeight();
+			this.setBounds(0, 0, w, h);
+			d.setSize(w, h);
+			
+//			offscreen = createImage(d.width, d.height);
+			offscreen = createImage(w, h);
 			offscreenSize = d;
 			offGraphics = (Graphics2D) offscreen.getGraphics();
 			offGraphics.setFont(new Font("Helvetica",Font.BOLD,18));
@@ -82,10 +101,12 @@ public class MyCanvas extends Canvas {
 		}
 		bgPaint();
 
-		
+//		for(EntityCanvas c: entities)
+//			c.entityPaint();
 		bgMaskPaint();
-		enemyPaint();
-		playerPaint();
+		for(EntityCanvas c: entities)
+			c.entityPaint();
+
 
 		g.drawImage(offscreen, 0, 0, null);
 		g.dispose();
@@ -95,28 +116,52 @@ public class MyCanvas extends Canvas {
 
 
 
-
-	private static final String bgPathStr = "image/worldmap.gif";
-	private static Image bg;
-
-	private static BufferedImage bgMask = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
+	private static final String worldMapPathStr = "image/worldMap.gif", gameMapPathStr = "image/gameMap.jpg",
+			snowMapPathStr = "image/snowMap.png", townMapPathStr = "image/townMap.jpg", volcanoMapPathStr = "image/volcanoMap.jpg";
+	static ArrayList<String> mapPaths = new ArrayList<>(
+			Arrays.asList(worldMapPathStr, gameMapPathStr, snowMapPathStr, townMapPathStr, volcanoMapPathStr));
+	static Image mapImgs[] = new Image[mapPaths.size()];
+	
+	static int worldMap = 0, gameMap = 1, snowMap = 2, townMap = 3, volcanoMap = 4;
+	
+	static int mapState = gameMap;
+	
+	ArrayList<Integer> mapStates = new ArrayList<>(
+			Arrays.asList(worldMap, gameMap, snowMap, townMap, volcanoMap));
+	
+	//private static BufferedImage bgMask = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage bgMask = new BufferedImage(1400, 800, BufferedImage.TYPE_INT_ARGB);
 	private static final Graphics2D bgMaskG2D = bgMask.createGraphics();
 
 	void initBg() {
-		if(Files.exists(Paths.get(bgPathStr), LinkOption.NOFOLLOW_LINKS)) {
-			bg = Toolkit.getDefaultToolkit().createImage(bgPathStr);
-			mt.addImage(bg, 0);
-		}
-		else {
-			System.out.println(bgPathStr+" was not found");
-			System.exit(-1);
+//		if(Files.exists(Paths.get(bgPathStr), LinkOption.NOFOLLOW_LINKS)) {
+//			bg = Toolkit.getDefaultToolkit().createImage(bgPathStr);
+//			mt.addImage(bg, 0);
+//		}
+//		else {
+//			System.out.println(bgPathStr+" was not found");
+//			System.exit(-1);
+//		}
+		
+		int i = 0;
+		for (String path : mapPaths) {
+			if (Files.exists(Paths.get(path), LinkOption.NOFOLLOW_LINKS)) {
+				mapImgs[i] = Toolkit.getDefaultToolkit().createImage(path);
+				mt.addImage(mapImgs[i], mtCount);
+			} else {
+				System.out.println(path + " was not found");
+				System.exit(-1);
+			}
+			i++;
+			mtCount++;
+			
 		}
 	}
 
 	void bgPaint() {
 		offGraphics.setColor(getBackground());
 		offGraphics.fill(getBounds());
-		offGraphics.drawImage(bg, 0, 0, this);
+		offGraphics.drawImage(mapImgs[mapState], 0, 0, getWidth(), getHeight(), null);
 	}
 
 	private void bgMaskPaint() {
@@ -130,22 +175,26 @@ public class MyCanvas extends Canvas {
 
 		/* Clear the circle away */
 		bgMaskG2D.setComposite(AlphaComposite.Clear);
-		int ovalX = MainWindow.getPlayerCurX();
-		int ovalY =	MainWindow.getPlayerCurY();
-		int ovalRadius = playerImgs[0].getWidth(this)*2;
+		int ovalX = MainWindow.knight0_Canvas.getEntityCurX();
+		int ovalY =	MainWindow.knight0_Canvas.getEntityCurY();
+		int ovalRadius = MainWindow.knight0_Canvas.entityVisibleRadius;/*entities.get(0).entityImgs[0].getWidth(this)*2;*/
 		bgMaskG2D.fillOval(ovalX - ovalRadius, ovalY - ovalRadius, 2 * ovalRadius, 2 * ovalRadius);
 		bgMaskG2D.setComposite(AlphaComposite.Src);
 
 		offGraphics.drawImage(bgMask, 0, 0, bgMask.getWidth(this), bgMask.getHeight(this), this);
 	}
 
-
-
+	
+	
+	
+	
+	
+/*	
 	static final int PLAYERSTOPPED = 0,
 			PLAYERMOVING = 1,
 			PLAYERATTACKING = 2;
 
-	private static final ArrayList<Integer> playerStates = new ArrayList<>(Arrays.asList(
+	private static final ArrayList<Integer> entityStates = new ArrayList<>(Arrays.asList(
 			PLAYERSTOPPED,
 			PLAYERMOVING, 
 			PLAYERATTACKING
@@ -228,19 +277,13 @@ public class MyCanvas extends Canvas {
 	}
 
 	synchronized static void setPlayerAffine(AffineTransform playerAffine) {
-		MyCanvas.playerAffine = playerAffine;
+		MapCanvas.playerAffine = playerAffine;
 	}
-
-
-
-
-
-
 
 	static final int ENEMYSTOPPED = 0,
 			ENEMYMOVING = 1,
 			ENEMYATTACKING = 2;
-	static final int[] ENEMYSTOPPEDBOUNDS = {0,0,75,35};
+	//static final int[] ENEMYSTOPPEDBOUNDS = {0,0,75,35};
 
 	private static final ArrayList<Integer> enemyStates = new ArrayList<>(Arrays.asList(
 			ENEMYSTOPPED,
@@ -250,8 +293,8 @@ public class MyCanvas extends Canvas {
 
 	private static final String enemyStoppedPathStr = "image/stopped.gif", 
 			enemyAttackingPathStr = "image/attacking.gif", 
-			enemyMovingPathStr = "image/moving.gif",
-			enemyImgsPathStr = "image/Genesis 32X SCD - Aladdin - Snake.gif";
+			enemyMovingPathStr = "image/moving.gif";
+			//enemyImgsPathStr = "image/Genesis 32X SCD - Aladdin - Snake.gif";
 
 	private static final ArrayList<String> enemyImgPaths = new ArrayList<>(Arrays.asList(
 			enemyStoppedPathStr, 
@@ -322,13 +365,24 @@ public class MyCanvas extends Canvas {
 	}
 
 	synchronized static AffineTransform getEnemyAffine() {
-		/*return enemyAffine =  new AffineTransform();*/  //took awhile to find this for some reason
+		return enemyAffine =  new AffineTransform();  //took awhile to find this for some reason
 		return enemyAffine;
 	}
 
 	synchronized static void setEnemyAffine(AffineTransform enemyAffine) {
-		MyCanvas.enemyAffine = enemyAffine;
+		MapCanvas.enemyAffine = enemyAffine;
 	}
+	
+	
+	*/
+
+
+
+
+
+
+
+	
 
 
 

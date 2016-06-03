@@ -193,8 +193,7 @@ public class ProfileInput implements GameTextInputState {
 				profileInputStream.close();
 		}
 		while(!profileFound){
-			MainWindow.updateTextArea("profile does not exist"
-					+ "enter a profileName to load\n");
+			MainWindow.updateTextArea("profile does not exist. \nEnter a profileName to load\n");
 			//getPrintStream().print("-->");
 			profileName = readLine();
 			try {
