@@ -56,7 +56,7 @@ public class MapCanvas extends Canvas {
 				mt.waitForID(k);
 			
 		} catch (java.lang.InterruptedException e) {
-			System.out.println("Couldn't load one of the images");
+			MainWindow.updateTextArea("Couldn't load one of the images\n");
 		}
 	}
 
@@ -149,7 +149,7 @@ public class MapCanvas extends Canvas {
 				mapImgs[i] = Toolkit.getDefaultToolkit().createImage(path);
 				mt.addImage(mapImgs[i], mtCount);
 			} else {
-				System.out.println(path + " was not found");
+				MainWindow.updateTextArea(path + " was not found\n");
 				System.exit(-1);
 			}
 			i++;

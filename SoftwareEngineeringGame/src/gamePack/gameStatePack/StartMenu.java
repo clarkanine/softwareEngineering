@@ -21,7 +21,17 @@ public class StartMenu implements GameTextInputState {
 	private PrintStream profileOutputStream;
 	private Scanner profileInputStream;
 	private GameStateContext gameStateContext;
-
+	
+	public StartMenu() {
+		this.setScanner(new Scanner(System.in));
+		this.setPrintStream(new PrintStream(System.out));
+		/*try {
+			this.setGameErrorLog(new PrintStream(new File("GameData/StartMenuErrorLog_"+System.currentTimeMillis())));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}*/
+	}
+/*	
 	public StartMenu(Scanner scanner, OutputStream printStream) {
 		this.setScanner(scanner);
 		this.setPrintStream(new PrintStream(printStream));
@@ -37,17 +47,9 @@ public class StartMenu implements GameTextInputState {
 		this.setPrintStream(new PrintStream(printStream));
 		this.setGameErrorLog(gameErrorLog);
 		this.setPlayer(player);
-	}
+	}*/
 	
-	public StartMenu() {
-		this.setScanner(new Scanner(System.in));
-		this.setPrintStream(new PrintStream(System.out));
-		try {
-			this.setGameErrorLog(new PrintStream(new File("GameData/StartMenuErrorLog_"+System.currentTimeMillis())));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	@Override
 	public void run(GameStateContext gameStateContext) {
@@ -124,7 +126,7 @@ public class StartMenu implements GameTextInputState {
 			option = readInt();
 			switch(option){
 			case 1:
-				GameMapState mapState = new DefaultMapState();
+				GameMapState mapState = new ConcreteGameMapState();
 				mapState.setPlayer(player);
 				gameStateContext.setState(mapState);
 				//gameStateContext.run();

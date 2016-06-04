@@ -24,7 +24,7 @@ public class ProfileInput implements GameTextInputState {
 
 	private GameStateContext gameStateContext;
 
-	public ProfileInput(Scanner scanner, PrintStream printStream) {
+	/*public ProfileInput(Scanner scanner, PrintStream printStream) {
 		this.setScanner(scanner);
 		this.setPrintStream(printStream);
 		try {
@@ -38,16 +38,16 @@ public class ProfileInput implements GameTextInputState {
 		this.setScanner(scanner);
 		this.setPrintStream(printStream);
 		this.gameErrorLog = gameErrorLog;
-	}
+	}*/
 
 	public ProfileInput() {
 		this.setScanner(new Scanner(System.in));
 		this.setPrintStream(new PrintStream(System.out));
-		try {
+		/*try {
 			this.gameErrorLog = new PrintStream(new File("GameData/ProfileInputErrorLog_"+System.currentTimeMillis()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class ProfileInput implements GameTextInputState {
 		}
 		while(profileFound){
 			MainWindow.updateTextArea("profile source exists\n"
-					+ "enter new profileName\n");
+									+ "enter new profileName\n");
 			//getPrintStream().print("-->");
 			profileName = getScanner().nextLine();
 			try {
@@ -157,11 +157,11 @@ public class ProfileInput implements GameTextInputState {
 			this.profileOutputStream = new PrintStream("GameData/ProfileSource_"+profileName);
 
 			//this.profileOutputStream.println("***begin ProfileSource_"+profileName+"***");
-			this.profileOutputStream.println("profileName: "+profileName);
-			this.profileOutputStream.println("characterName: "+characterName);
-			this.profileOutputStream.println("weaponName: "+weaponName);
-			this.profileOutputStream.println("difficulty: "+difficulty);
-			this.profileOutputStream.println("experience: "+experience);
+			MainWindow.updateTextArea("profileName: "+profileName+"\n");
+			MainWindow.updateTextArea("characterName: "+characterName+"\n");
+			MainWindow.updateTextArea("weaponName: "+weaponName+"\n");
+			MainWindow.updateTextArea("difficulty: "+difficulty+"\n");
+			MainWindow.updateTextArea("experience: "+experience+"\n");
 			//this.profileOutputStream.println("***end ProfileSource_"+profileName+"***");
 			this.profileOutputStream.close();
 		} catch (FileNotFoundException e) {
@@ -237,24 +237,25 @@ public class ProfileInput implements GameTextInputState {
 		do{
 			MainWindow.updateTextArea("\n_____-----Game-----_____\n"
 					+ "Welcome, choose an option:\n"
-					+ "1)  readLine() --> Log\n"
-					+ "2)  Create a new profile\n"
-					+ "3)  Load an existing profile\n"
+					+ "1)  Create a new profile\n"
+					+ "2)  Load an existing profile\n"
+					//+ "3)  readLine() --> Log\n"
 					+ "0)  EXIT\n");
 			option = readInt();
 			switch(option){
 			case 1:
-				gameErrorLog.println(readLine());
-				break;
-			case 2:
 				createProfile();
 				break;
-			case 3:
+			case 2:
 				loadProfile();
 				GameTextInputState newState = new StartMenu();
+				newState.setPlayer(player);
 				newState.setScanner(new Scanner(System.in));
 				gameStateContext.setState(newState);
-				break;	
+				break;
+			/*case 3:
+				gameErrorLog.println(readLine());
+				break;*/
 			case 0: 
 				gameStateContext.setState(new EndGame());
 				break;

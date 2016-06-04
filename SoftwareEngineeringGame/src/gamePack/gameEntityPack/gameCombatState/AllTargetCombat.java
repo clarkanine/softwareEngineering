@@ -3,9 +3,9 @@ package gamePack.gameEntityPack.gameCombatState;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameStatePack.CombatShenanigans;
 
 public class AllTargetCombat implements CombatState
 {

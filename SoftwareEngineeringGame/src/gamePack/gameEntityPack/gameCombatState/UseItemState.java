@@ -1,10 +1,13 @@
 package gamePack.gameEntityPack.gameCombatState;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.CombatShenanigans;
+import gamePack.gameStatePack.ConcreteGameTextInputState;
 
 public class UseItemState implements CombatState
 {
@@ -25,7 +28,7 @@ public class UseItemState implements CombatState
 		
 		for(GameCharacter c : me.getTargets() )
 		{
-			System.out.println("using item on " + c.getName() );
+			MainWindow.updateTextArea("using item on " + c.getName() + "\n");
 			c.useItem(me.getCurrentItem());
 			
 		}
@@ -53,21 +56,27 @@ public class UseItemState implements CombatState
 		
 		me.setCurrentItem( me.chooseItem() );
 		
-		System.out.println("Item chosen was " + me.getCurrentItem() );
+		MainWindow.updateTextArea("Item chosen was " + me.getCurrentItem() + "\n");
 		ArrayList<GameCharacter> everyone = new ArrayList<>();
 		ArrayList<GameCharacter> target = new ArrayList<>();
 		
 		everyone.addAll(friends);
 		everyone.addAll(foes);
 		
-		System.out.println("Who are you using the item on?");
+		MainWindow.updateTextArea("Who are you using the item on?"+ "\n");
 		
 		for(GameCharacter c : everyone)
 		{
-			System.out.println(i++ + ". " + c.getName() + ": " + c.getHealth() + "/" + c.getMaxHealth() );
+			MainWindow.updateTextArea(i++ + ". " + c.getName() + ": " + c.getHealth() + "/" + c.getMaxHealth() + "\n");
 		}
 		
-		choice = ConcreteCharacter.user.nextInt();
+		choice = ConcreteGameTextInputState.readInt();
+		
+		/*Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		in.close();*/
+		
+		//choice = ConcreteCharacter.user.nextInt();
 		target.add( everyone.get(choice - 1));
 		
 		me.setTargets(target);

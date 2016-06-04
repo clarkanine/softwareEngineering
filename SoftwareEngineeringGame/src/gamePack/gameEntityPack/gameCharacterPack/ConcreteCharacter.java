@@ -9,12 +9,14 @@ import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameArtifactPack.NullArtifact;
 import gamePack.gameEntityPack.gameCharacterBehavior.Attack;
 import gamePack.gameEntityPack.gameCombatState.CombatState;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
 import gamePack.gameEntityPack.gameWeaponPack.NullWeapon;
+import gamePack.gameStatePack.ConcreteGameTextInputState;
 
 public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEntity
 {
-	public static final Scanner user = new Scanner(System.in);
+	//public static final Scanner user = new Scanner(System.in);
 	public static final Random random = new Random();
 	private CombatState currentState;
 	private GameArtifact currentItem;
@@ -87,7 +89,7 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 		this.setHealth(this.getHealth() - damageTaken);
 		
 		if(this.isDead())
-			System.out.println(this.getName() + " has fallen");
+			MainWindow.updateTextArea(this.getName() + " has fallen\n");
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 	@Override
 	public void attack(GameCharacter you)
 	{
-		//System.out.println("attacking " + you.getName() );
+		//MainWindow.updateTextArea("attacking " + you.getName() );
 		if(this.isDead())
 			return;
 		myAttack.attack(this, you);
@@ -109,7 +111,7 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 	public void defend()
 	{
 		this.isDefending = true;
-		System.out.println(this.getName() + " is defending!");
+		MainWindow.updateTextArea(this.getName() + " is defending!\n");
 		myDefendWeapon.weaponDefend(this);
 	}
 	
@@ -302,7 +304,7 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 	{
 		if(item != null)
 		{
-			System.out.println("using " + item.getName() );
+			MainWindow.updateTextArea("using " + item.getName() +"\n");
 			item.use(this);
 		}
 	}
@@ -315,14 +317,21 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 		
 		if(items.size() < 1)
 		{
-			System.out.println("No items");
+			MainWindow.updateTextArea("No items"+ "\n");
 			return null;
 		}
 		
 		for(GameArtifact item : items)
-			System.out.println(i++ + ". " + item.getName());
+			MainWindow.updateTextArea(i++ + ". " + item.getName()+ "\n");
 		
-		choice = user.nextInt();
+		
+		choice = ConcreteGameTextInputState.readInt();
+		
+		/*Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		in.close();*/
+		
+		//choice = user.nextInt();
 		
 		if(choice < 1 || choice > items.size() + 1)
 			return null;
@@ -397,11 +406,9 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 		return items;
 	}
 	
-	public int compareTo(GameCharacter other)
+	public int compareTo(GameEntity other)
 	{
-		if(this.getSpeed() > other.getSpeed() )
-			return 1;
-		return -1;
+		return ((GameCharacter)this).getSpeed() - ((GameCharacter)other).getSpeed();
 	}
 	
 	public ArrayList<GameCharacter> getTargets()

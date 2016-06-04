@@ -3,9 +3,11 @@ package gamePack.gameEntityPack.gameCombatState;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.CombatShenanigans;
+import gamePack.gameStatePack.ConcreteGameTextInputState;
 
 public class SingleTargetCombat implements CombatState
 {
@@ -28,18 +30,24 @@ public class SingleTargetCombat implements CombatState
 		int i = 1;
 		int choice;
 		
-		System.out.println("Choose a target:");
+		MainWindow.updateTextArea("Choose a target:\n");
 		
 		for(GameCharacter c : this.characters)
 		{
-			System.out.print(i++ + ". " + c.getName());
+			MainWindow.updateTextArea(i++ + ". " + c.getName()+"\n");
 			if(c.isDead() == true)
-				System.out.print(" (dead)");
-			System.out.println();
+				MainWindow.updateTextArea(" (dead)\n");
+			MainWindow.updateTextArea("\n");
 			
 		}
 		
-		choice = ConcreteCharacter.user.nextInt();
+		choice = ConcreteGameTextInputState.readInt();
+		
+		/*Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		in.close();*/
+		
+		//choice = ConcreteCharacter.user.nextInt();
 		
 		return characters.get(choice - 1);
 		
@@ -73,18 +81,24 @@ public class SingleTargetCombat implements CombatState
 		int choice;
 		ArrayList<GameCharacter> target = new ArrayList<>();
 		
-		System.out.println("Choose a target:");
+		MainWindow.updateTextArea("Choose a target:\n");
 		
 		for(GameCharacter c : foes)
 		{
-			System.out.print(i++ + ". " + c.getName() + ": " + c.getHealth() + "/" + c.getMaxHealth());
+			MainWindow.updateTextArea(i++ + ". " + c.getName() + ": " + c.getHealth() + "/" + c.getMaxHealth() + "\n");
 			if(c.isDead() == true)
-				System.out.print(" (dead)");
-			System.out.println();
+				MainWindow.updateTextArea(" (dead)\n");
+			MainWindow.updateTextArea("\n");
 			
 		}
 		
-		choice = ConcreteCharacter.user.nextInt();
+		choice = ConcreteGameTextInputState.readInt();
+		
+		/*Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		in.close();*/
+		
+		//choice = ConcreteCharacter.user.nextInt();
 		target.add(foes.get(choice - 1) );
 		
 		me.setTargets(target);

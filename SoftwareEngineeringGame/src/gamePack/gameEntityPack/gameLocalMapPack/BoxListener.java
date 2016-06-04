@@ -162,7 +162,7 @@ public class BoxListener extends MouseAdapter
 					textArea_player.repaint();
 					textArea_enemy.repaint();
 					if(ds < 50 && isInPursuit()) {
-						System.out.println(textArea_enemy.getName()+ " got you!");
+						MainWindow.updateTextArea(textArea_enemy.getName()+ " got you!\n");
 						System.exit(-1);
 					}
 					try {

@@ -2,7 +2,9 @@ package gamePack.gameEntityPack.gameArtifactPack;
 
 import java.util.Random;
 
+import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 
 public class Potion implements GameArtifact
@@ -37,7 +39,7 @@ public class Potion implements GameArtifact
 		
 		else
 		{
-			System.out.println("Potion is empty.");
+			MainWindow.updateTextArea("Potion is empty.\n");
 			//return 0;
 		}//end else
 
@@ -114,5 +116,11 @@ public class Potion implements GameArtifact
 	{
 		this.numUses = this.maxUses;
 		
+	}
+
+	@Override
+	public int compareTo(GameEntity o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

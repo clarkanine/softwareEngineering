@@ -2,9 +2,10 @@ package gamePack.gameEntityPack.gameCombatState;
 
 import java.util.ArrayList;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.CombatShenanigans;
 
 public class EndCombatState implements CombatState
 {
@@ -19,7 +20,7 @@ public class EndCombatState implements CombatState
 	public void run(GameCharacter me)
 	{
 		player.restore();
-		System.out.println("Battle has ended");
+		MainWindow.updateTextArea("Battle has ended\n");
 		
 	}
 

@@ -1,7 +1,6 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
 import gamePack.gameEntityPack.gameArtifactPack.Potion;
-import gamePack.gameEntityPack.gameBehaviorPack.KnightAttackBehavior;
 import gamePack.gameEntityPack.gameCharacterBehavior.Heal;
 import gamePack.gameEntityPack.gameCharacterBehavior.NullAttack;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
@@ -21,10 +20,11 @@ public class KnightPlayer extends ConcretePlayer
 	{
 		this.setDefault();
 	}
+
 	
 	public void setDefault()
 	{
-		this.setName("Aaron");
+		this.setName("defaultKnightName");
 		this.setAttack(new NullAttack());
 		this.setMaxHealth(300);
 		this.restore();

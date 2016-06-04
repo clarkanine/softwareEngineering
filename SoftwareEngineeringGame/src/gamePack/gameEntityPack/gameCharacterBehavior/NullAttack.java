@@ -2,6 +2,7 @@ package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class NullAttack implements Attack
 {
@@ -11,10 +12,10 @@ public class NullAttack implements Attack
 	{
 		if(you.isDead())
 		{
-			System.out.println(you.getName() + " is dead. You give him a disrespectful kick in the head");
+			MainWindow.updateTextArea(you.getName() + " is dead. You give him a disrespectful kick in the head\n");
 			return;
 		}
-		System.out.println(me.getName() + " is hitting " + you.getName() + " with his " + me.getAttackWeapon().getName());
+		MainWindow.updateTextArea(me.getName() + " is hitting " + you.getName() + " with his " + me.getAttackWeapon().getName()+"\n");
 		you.takeDamage( me.getStrength() );
 		
 	}

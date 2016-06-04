@@ -2,8 +2,8 @@ package gamePack.gameEntityPack.gameCombatState;
 
 import java.util.ArrayList;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameStatePack.CombatShenanigans;
 
 public interface CombatState
 {

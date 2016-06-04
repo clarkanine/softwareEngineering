@@ -10,6 +10,7 @@ public class StartGame implements GameInitialState {
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
+		MainWindow.gameStateContext = this.gameStateContext;
 		GameState gameState = new ProfileInput();
 		gameStateContext.setState(gameState);
 		gameStateContext.run();

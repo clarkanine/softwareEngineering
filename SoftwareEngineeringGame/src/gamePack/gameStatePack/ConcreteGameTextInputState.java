@@ -1,47 +1,33 @@
 package gamePack.gameStatePack;
 
-import java.io.File;
 import java.io.PrintStream;
 import java.util.Scanner;
-
-import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
-public interface GameTextInputState extends GameState {
+public class ConcreteGameTextInputState {
 	static PrintStream printStream = new PrintStream(System.out);
 	static Scanner scanner = new Scanner(System.in);
-	static File errorLogFile = new File("GameData/ProfileInputErrorLog_"+System.currentTimeMillis());
-	static PrintStream gameErrorLog = new PrintStream(System.out);
-
-	default String readWord() {
-		MainWindow.updateTextArea("GameTextInputState.readWord()\n");
-		String res = GameTextInputState.scanner.next().trim();
+	public static String readWord() {
+		String res = ConcreteGameTextInputState.scanner.next().trim();
 		return res;
 	}
-	
-	default String readWord(Scanner scanner) {
-		MainWindow.updateTextArea("GameTextInputState.readWord(Scanner scanner)\n");
-		String res = scanner.next().trim();
+	public static String readWord(Scanner scanner) {
+				String res = scanner.next().trim();
 		return res;
 	}
-	
-	default String readLine() {
-		MainWindow.updateTextArea("GameTextInputState.readLine()\n");
-		String res = GameTextInputState.scanner.nextLine().trim();
+	public static String readLine() {
+				String res = ConcreteGameTextInputState.scanner.nextLine().trim();
 		return res;
 	}
-	
-	default String readLine(Scanner scanner) {
-		MainWindow.updateTextArea("GameTextInputState.readLine(Scanner scanner)\n");
-		String res = scanner.nextLine().trim();
+	public static String readLine(Scanner scanner) {
+				String res = scanner.nextLine().trim();
 		return res;
 	}
-	
-	default int readInt()
+	public static int readInt()
 	{
 		int num=0;
 		boolean parsedInt = true;
-		String something = GameTextInputState.scanner.nextLine();
+		String something = ConcreteGameTextInputState.scanner.nextLine();
 		try {
 			num = Integer.parseInt(something);
 		} catch(NumberFormatException nfe) {
@@ -49,7 +35,7 @@ public interface GameTextInputState extends GameState {
 			parsedInt = false;
 		}
 		while(! parsedInt){
-			something = GameTextInputState.scanner.nextLine();
+			something = ConcreteGameTextInputState.scanner.nextLine();
 			try {
 				num = Integer.parseInt(something);
 
@@ -61,8 +47,7 @@ public interface GameTextInputState extends GameState {
 		}
 		return num;
 	}
-	
-	default int readInt(Scanner scanner)
+	public static int readInt(Scanner scanner)
 	{
 		int num=0;
 		boolean parsedInt = true;
@@ -86,36 +71,24 @@ public interface GameTextInputState extends GameState {
 		}
 		return num;
 	}
-	
-	default char readChar()
+	public static char readChar()
 	{
 		char res = '?';
 		try {
-			res = GameTextInputState.scanner.nextLine().trim().charAt(0);
+			res = ConcreteGameTextInputState.scanner.nextLine().trim().charAt(0);
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace(GameTextInputState.gameErrorLog);
+			printStream.println(e.getMessage());
 		}
 		return res;
 	}
-	
-	default char readChar(Scanner scanner)
+	public static char readChar(Scanner scanner)
 	{
 		char res = '?';
 		try {
 			res = scanner.nextLine().trim().charAt(0);
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace(GameTextInputState.gameErrorLog);
+			printStream.println(e.getMessage());
 		}
 		return res;
 	}
-	
-	void openMenu();
-	void closeMenu();
-	//etc
-
-	public void setScanner(Scanner scanner);
-
-	public void setPlayer(GamePlayer player);
-
-
 }

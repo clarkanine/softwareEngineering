@@ -1,10 +1,13 @@
 package gamePack.gameEntityPack.gameCombatState;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.CombatShenanigans;
+import gamePack.gameStatePack.ConcreteGameTextInputState;
 
 public class InitialCombatState implements CombatState
 {
@@ -31,11 +34,17 @@ public class InitialCombatState implements CombatState
 		for(CombatState combatState : actor.getCombatStates())
 		{
 			//behavior.initCombatState(this, enemies);
-			System.out.println(i++ + ". " + combatState.getName());
+			MainWindow.updateTextArea(i++ + ". " + combatState.getName() + "\n");
 		}
 		
-		choice = ConcreteCharacter.user.nextInt();
-		//System.out.println("Chosen state is " + actor.getCombatStates().get(choice-1).getName());
+		choice = ConcreteGameTextInputState.readInt();
+		
+		/*Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		in.close();*/
+		
+		//choice = ConcreteCharacter.user.nextInt();
+		//MainWindow.updateTextArea("Chosen state is " + actor.getCombatStates().get(choice-1).getName());
 		actor.setState( actor.getCombatStates().get(choice - 1));
 		actor.runState();
 	}

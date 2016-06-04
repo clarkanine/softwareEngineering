@@ -13,7 +13,7 @@ public class GameStateContext {
      * Normally only called by classes implementing the State interface.
      * @param newState the new state of this context
      */
-    void setState(final GameState newState) {
+    public void setState(final GameState newState) {
         myState = newState;
     }
 

@@ -1,3 +1,4 @@
+
 package gamePack.gameStatePack;
 
 import java.io.IOException;
@@ -7,20 +8,28 @@ import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
-public class DefaultMapState implements GameMapState {
+public class ConcreteTownMapState implements GameMapState {
+	public static GameStateContext gameStateContext;
+	
 
-	private GamePlayer player;
+	public static GamePlayer player;
 	private static Boolean mapIsVisible = new Boolean(false);
 
 	@Override
-	public void run(GameStateContext gameStateContext) {
+	public synchronized void run(GameStateContext gameStateContext) {
+		ConcreteTownMapState.gameStateContext = gameStateContext;
+		MainWindow.gameStateContext = gameStateContext;
 		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
 		
-		DefaultMapState.setMapIsVisible(true);
+		
+		
+		ConcreteTownMapState.setMapIsVisible(true);
+		
+		
 	
 		while(mapIsVisible())
 			try {
-				Thread.sleep(1000);
+				wait(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -43,14 +52,14 @@ public class DefaultMapState implements GameMapState {
 	}
 
 	public static boolean mapIsVisible() {
-		synchronized(DefaultMapState.mapIsVisible) {
-			return DefaultMapState.mapIsVisible;
+		synchronized(ConcreteTownMapState.mapIsVisible) {
+			return ConcreteTownMapState.mapIsVisible;
 		}
 	}
 
 	public static void setMapIsVisible(boolean mapIsVisible) {
-		synchronized(DefaultMapState.mapIsVisible) {
-			DefaultMapState.mapIsVisible = mapIsVisible;
+		synchronized(ConcreteTownMapState.mapIsVisible) {
+			ConcreteTownMapState.mapIsVisible = mapIsVisible;
 		}
 	}
 

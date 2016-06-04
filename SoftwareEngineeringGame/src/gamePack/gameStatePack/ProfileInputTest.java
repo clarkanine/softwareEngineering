@@ -13,6 +13,8 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+
 public class ProfileInputTest {
 	static GameState gameState;
 
@@ -28,12 +30,12 @@ public class ProfileInputTest {
 
 	@Test
 	public void testReadWord() {
-		System.out.println("type \"word\" with a single trailing space and return");
+		MainWindow.updateTextArea("type \"word\" with a single trailing space and return\n");
 		String res = ((ProfileInput) gameState).readWord();
 		assertEquals("word",res);
 		((ProfileInput) gameState).readLine();
 
-		System.out.println("type \"word\" with a single trailing space and return");
+		MainWindow.updateTextArea("type \"word\" with a single trailing space and return\n");
 		res = ((ProfileInput) gameState).readWord();
 		((ProfileInput) gameState).readLine();
 		assertEquals("word",res);
@@ -41,7 +43,7 @@ public class ProfileInputTest {
 
 	@Test
 	public void testReadLine() {
-		System.out.println("type \"word\" with or without trailing space and return");
+		MainWindow.updateTextArea("type \"word\" with or without trailing space and return\n");
 		String res = ((ProfileInput) gameState).readLine();
 		assertEquals("word",res);
 
@@ -49,7 +51,7 @@ public class ProfileInputTest {
 
 	@Test
 	public void testReadInt() {
-		System.out.println("type \"2\" followed by any garbage and return");
+		MainWindow.updateTextArea("type \"2\" followed by any garbage and return\n");
 		String res = Integer.toString(((ProfileInput) gameState).readInt());
 		assertEquals("2",res);
 
@@ -57,7 +59,7 @@ public class ProfileInputTest {
 
 	@Test
 	public void testReadChar() {
-		System.out.println("type \"a\" followed by any garbage and return");
+		MainWindow.updateTextArea("type \"a\" followed by any garbage and return\n");
 		String res = Character.toString(((ProfileInput) gameState).readChar());
 		assertEquals("a",res);
 

@@ -1,10 +1,11 @@
-package gamePack.gameEntityPack.gameCharacterPack;
+package gamePack.gameStatePack;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import gamePack.gameEntityPack.gameArtifactPack.Potion;
 import gamePack.gameEntityPack.gameCharacterBehavior.Heal;
+import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack.Snake;
 import gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack.TrollEnemy;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.KnightPlayer;
@@ -15,6 +16,7 @@ import gamePack.gameEntityPack.gameCombatState.CombatState;
 import gamePack.gameEntityPack.gameCombatState.InitialCombatState;
 import gamePack.gameEntityPack.gameCombatState.SingleTargetCombat;
 import gamePack.gameEntityPack.gameCombatState.UseItemState;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 import gamePack.gameEntityPack.gameWeaponPack.BattleAxe;
 import gamePack.gameEntityPack.gameWeaponPack.BigStick;
 import gamePack.gameEntityPack.gameWeaponPack.GreatHammer;
@@ -27,7 +29,7 @@ public class Combat
 		int numAliveEnemies;
 		GameCharacter current;
 		ArrayList<GameCharacter> enemies, players, everyone;
-		Scanner user = new Scanner(System.in);
+		//Scanner user = new Scanner(System.in);
 		String again = "y";
 		CombatShenanigans theCombat;
 
@@ -63,13 +65,14 @@ public class Combat
 			
 			
 			theCombat.run();
-			System.out.println("===============================");
+			MainWindow.updateTextArea("===============================\n");
 			
-			System.out.print("Play again? (y/n): ");
-			again = user.next();
+			MainWindow.updateTextArea("Play again? (y/n): \n");
+			again = ConcreteGameTextInputState.readLine();
+			//again = user.next();
 		}
 			
-		user.close();
+		//user.close();
 	}
 	
 }

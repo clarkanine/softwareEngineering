@@ -2,8 +2,9 @@ package gamePack.gameEntityPack.gameCombatState;
 
 import java.util.ArrayList;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.CombatShenanigans;
 
 public class BattleWonState implements CombatState
 {
@@ -18,7 +19,7 @@ public class BattleWonState implements CombatState
 	@Override
 	public void run(GameCharacter me)
 	{
-		System.out.println(actor.getName() + " has defeated all opponents!");
+		MainWindow.updateTextArea(actor.getName() + " has defeated all opponents!\n");
 		actor.setState(new EndCombatState(actor) );
 		
 	}

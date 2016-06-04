@@ -2,9 +2,10 @@ package gamePack.gameEntityPack.gameCombatState;
 
 import java.util.ArrayList;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.CombatShenanigans;
 
 public class BattleLostState implements CombatState
 {
@@ -19,7 +20,7 @@ public class BattleLostState implements CombatState
 	@Override
 	public void run(GameCharacter me)
 	{
-		System.out.println(actor.getName() + " has fallen!");
+		MainWindow.updateTextArea(actor.getName() + " has fallen!\n");
 		actor.setState(new EndCombatState(actor) );
 		
 	}

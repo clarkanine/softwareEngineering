@@ -2,7 +2,9 @@ package gamePack.gameEntityPack.gameArtifactPack;
 
 import java.util.Random;
 
+import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
+import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class DefensePotion implements GameArtifact
 {
@@ -16,7 +18,7 @@ public class DefensePotion implements GameArtifact
 	}//end StrengthPotion
 	
 	@Override
-	public int use(ConcreteCharacter c)
+	public void use(ConcreteCharacter c)
 	{
 		if(this.numUses > 0)
 		{
@@ -24,13 +26,13 @@ public class DefensePotion implements GameArtifact
 			int high = 10;
 			int low = 1;
 			
-			return r.nextInt(high - low) + low;
+			//return r.nextInt(high - low) + low;
 		}//end if
 		
 		else
 		{
-			System.out.println("Potion is empty!");
-			return 0;
+			MainWindow.updateTextArea("Potion is empty!\n");
+			//return 0;
 		}//end else
 	}//end use
 
@@ -97,17 +99,17 @@ public class DefensePotion implements GameArtifact
 		
 	}
 
-	@Override
-	public void use(ConcreteCharacter character)
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void restore()
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int compareTo(GameEntity o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

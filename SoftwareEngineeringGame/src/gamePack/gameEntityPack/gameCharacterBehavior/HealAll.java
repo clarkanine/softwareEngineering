@@ -2,9 +2,9 @@ package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import java.util.ArrayList;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameStatePack.CombatShenanigans;
 
 public class HealAll implements Special
 {

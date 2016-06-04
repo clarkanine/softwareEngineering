@@ -27,7 +27,8 @@ import javax.swing.text.DefaultCaret;
 import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import gamePack.gameStatePack.DefaultMapState;
+import gamePack.gameStatePack.ConcreteGameMapState;
+import gamePack.gameStatePack.GameStateContext;
 import sun.awt.image.ToolkitImage;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
@@ -45,14 +46,14 @@ public class MainWindow {
 	private static JScrollPane scrollPane;
 	private static JScrollPane scrollPane_1;
 	private static JLayeredPane layeredPane;
-	static Thread knight0_Thread, snake0Thread, portal0_Thread, portal1_Thread, portal2_Thread;
+	static Thread knight0_Thread, snake0Thread, troll0_Thread, dragon0Thread, portal0_Thread, portal1_Thread, portal2_Thread;
 	private static ArrayList<Thread> entityThreads = new ArrayList<Thread>();
 
 	
-	static EntityCanvas knight0_Canvas;
-	static EntityCanvas snake0_Canvas;
-	//	private EntityCanvas dragon0_Canvas;
-	//	private EntityCanvas goblin0_Canvas;
+	static EntityCanvas knight0_Canvas, knight1_Canvas, knight2_Canvas;
+	static EntityCanvas snake0_Canvas, snake1_Canvas, snake2_Canvas;
+	static EntityCanvas dragon0_Canvas, dragon1_Canvas, dragon2_Canvas; // 3 dragons for crazy mode
+	static EntityCanvas troll0_Canvas, troll1_Canvas, troll2_Canvas;
 
 
 	static ArrayList<EntityCanvas> entityCanvasList = new ArrayList<>(
@@ -72,6 +73,8 @@ public class MainWindow {
 	
 	private static Boolean mapIsNew = true;
 
+	public static GameStateContext gameStateContext;
+
 
 
 
@@ -90,9 +93,9 @@ public class MainWindow {
 		
 		//		snake0_Canvas = new EntityCanvas(snake0_ID);
 		//		dragon0_Canvas = new EntityCanvas(dragon0_ID);
-		//		goblin0_Canvas = new EntityCanvas(goblin0_ID);
+		//		troll0_Canvas = new EntityCanvas(goblin0_ID);
 
-		mapCanvas = new MapCanvas(/*knight0_Canvas, snake0_Canvas, dragon0_Canvas, goblin0_Canvas*/);
+		mapCanvas = new MapCanvas(/*knight0_Canvas, snake0_Canvas, dragon0_Canvas, troll0_Canvas*/);
 
 		// for(int id: entityID) {
 		// entityThreads.add(makeKnight(id));
@@ -117,23 +120,15 @@ public class MainWindow {
 		knight0_Canvas.setEntityCurX(knight0_Canvas.entityInitX);
 		knight0_Canvas.setEntityCurY(knight0_Canvas.entityInitY);
 
-		entityThreads.add(portal0_Thread = this.makeGameMapPortal(knight0_Canvas, 200, 200, MapCanvas.townMap, null));
+		entityThreads.add(portal0_Thread = this.makeGameMap2TownMapPortal(knight0_Canvas, 200, 200, MapCanvas.townMap));
 		portal0_Thread.start();
 
-		entityThreads.add(portal1_Thread = this.makeGameMapPortal(knight0_Canvas, 800, 200, MapCanvas.snowMap, null));
+		entityThreads.add(portal1_Thread = this.makeGameMap2SnowMapPortal(knight0_Canvas, 800, 200, MapCanvas.snowMap));
 		portal1_Thread.start();
 
-		entityThreads.add(portal2_Thread = this.makeGameMapPortal(knight0_Canvas, 800, 700, MapCanvas.volcanoMap, null));
+		entityThreads.add(portal2_Thread = this.makeGameMap2VolcanoMapPortal(knight0_Canvas, 800, 700, MapCanvas.volcanoMap));
 		portal2_Thread.start();
 
-		/*entityThreads.add(makeSnake(snake0_ID));
-				entityThreads.get(snake0_ID).start();
-
-				entityThreads.add(makeDragon(dragon0_ID));
-				entityThreads.get(dragon0_ID).start();
-
-				entityThreads.add(makeGoblin(goblin0_ID));
-				entityThreads.get(goblin0_ID).start();*/
 
 		initialize();
 
@@ -267,9 +262,9 @@ public class MainWindow {
 
 
 
-	Thread makeGameMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState, EntityCanvas[] newEntities) {
+	Thread makeGameMap2TownMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState/*, EntityCanvas[] newEntities*/) {
 		return new Thread(new Runnable() {
-			public void run() {
+			public synchronized void run() {
 				while (true) {
 					try {
 						if (Math.abs(actorEntity.entityCurX - x) < 2*actorEntity.entityCollisionRadius
@@ -277,20 +272,22 @@ public class MainWindow {
 								&& MapCanvas.mapState == MapCanvas.gameMap) {
 							MapCanvas.mapState = newMapState;
 
-//							for(EntityCanvas entity: newEntities)
-//							if (entity == null) {
-//								entity = new EntityCanvas(getNewEntityID());
-//								mapCanvas.entities.add(entity);
-//								entity.initEntity();
-//								for (Image entityImage : entity.entityImgs)
-//									mapCanvas.mt.addImage(entityImage, mapCanvas.mtCount++);
-//								Thread entityThread = EntityCanvas.makeSnake(snake0_Canvas);
-//								entityThreads.add(entityThread);
-//								//entityThreads.get(snake0_ID).start();
-//								entityThread.start();
-//							}
-//							snake0_Canvas.setEntityCurX((int) (Math.random()*mapCanvas.getWidth()));
-//							snake0_Canvas.setEntityCurY((int) (Math.random()*mapCanvas.getHeight()));
+							/*
+							for(EntityCanvas entity: newEntities)
+							if (entity == null) {
+								entity = new EntityCanvas(getNewEntityID());
+								mapCanvas.entities.add(entity);
+								entity.initEntity();
+								for (Image entityImage : entity.entityImgs)
+									mapCanvas.mt.addImage(entityImage, mapCanvas.mtCount++);
+								Thread entityThread = EntityCanvas.makeSnake(snake0_Canvas);
+								entityThreads.add(entityThread);
+								//entityThreads.get(snake0_ID).start();
+								entityThread.start();
+							}
+							snake0_Canvas.setEntityCurX((int) (Math.random()*mapCanvas.getWidth()));
+							snake0_Canvas.setEntityCurY((int) (Math.random()*mapCanvas.getHeight()));
+							*/
 
 							if (snake0_Canvas == null) {
 								snake0_Canvas = new EntityCanvas(getNewEntityID());
@@ -314,7 +311,7 @@ public class MainWindow {
 							pauseAction.putValue("NAME", "PLAY");
 							pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
 							btnPause.setText("PLAY");
-							DefaultMapState.setMapIsVisible(false);
+							ConcreteGameMapState.setMapIsVisible(false);
 							break;
 						}
 						mapCanvas.repaint();
@@ -326,6 +323,97 @@ public class MainWindow {
 			}
 		});
 	}
+	
+	
+	Thread makeGameMap2SnowMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState) {
+		return new Thread(new Runnable() {
+			public void run() {
+				while (true) {
+					try {
+						if (Math.abs(actorEntity.entityCurX - x) < 2*actorEntity.entityCollisionRadius
+								&& Math.abs(actorEntity.entityCurY - y) < 2*actorEntity.entityCollisionRadius
+								&& MapCanvas.mapState == MapCanvas.gameMap) {
+							MapCanvas.mapState = newMapState;
+
+							if (troll0_Canvas == null) {
+								troll0_Canvas = new EntityCanvas(getNewEntityID());
+								mapCanvas.entities.add(troll0_Canvas);
+								troll0_Canvas.initEntity();
+								for (Image entityImage : troll0_Canvas.entityImgs)
+									mapCanvas.mt.addImage(entityImage, mapCanvas.mtCount++);
+								troll0_Thread = EntityCanvas.makeTroll(troll0_Canvas);
+								entityThreads.add(troll0_Thread);
+								troll0_Thread.start();
+							}
+							troll0_Canvas.setEntityCurX((int) (Math.random()*mapCanvas.getWidth()));
+							troll0_Canvas.setEntityCurY((int) (Math.random()*mapCanvas.getHeight()));
+							
+							
+							knight0_Canvas.setEntityCurX(mapCanvas.getWidth()/2);
+							knight0_Canvas.setEntityCurY(mapCanvas.getHeight()/2);
+
+							setGamePaused(true);
+							pauseAction.putValue("NAME", "PLAY");
+							pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
+							btnPause.setText("PLAY");
+							ConcreteGameMapState.setMapIsVisible(false);
+							break;
+						}
+						mapCanvas.repaint();
+						Thread.sleep(100);
+					} catch (java.lang.InterruptedException e) {
+					}
+				}
+
+			}
+		});
+	}
+	
+	Thread makeGameMap2VolcanoMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState) {
+		return new Thread(new Runnable() {
+			public void run() {
+				while (true) {
+					try {
+						if (Math.abs(actorEntity.entityCurX - x) < 2*actorEntity.entityCollisionRadius
+								&& Math.abs(actorEntity.entityCurY - y) < 2*actorEntity.entityCollisionRadius
+								&& MapCanvas.mapState == MapCanvas.gameMap) {
+							MapCanvas.mapState = newMapState;
+
+							if (dragon0_Canvas == null) {
+								dragon0_Canvas = new EntityCanvas(getNewEntityID());
+								mapCanvas.entities.add(dragon0_Canvas);
+								dragon0_Canvas.initEntity();
+								for (Image entityImage : dragon0_Canvas.entityImgs)
+									mapCanvas.mt.addImage(entityImage, mapCanvas.mtCount++);
+								dragon0Thread = EntityCanvas.makeDragon(dragon0_Canvas);
+								entityThreads.add(dragon0Thread);
+								dragon0Thread.start();
+							}
+							dragon0_Canvas.setEntityCurX((int) (Math.random()*mapCanvas.getWidth()));
+							dragon0_Canvas.setEntityCurY((int) (Math.random()*mapCanvas.getHeight()));
+							
+							
+							knight0_Canvas.setEntityCurX(mapCanvas.getWidth()/2);
+							knight0_Canvas.setEntityCurY(mapCanvas.getHeight()/2);
+
+							setGamePaused(true);
+							pauseAction.putValue("NAME", "PLAY");
+							pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
+							btnPause.setText("PLAY");
+							ConcreteGameMapState.setMapIsVisible(false);
+							break;
+						}
+						mapCanvas.repaint();
+						Thread.sleep(100);
+					} catch (java.lang.InterruptedException e) {
+					}
+				}
+
+			}
+		});
+	}
+	
+	
 
 	public static void updateTextArea(final String text) {
 		if (window == null)
@@ -393,7 +481,7 @@ public class MainWindow {
 		public synchronized void actionPerformed(ActionEvent e) {
 			txtTextfield.requestFocus();
 			txtrTextarea_1.setCaretPosition(txtrTextarea_1.getDocument().getLength());
-			if (!DefaultMapState.mapIsVisible())
+			if (!ConcreteGameMapState.mapIsVisible())
 				return;
 			if (getMapIsNew()) {
 				setMapIsNew(false);

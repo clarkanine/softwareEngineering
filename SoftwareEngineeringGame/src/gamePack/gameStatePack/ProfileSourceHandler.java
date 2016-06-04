@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.ConcretePlayer;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.KnightPlayer;
@@ -128,12 +129,12 @@ class ProfileSourceHandler {
 		GamePlayer player = new KnightPlayer();
 		player.setName(profileName);
 		player.setProfileInfo("Knight: "+ characterNameString +" using "+ weaponNameString+"\ndifficulty: "+difficultyInt+"\nxp: "+experienceInt);
-		player.setExp(experienceInt);
+		//player.setExp(experienceInt);
 		player.setHealth(100);
-		player.setAccel(100);
-		player.setMaxSpeed(100);
+		//player.setAccel(100);
+		player.setSpeed(100);
 		player.setStrength(100);
-		player.setWeight(100);
+		//player.setWeight(100);
 		MainWindow.updateTextArea("Loaded: "+player.getName()+"  "+player.getClass().getSimpleName()+"\n");
 		return player;
 	}
