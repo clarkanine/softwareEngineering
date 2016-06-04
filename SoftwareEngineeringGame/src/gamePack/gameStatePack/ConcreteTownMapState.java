@@ -9,36 +9,35 @@ import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 
 public class ConcreteTownMapState implements GameMapState {
-	public static GameStateContext gameStateContext;
+	private static GameStateContext gameStateContext;
 	
 
 	public static GamePlayer player;
-	private static Boolean mapIsVisible = new Boolean(false);
 
 	@Override
 	public synchronized void run(GameStateContext gameStateContext) {
-		ConcreteTownMapState.gameStateContext = gameStateContext;
+		ConcreteGameMapState.gameStateContext = gameStateContext;
 		MainWindow.gameStateContext = gameStateContext;
 		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
 		
 		
 		
-		ConcreteTownMapState.setMapIsVisible(true);
+		MainWindow.setMapIsVisible(true);
 		
 		
 	
-		while(mapIsVisible())
+		while(MainWindow.mapIsVisible())
 			try {
 				wait(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		
-		try {
+		/*try {
 			System.in.close();//if text was entered during map state this will clear the input stream 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		/*Scanner sc = new Scanner(System.in);
 		if(sc.hasNextLine())
 			sc.nextLine();
@@ -47,21 +46,10 @@ public class ConcreteTownMapState implements GameMapState {
 		GameTextInputState newState = new StartMenu();
 		newState.setScanner(new Scanner(System.in));
 		newState.setPlayer(player);
-		gameStateContext.setState(newState);
-		gameStateContext.run();
+		ConcreteGameMapState.gameStateContext.setState(newState);
+		ConcreteGameMapState.gameStateContext.run();
 	}
 
-	public static boolean mapIsVisible() {
-		synchronized(ConcreteTownMapState.mapIsVisible) {
-			return ConcreteTownMapState.mapIsVisible;
-		}
-	}
-
-	public static void setMapIsVisible(boolean mapIsVisible) {
-		synchronized(ConcreteTownMapState.mapIsVisible) {
-			ConcreteTownMapState.mapIsVisible = mapIsVisible;
-		}
-	}
 
 	@Override
 	public void nextTurn() {

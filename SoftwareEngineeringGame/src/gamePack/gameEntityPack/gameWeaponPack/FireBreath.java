@@ -39,5 +39,5 @@ public class FireBreath implements GameWeapon
 	{
 		return name;
 	}
-
+	public String toString() {return this.getName();}
 }

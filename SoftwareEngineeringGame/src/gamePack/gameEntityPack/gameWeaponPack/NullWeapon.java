@@ -30,5 +30,5 @@ public class NullWeapon implements GameWeapon
 	{
 		return "bare hands";
 	}
-
+	public String toString() {return this.getName();}
 }

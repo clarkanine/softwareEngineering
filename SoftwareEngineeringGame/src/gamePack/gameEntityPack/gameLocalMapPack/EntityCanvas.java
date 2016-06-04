@@ -51,10 +51,15 @@ public class EntityCanvas {
 					e.printStackTrace();
 				}
 		entityState = s;
+		//int tx0 = (int) getEntityAffine().getTranslateX(), ty0 = (int) getEntityAffine().getTranslateY();
 		AffineTransform newAffine = new AffineTransform();
 		int tx = this.getEntityCurX() - entityImgs[entityState].getWidth(null) / 2;
 		int ty = this.getEntityCurY() - entityImgs[entityState].getHeight(null) / 2;
 		newAffine.translate(tx, ty);
+//		if((tx-tx0)>0)
+//			newAffine.scale(1, -1);
+//		else
+//			newAffine.scale(-1, -1);
 		double radians = 2.0 * Math.PI * (1.0 - (double) entityAngle / 360);
 		newAffine.rotate(radians);
 		setEntityAffine(newAffine);
@@ -443,8 +448,10 @@ public class EntityCanvas {
 							combatShenanigans.getTheEnemies().add(srcEntity.gameCharacter);
 							MainWindow.gameStateContext.setState(combatShenanigans);
 							MainWindow.gameStateContext.run();
+							
+							
 
-							ConcreteGameMapState.setMapIsVisible(false);
+							MainWindow.setMapIsVisible(false);
 						}
 
 						dstEntity.setIsEntityMoving(false);

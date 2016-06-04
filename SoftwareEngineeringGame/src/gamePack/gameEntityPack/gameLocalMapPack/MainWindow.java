@@ -28,6 +28,8 @@ import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameStatePack.ConcreteGameMapState;
+import gamePack.gameStatePack.ConcreteTownMapState;
+import gamePack.gameStatePack.GameState;
 import gamePack.gameStatePack.GameStateContext;
 import sun.awt.image.ToolkitImage;
 import javax.swing.JButton;
@@ -68,6 +70,8 @@ public class MainWindow {
 	private static Boolean isGamePaused = true;
 	static JButton btnPause;
 	Action pauseAction = new PauseButtonSwingAction();
+
+	public static Boolean mapIsVisible = new Boolean(false);
 
 	private static Integer entityIDCount = 0;
 	
@@ -271,7 +275,10 @@ public class MainWindow {
 								&& Math.abs(actorEntity.entityCurY - y) < 2*actorEntity.entityCollisionRadius
 								&& MapCanvas.mapState == MapCanvas.gameMap) {
 							MapCanvas.mapState = newMapState;
-
+							
+						
+							
+							
 							/*
 							for(EntityCanvas entity: newEntities)
 							if (entity == null) {
@@ -311,11 +318,12 @@ public class MainWindow {
 							pauseAction.putValue("NAME", "PLAY");
 							pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
 							btnPause.setText("PLAY");
-							ConcreteGameMapState.setMapIsVisible(false);
+							MainWindow.setMapIsVisible(false);
+							
 							break;
 						}
 						mapCanvas.repaint();
-						Thread.sleep(100);
+						wait(100);
 					} catch (java.lang.InterruptedException e) {
 					}
 				}
@@ -356,7 +364,7 @@ public class MainWindow {
 							pauseAction.putValue("NAME", "PLAY");
 							pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
 							btnPause.setText("PLAY");
-							ConcreteGameMapState.setMapIsVisible(false);
+							MainWindow.setMapIsVisible(false);
 							break;
 						}
 						mapCanvas.repaint();
@@ -400,7 +408,7 @@ public class MainWindow {
 							pauseAction.putValue("NAME", "PLAY");
 							pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
 							btnPause.setText("PLAY");
-							ConcreteGameMapState.setMapIsVisible(false);
+							MainWindow.setMapIsVisible(false);
 							break;
 						}
 						mapCanvas.repaint();
@@ -481,7 +489,7 @@ public class MainWindow {
 		public synchronized void actionPerformed(ActionEvent e) {
 			txtTextfield.requestFocus();
 			txtrTextarea_1.setCaretPosition(txtrTextarea_1.getDocument().getLength());
-			if (!ConcreteGameMapState.mapIsVisible())
+			if (!MainWindow.mapIsVisible())
 				return;
 			if (getMapIsNew()) {
 				setMapIsNew(false);
@@ -565,6 +573,19 @@ public class MainWindow {
 	static Integer getNewEntityID() {
 		synchronized (MainWindow.entityIDCount) {
 			return ++entityIDCount;
+		}
+	}
+	
+	
+	public static boolean mapIsVisible() {
+		synchronized(MainWindow.mapIsVisible) {
+			return MainWindow.mapIsVisible;
+		}
+	}
+
+	public static void setMapIsVisible(boolean mapIsVisible) {
+		synchronized(MainWindow.mapIsVisible) {
+			MainWindow.mapIsVisible = mapIsVisible;
 		}
 	}
 

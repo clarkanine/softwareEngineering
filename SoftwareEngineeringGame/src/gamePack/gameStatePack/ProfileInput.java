@@ -8,14 +8,20 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.ConcretePlayer;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameEntityPack.gameWeaponPack.BattleAxe;
+import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
+import gamePack.gameEntityPack.gameWeaponPack.GreatHammer;
+import gamePack.gameEntityPack.gameWeaponPack.WeaponOfTheGods;
 
 public class ProfileInput implements GameTextInputState {
-	private GamePlayer player = null;
-	
+	private GamePlayer player = new ConcretePlayer();
+
 	private Scanner scanner;
 	private PrintStream printStream;
 	private PrintStream gameErrorLog;
@@ -103,25 +109,28 @@ public class ProfileInput implements GameTextInputState {
 	public void createProfile() {
 		boolean profileFound = false;
 		MainWindow.updateTextArea("enter new profileName\n");
-		//getPrintStream().print("-->");
 		String profileName = readLine();
 		MainWindow.updateTextArea("enter new characterName\n");
-		//getPrintStream().print("-->");
 		String characterName = readLine();
-		ArrayList<String> defaultWeaponsList = new ArrayList<>();
-		defaultWeaponsList.add("defaultWeaponName0");
-		defaultWeaponsList.add("defaultWeaponName1");
-		defaultWeaponsList.add("defaultWeaponName2");
-		MainWindow.updateTextArea("select a weapon: "+defaultWeaponsList+"\n");
-		//getPrintStream().print("-->");
-		String weaponName = readLine();
-		while(! defaultWeaponsList.contains(weaponName)) {
-			MainWindow.updateTextArea("select a weapon:\n");
-			//getPrintStream().print("-->");
-			weaponName = readLine();
+		ArrayList<GameWeapon> defaultWeaponsList = new ArrayList<>();
+		defaultWeaponsList.add(new BattleAxe());
+		defaultWeaponsList.add(new GreatHammer());
+		defaultWeaponsList.add(new WeaponOfTheGods());
+
+		
+		boolean found = false;
+		GameWeapon weapon; 
+		while(!found) {
+			MainWindow.updateTextArea("select a weapon: "+defaultWeaponsList+"\n");
+			String weaponNameChoiceStr = readLine();
+			for(GameWeapon cur: defaultWeaponsList)
+				if(cur.getName().equals(weaponNameChoiceStr)) {
+					player.addWeapon(cur);
+					found = true;
+				}
 		}
+
 		MainWindow.updateTextArea("enter difficulty\n");
-		//getPrintStream().print("-->");
 		int difficulty = readInt();
 		int experience = 0;
 		try {
@@ -138,7 +147,7 @@ public class ProfileInput implements GameTextInputState {
 		}
 		while(profileFound){
 			MainWindow.updateTextArea("profile source exists\n"
-									+ "enter new profileName\n");
+					+ "enter new profileName\n");
 			//getPrintStream().print("-->");
 			profileName = getScanner().nextLine();
 			try {
@@ -157,11 +166,19 @@ public class ProfileInput implements GameTextInputState {
 			this.profileOutputStream = new PrintStream("GameData/ProfileSource_"+profileName);
 
 			//this.profileOutputStream.println("***begin ProfileSource_"+profileName+"***");
-			MainWindow.updateTextArea("profileName: "+profileName+"\n");
-			MainWindow.updateTextArea("characterName: "+characterName+"\n");
-			MainWindow.updateTextArea("weaponName: "+weaponName+"\n");
-			MainWindow.updateTextArea("difficulty: "+difficulty+"\n");
-			MainWindow.updateTextArea("experience: "+experience+"\n");
+			MainWindow.updateTextArea("profileName: "+profileName+"\n"
+			+"characterName: "+characterName+"\n"
+			+"weaponName: "+player.getWeapons().get(0)+"\n"
+			+"difficulty: "+difficulty+"\n"
+			+"experience: "+experience+"\n"
+			);
+			
+			this.profileOutputStream.print("profileName: "+profileName+"\n"
+					+"characterName: "+characterName+"\n"
+					+"weaponName: "+player.getWeapons().get(0)+"\n"
+					+"difficulty: "+difficulty+"\n"
+					+"experience: "+experience+"\n"
+					);
 			//this.profileOutputStream.println("***end ProfileSource_"+profileName+"***");
 			this.profileOutputStream.close();
 		} catch (FileNotFoundException e) {
@@ -208,11 +225,11 @@ public class ProfileInput implements GameTextInputState {
 					profileInputStream.close();
 			}
 		} 
-		
-		this.setPlayer(ProfileSourceHandler.profileSourceParser(profileName));
-		
 
-/*
+		this.setPlayer(ProfileSourceHandler.profileSourceParser(profileName));
+
+
+		/*
 		try {
 			this.profileInputStream = new Scanner(new FileInputStream("GameData/ProfileSource_"+profileName));
 			String profileSourceString = "";
@@ -224,14 +241,14 @@ public class ProfileInput implements GameTextInputState {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}		
-*/
+		 */
 
 
 	}
 
 	@Override
 	public void openMenu() {
-		
+
 		//System.out.println();
 		int option = 999;	
 		do{
@@ -253,7 +270,7 @@ public class ProfileInput implements GameTextInputState {
 				newState.setScanner(new Scanner(System.in));
 				gameStateContext.setState(newState);
 				break;
-			/*case 3:
+				/*case 3:
 				gameErrorLog.println(readLine());
 				break;*/
 			case 0: 
@@ -349,7 +366,7 @@ public class ProfileInput implements GameTextInputState {
 		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName());
 		this.openMenu();
 		gameStateContext.run();
-		
+
 	}
 
 	private PrintStream getPrintStream() {

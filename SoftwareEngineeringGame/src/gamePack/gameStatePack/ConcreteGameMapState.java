@@ -13,8 +13,6 @@ public class ConcreteGameMapState implements GameMapState {
 	
 
 	public static GamePlayer player;
-	private static Boolean mapIsVisible = new Boolean(false);
-
 	@Override
 	public synchronized void run(GameStateContext gameStateContext) {
 		ConcreteGameMapState.gameStateContext = gameStateContext;
@@ -23,45 +21,38 @@ public class ConcreteGameMapState implements GameMapState {
 		
 		
 		
-		ConcreteGameMapState.setMapIsVisible(true);
+		MainWindow.setMapIsVisible(true);
 		
 		
 	
-		while(mapIsVisible())
+/*		while(MainWindow.mapIsVisible())
 			try {
 				wait(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 		
-		try {
+/*		try {
 			System.in.close();//if text was entered during map state this will clear the input stream 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		/*Scanner sc = new Scanner(System.in);
+		}*/
+		/*
+		Scanner sc = new Scanner(System.in);
 		if(sc.hasNextLine())
 			sc.nextLine();
-		sc.close();*/
-		
+		sc.close();
+		*/
 		GameTextInputState newState = new StartMenu();
 		newState.setScanner(new Scanner(System.in));
 		newState.setPlayer(player);
 		gameStateContext.setState(newState);
+		
+		
 		gameStateContext.run();
 	}
 
-	public static boolean mapIsVisible() {
-		synchronized(ConcreteGameMapState.mapIsVisible) {
-			return ConcreteGameMapState.mapIsVisible;
-		}
-	}
 
-	public static void setMapIsVisible(boolean mapIsVisible) {
-		synchronized(ConcreteGameMapState.mapIsVisible) {
-			ConcreteGameMapState.mapIsVisible = mapIsVisible;
-		}
-	}
 
 	@Override
 	public void nextTurn() {

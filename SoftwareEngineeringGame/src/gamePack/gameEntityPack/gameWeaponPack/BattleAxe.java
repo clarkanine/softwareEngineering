@@ -43,6 +43,6 @@ public class BattleAxe implements GameWeapon
 		return name;
 	}
 	
-
+public String toString() {return this.getName();}
 
 }

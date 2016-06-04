@@ -30,5 +30,5 @@ public class WeaponOfTheGods implements GameWeapon
 	{
 		return "Weapon of the Gods";
 	}
-
+	public String toString() {return this.getName();}
 }

@@ -41,5 +41,5 @@ public class GreatHammer implements GameWeapon
 		// TODO Auto-generated method stub
 		return name;
 	}
-
+	public String toString() {return this.getName();}
 }

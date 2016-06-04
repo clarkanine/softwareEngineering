@@ -39,5 +39,5 @@ public class BigStick implements GameWeapon
 	{
 		return name;
 	}
-
+	public String toString() {return this.getName();}
 }
