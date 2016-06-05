@@ -4,7 +4,7 @@ import java.util.Random;
 
 import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
 
 public class Potion implements GameArtifact

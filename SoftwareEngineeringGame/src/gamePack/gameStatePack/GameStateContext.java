@@ -3,9 +3,11 @@ package gamePack.gameStatePack;
 import java.util.Scanner;
 
 public class GameStateContext {
-    private GameState myState;
-    public GameStateContext() {
-        this.setState(new StartGame());
+    private static GameState gameState;
+    private static GameStateContext gameStateContext;
+    private GameStateContext() {
+        gameState = new StartGame();
+        GameStateContext.gameStateContext = this;
     }
 
     /**
@@ -13,15 +15,27 @@ public class GameStateContext {
      * Normally only called by classes implementing the State interface.
      * @param newState the new state of this context
      */
-    public void setState(final GameState newState) {
-        myState = newState;
+    public static void setState(final GameState newState) {
+    	if(GameStateContext.getGameStateContext()==null)
+    		GameStateContext.gameStateContext = new GameStateContext();
+        GameStateContext.gameState = newState;
     }
 
     public GameState getState() {
-        return myState;
+    	if(GameStateContext.gameState==null) {
+    		GameStateContext.gameStateContext = new GameStateContext();
+    	}
+        return GameStateContext.gameState;
     }
     
     public void run() {
-        myState.run(this);
+        gameState.run(this);
     }
+
+	public static GameStateContext getGameStateContext() {
+		if(GameStateContext.gameStateContext==null) {
+    		GameStateContext.gameStateContext = new GameStateContext();
+    	}
+        return GameStateContext.gameStateContext;
+	}
 }

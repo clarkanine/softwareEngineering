@@ -4,15 +4,15 @@ import gamePack.gameEntityPack.gameArtifactPack.Potion;
 import gamePack.gameEntityPack.gameCharacterBehavior.Heal;
 import gamePack.gameEntityPack.gameCharacterBehavior.NullAttack;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameCombatState.AllTargetCombat;
-import gamePack.gameEntityPack.gameCombatState.ChangeWeapon;
-import gamePack.gameEntityPack.gameCombatState.SingleTargetCombat;
-import gamePack.gameEntityPack.gameCombatState.UseItemState;
 import gamePack.gameEntityPack.gameWeaponPack.BattleAxe;
 import gamePack.gameEntityPack.gameWeaponPack.BigStick;
 import gamePack.gameEntityPack.gameWeaponPack.GreatHammer;
 import gamePack.gameEntityPack.gameWeaponPack.NullWeapon;
 import gamePack.gameEntityPack.gameWeaponPack.WeaponOfTheGods;
+import gamePack.gameStatePack.gameCombatState.AllTargetCombat;
+import gamePack.gameStatePack.gameCombatState.ChangeWeapon;
+import gamePack.gameStatePack.gameCombatState.SingleTargetCombat;
+import gamePack.gameStatePack.gameCombatState.UseItemState;
 
 public class KnightPlayer extends ConcretePlayer
 {
@@ -24,7 +24,7 @@ public class KnightPlayer extends ConcretePlayer
 	
 	public void setDefault()
 	{
-		this.setName("defaultKnightName");
+		this.setName("KnightPlayer");
 		this.setAttack(new NullAttack());
 		this.setMaxHealth(300);
 		this.restore();
@@ -45,4 +45,6 @@ public class KnightPlayer extends ConcretePlayer
 		
 		this.addItem(new Potion(5, "Potion") );
 	}
+	
+	public String toString() {return this.getName();}
 }

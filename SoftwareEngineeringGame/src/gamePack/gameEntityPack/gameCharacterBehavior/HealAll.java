@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameStatePack.CombatShenanigans;
+import gamePack.gameStatePack.gameCombatState.CombatShenanigans;
 
 public class HealAll implements Special
 {

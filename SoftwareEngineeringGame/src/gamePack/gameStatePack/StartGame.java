@@ -2,18 +2,20 @@ package gamePack.gameStatePack;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
+import gamePack.gameStatePack.gameTextStatePack.ProfileInputState;
 
-public class StartGame implements GameInitialState {
+public class StartGame implements InitialStateInterface {
 
-	private GameStateContext gameStateContext;
+	GameStateContext gameStateContext;
 	@Override
 	public void run(GameStateContext gameStateContext) {
-		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
-		MainWindow.gameStateContext = this.gameStateContext;
-		GameState gameState = new ProfileInput();
-		gameStateContext.setState(gameState);
-		gameStateContext.run();
+		this.gameStateContext = gameStateContext;
+		MainWindow.updateTextArea(this.gameStateContext.getState().getClass().getSimpleName()+"\n");
+		this.gameStateContext = gameStateContext;
+		GameState gameState = new ProfileInputState();
+		this.gameStateContext.setState(gameState);
+		this.gameStateContext.run();
 	}
 	
 

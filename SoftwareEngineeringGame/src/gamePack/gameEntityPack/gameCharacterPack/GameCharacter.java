@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameCharacterBehavior.Attack;
-import gamePack.gameEntityPack.gameCombatState.CombatState;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
+import gamePack.gameStatePack.gameCombatState.CombatState;
 
 public interface GameCharacter extends GameEntity
 {

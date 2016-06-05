@@ -8,11 +8,11 @@ import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameArtifactPack.NullArtifact;
 import gamePack.gameEntityPack.gameCharacterBehavior.Attack;
-import gamePack.gameEntityPack.gameCombatState.CombatState;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
 import gamePack.gameEntityPack.gameWeaponPack.NullWeapon;
-import gamePack.gameStatePack.ConcreteGameTextInputState;
+import gamePack.gameStatePack.gameCombatState.CombatState;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
+import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
 public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEntity
 {
@@ -325,7 +325,7 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 			MainWindow.updateTextArea(i++ + ". " + item.getName()+ "\n");
 		
 		
-		choice = ConcreteGameTextInputState.readInt();
+		choice = TextInputState.readInt();
 		
 		/*Scanner in = new Scanner(System.in);
 		choice = in.nextInt();

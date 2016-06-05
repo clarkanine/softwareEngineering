@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameCombatState.CombatState;
-import gamePack.gameEntityPack.gameCombatState.SingleTargetCombat;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
+import gamePack.gameStatePack.gameCombatState.CombatState;
+import gamePack.gameStatePack.gameCombatState.SingleTargetCombat;
 
 public class ConcreteGameEnemy extends ConcreteCharacter
 {

@@ -2,7 +2,7 @@ package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.Defend;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
 public class ShieldDefend implements Defend
 {

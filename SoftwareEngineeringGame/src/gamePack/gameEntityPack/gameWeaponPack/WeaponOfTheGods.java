@@ -28,7 +28,7 @@ public class WeaponOfTheGods implements GameWeapon
 	
 	public String getName()
 	{
-		return "Weapon of the Gods";
+		return "WeaponOfTheGods";
 	}
 	public String toString() {return this.getName();}
 }

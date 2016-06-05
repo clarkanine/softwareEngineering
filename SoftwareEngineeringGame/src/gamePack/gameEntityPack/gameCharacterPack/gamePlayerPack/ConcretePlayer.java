@@ -8,10 +8,10 @@ import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameArtifactPack.NullArtifact;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameCombatState.CombatState;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
-import gamePack.gameStatePack.ConcreteGameTextInputState;
+import gamePack.gameStatePack.gameCombatState.CombatState;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
+import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
 public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 {
@@ -24,7 +24,7 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 		for(GameWeapon w : this.getWeapons())
 			MainWindow.updateTextArea(i++ + ". " + w.getName()+ "\n");
 		
-		choice = ConcreteGameTextInputState.readInt();
+		choice = TextInputState.readInt();
 		
 		/*Scanner in = new Scanner(System.in);
 		choice = in.nextInt();
@@ -45,7 +45,7 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 			MainWindow.updateTextArea(i++ + ". " + combatState.getName() + "\n");
 		}
 		
-		choice = ConcreteGameTextInputState.readInt();
+		choice = TextInputState.readInt();
 		
 		/*Scanner in = new Scanner(System.in);
 		choice = in.nextInt();
@@ -63,7 +63,7 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 		for(GameArtifact item : this.getItems())
 			MainWindow.updateTextArea(i++ + ". " + item.getName()+ "\n");
 		
-		choice = ConcreteGameTextInputState.readInt();
+		choice = TextInputState.readInt();
 		
 		/*Scanner in = new Scanner(System.in);
 		choice = in.nextInt();

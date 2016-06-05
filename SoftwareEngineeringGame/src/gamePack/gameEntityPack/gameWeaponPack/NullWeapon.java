@@ -28,7 +28,7 @@ public class NullWeapon implements GameWeapon
 	
 	public String getName()
 	{
-		return "bare hands";
+		return "barehands";
 	}
 	public String toString() {return this.getName();}
 }

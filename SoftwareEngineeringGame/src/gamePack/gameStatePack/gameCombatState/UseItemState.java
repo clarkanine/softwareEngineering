@@ -1,32 +1,36 @@
-package gamePack.gameEntityPack.gameCharacterBehavior;
+package gamePack.gameStatePack.gameCombatState;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameStatePack.gameCombatState.CombatShenanigans;
-import gamePack.gameStatePack.gameCombatState.InitialCombatState;
 import gamePack.gameStatePack.gameMapStatePack.MainWindow;
-import gamePack.gameStatePack.gameTextStatePack.GameTextInputState;
 import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
-public class Heal implements Special
+public class UseItemState implements CombatState
 {
-	private GameCharacter actor;
+
+	private GameCharacter player;
 	private ArrayList<GameCharacter> enemies;
-	private CombatShenanigans theCombat;
-	private int healPoints = 100;
 	
-	public Heal(GameCharacter actor, ArrayList<GameCharacter> enemies2)
+	public UseItemState(){}
+	
+	public UseItemState(GameCharacter player2, ArrayList<GameCharacter> enemies2)
 	{
-		this.actor = actor;
+		this.player = player2;
 		this.enemies = enemies2;
 	}
-	
-	public void useSpecial(ConcreteCharacter me, ConcreteCharacter you)
+	@Override
+	public void run(GameCharacter me)
 	{
-		me.setHealth(me.getHealth() + healPoints);
+		
+		for(GameCharacter c : me.getTargets() )
+		{
+			MainWindow.updateTextArea("using item on " + c.getName() + "\n");
+			c.useItem(me.getCurrentItem());
+			
+		}
 		
 	}
 
@@ -34,51 +38,47 @@ public class Heal implements Special
 	public String getName()
 	{
 		// TODO Auto-generated method stub
-		return "heal power";
-	}
-
-	@Override
-	public void run(GameCharacter me)
-	{
-		for(GameCharacter c : me.getTargets() )
-			c.setHealth(c.getHealth() + healPoints);;
-
-		theCombat.printStatus();
-		
+		return "Use item";
 	}
 
 	@Override
 	public void setCombat(CombatShenanigans theCombat)
 	{
-		this.theCombat = theCombat;
+		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void setTargets(GameCharacter me, ArrayList<GameCharacter> friends, ArrayList<GameCharacter> foes)
 	{
 		int i = 1;
 		int choice;
 		
+		me.setCurrentItem( me.chooseItem() );
+		
+		MainWindow.updateTextArea("Item chosen was " + me.getCurrentItem() + "\n");
 		ArrayList<GameCharacter> everyone = new ArrayList<>();
 		ArrayList<GameCharacter> target = new ArrayList<>();
 		
 		everyone.addAll(friends);
 		everyone.addAll(foes);
 		
+		MainWindow.updateTextArea("Who are you using the item on?"+ "\n");
+		
 		for(GameCharacter c : everyone)
 		{
-			MainWindow.updateTextArea(i + ". " + c.getName()+"\n" );
+			MainWindow.updateTextArea(i++ + ". " + c.getName() + ": " + c.getHealth() + "/" + c.getMaxHealth() + "\n");
 		}
 		
 		choice = TextInputState.readInt();
 		
-//		Scanner in = new Scanner(System.in);
-//		choice = in.nextInt();
-//		in.close();
+		/*Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		in.close();*/
 		
 		//choice = ConcreteCharacter.user.nextInt();
 		target.add( everyone.get(choice - 1));
+		
+		me.setTargets(target);
 	}
 
 }

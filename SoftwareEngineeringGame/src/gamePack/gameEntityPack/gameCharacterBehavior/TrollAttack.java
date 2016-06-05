@@ -1,7 +1,7 @@
 package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
 public class TrollAttack implements Attack
 {
