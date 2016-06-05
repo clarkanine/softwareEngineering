@@ -1,5 +1,6 @@
 package gamePack.gameEntityPack.gameArtifactPack;
 
+import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 
 public class NullArtifact implements GameArtifact
@@ -81,5 +82,11 @@ public void restore()
 {
 	// TODO Auto-generated method stub
 	
+}
+
+@Override
+public int compareTo(GameEntity o) {
+	// TODO Auto-generated method stub
+	return 0;
 }
 }

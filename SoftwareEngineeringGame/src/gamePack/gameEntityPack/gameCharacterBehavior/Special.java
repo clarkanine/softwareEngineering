@@ -1,7 +1,7 @@
 package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
-import gamePack.gameEntityPack.gameCombatState.CombatState;
+import gamePack.gameStatePack.gameCombatState.CombatState;
 
 public interface Special extends CombatState
 {

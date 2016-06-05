@@ -13,7 +13,7 @@ public class BattleAxe implements GameWeapon
 	private int absorbtion = 5;
 	private Attack axeAttack;
 	private Defend axeDefend;
-	private String name = "Battle Axe";
+	private String name = "BattleAxe";
 	
 	public BattleAxe()
 	{
@@ -43,6 +43,6 @@ public class BattleAxe implements GameWeapon
 		return name;
 	}
 	
-
+public String toString() {return this.getName();}
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameCombatState.SingleTargetCombat;
+import gamePack.gameStatePack.gameCombatState.SingleTargetCombat;
 
 public class AISingleTarget extends SingleTargetCombat
 {

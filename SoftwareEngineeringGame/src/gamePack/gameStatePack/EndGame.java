@@ -2,9 +2,9 @@ package gamePack.gameStatePack;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
-import gamePack.gameEntityPack.gameLocalMapPack.MainWindow;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
-public class EndGame implements GameFinalState {
+public class EndGame implements FinalStateInterface {
 
 	@Override
 	public void nextTurn() {

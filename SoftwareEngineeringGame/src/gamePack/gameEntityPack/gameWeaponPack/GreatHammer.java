@@ -12,7 +12,7 @@ public class GreatHammer implements GameWeapon
 	private int absorbtion = 5;
 	private Attack axeAttack;
 	private Defend axeDefend;
-	private String name = "Great Hammer";
+	private String name = "GreatHammer";
 	
 	@Override
 	public void weaponAttack(ConcreteCharacter me, ConcreteCharacter you)
@@ -41,5 +41,5 @@ public class GreatHammer implements GameWeapon
 		// TODO Auto-generated method stub
 		return name;
 	}
-
+	public String toString() {return this.getName();}
 }

@@ -12,7 +12,7 @@ public class BigStick implements GameWeapon
 	private int absorbtion = 5;
 	private Attack axeAttack;
 	private Defend axeDefend;
-	private String name = "Big Stick";
+	private String name = "BigStick";
 	
 	@Override
 	public void weaponAttack(ConcreteCharacter me, ConcreteCharacter you)
@@ -39,5 +39,5 @@ public class BigStick implements GameWeapon
 	{
 		return name;
 	}
-
+	public String toString() {return this.getName();}
 }

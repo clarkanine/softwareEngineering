@@ -2,6 +2,7 @@ package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.Defend;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
 public class AxeDefend implements Defend
 {
@@ -10,7 +11,7 @@ public class AxeDefend implements Defend
 	public void defend(ConcreteCharacter me)
 	{
 		if(!me.isDead())
-			System.out.println(me.getName() + " is defending with axe");
+			MainWindow.updateTextArea(me.getName() + " is defending with axe\n");
 		
 		me.setDefending(true);
 		

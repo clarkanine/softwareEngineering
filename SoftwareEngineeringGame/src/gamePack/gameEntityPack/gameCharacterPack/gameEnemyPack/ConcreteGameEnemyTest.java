@@ -40,13 +40,13 @@ public class ConcreteGameEnemyTest
 		//scanner.close();
 	}
 	
-	@Test
-	public void testDifficulty() 
-	{
-		System.out.println("Enter difficulty value 10");
-		enemy.setDifficulty( scanner.nextInt() );
-		
-		assertEquals( 10, enemy.getDifficulty() );
-	}
+//	@Test
+//	public void testDifficulty() 
+//	{
+//		System.out.println("Enter difficulty value 10");
+//		enemy.setDifficulty( scanner.nextInt() );
+//		
+//		assertEquals( 10, enemy.getDifficulty() );
+//	}
 
 }

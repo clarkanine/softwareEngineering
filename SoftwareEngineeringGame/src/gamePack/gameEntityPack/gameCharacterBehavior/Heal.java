@@ -1,11 +1,15 @@
 package gamePack.gameEntityPack.gameCharacterBehavior;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
-import gamePack.gameEntityPack.gameCharacterPack.CombatShenanigans;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameCombatState.InitialCombatState;
+import gamePack.gameStatePack.gameCombatState.CombatShenanigans;
+import gamePack.gameStatePack.gameCombatState.InitialCombatState;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
+import gamePack.gameStatePack.gameTextStatePack.GameTextInputState;
+import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
 public class Heal implements Special
 {
@@ -64,10 +68,16 @@ public class Heal implements Special
 		
 		for(GameCharacter c : everyone)
 		{
-			System.out.println(i + ". " + c.getName() );
+			MainWindow.updateTextArea(i + ". " + c.getName()+"\n" );
 		}
 		
-		choice = ConcreteCharacter.user.nextInt();
+		choice = TextInputState.readInt();
+		
+//		Scanner in = new Scanner(System.in);
+//		choice = in.nextInt();
+//		in.close();
+		
+		//choice = ConcreteCharacter.user.nextInt();
 		target.add( everyone.get(choice - 1));
 	}
 

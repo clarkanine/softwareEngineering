@@ -1,6 +1,6 @@
 package gamePack.gameEntityPack;
 
-public interface GameEntity {
+public interface GameEntity extends Comparable<GameEntity>{
 
 	public String toString();
 	

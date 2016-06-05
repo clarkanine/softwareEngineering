@@ -2,7 +2,9 @@ package gamePack.gameEntityPack.gameArtifactPack;
 
 import java.util.Random;
 
+import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
+import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
 public class SpeedPotion implements GameArtifact
 {
@@ -15,7 +17,8 @@ public class SpeedPotion implements GameArtifact
 		this.name = name;
 	}//end StrengthPotion
 	
-	public int use(ConcreteCharacter c)
+	@Override
+	public void use(ConcreteCharacter c)
 	{
 		if(this.numUses > 0)
 		{
@@ -23,13 +26,13 @@ public class SpeedPotion implements GameArtifact
 			int high = 10;
 			int low = 1;
 			
-			return r.nextInt(high - low) + low;
+			//return r.nextInt(high - low) + low;
 		}//end if
 		
 		else
 		{
-			System.out.println("Potion is empty!");
-			return 0;
+			MainWindow.updateTextArea("Potion is empty!\n");
+			//return 0;
 		}//end else
 	}//end use
 
@@ -92,6 +95,19 @@ public class SpeedPotion implements GameArtifact
 	@Override
 	public void load()
 	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int compareTo(GameEntity o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void restore() {
 		// TODO Auto-generated method stub
 		
 	}

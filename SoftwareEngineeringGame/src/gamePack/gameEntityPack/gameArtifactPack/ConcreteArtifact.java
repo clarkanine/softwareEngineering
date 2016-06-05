@@ -1,5 +1,6 @@
 package gamePack.gameEntityPack.gameArtifactPack;
 
+import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 
 public class ConcreteArtifact implements GameArtifact
@@ -76,6 +77,11 @@ public class ConcreteArtifact implements GameArtifact
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public int compareTo(GameEntity o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
