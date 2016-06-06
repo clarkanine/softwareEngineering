@@ -1,7 +1,5 @@
 package gamePack.gameStatePack.gameTextStatePack;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -10,7 +8,6 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,16 +27,16 @@ public class StartMenuTest {
 		scanner = new Scanner(in);
 		printStream = new PrintStream(out);
 		try {
-			errorLog = new PrintStream(new File("TestLogs/TestProfileInputErrorLog_"+System.currentTimeMillis()));
+			errorLog = new PrintStream(new File("TestLogs/TestProfileInputErrorLog_" + System.currentTimeMillis()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		//gameStateContext = new GameStateContext();
+		// gameStateContext = new GameStateContext();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		//scanner.close();
+		// scanner.close();
 	}
 
 	@Test

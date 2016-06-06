@@ -1,7 +1,5 @@
 package gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,10 +9,8 @@ import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
-public class ConcreteGameEnemyTest 
-{
+public class ConcreteGameEnemyTest {
 
 	static ConcreteGameEnemy enemy;
 	static Scanner scanner;
@@ -28,7 +24,7 @@ public class ConcreteGameEnemyTest
 		scanner = new Scanner(in);
 		printStream = new PrintStream(out);
 		try {
-			errorLog = new PrintStream(new File("TestLogs/TestProfileInputErrorLog_"+System.currentTimeMillis()));
+			errorLog = new PrintStream(new File("TestLogs/TestProfileInputErrorLog_" + System.currentTimeMillis()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -37,16 +33,16 @@ public class ConcreteGameEnemyTest
 
 	@After
 	public void tearDown() throws Exception {
-		//scanner.close();
+		// scanner.close();
 	}
-	
-//	@Test
-//	public void testDifficulty() 
-//	{
-//		System.out.println("Enter difficulty value 10");
-//		enemy.setDifficulty( scanner.nextInt() );
-//		
-//		assertEquals( 10, enemy.getDifficulty() );
-//	}
+
+	// @Test
+	// public void testDifficulty()
+	// {
+	// System.out.println("Enter difficulty value 10");
+	// enemy.setDifficulty( scanner.nextInt() );
+	//
+	// assertEquals( 10, enemy.getDifficulty() );
+	// }
 
 }

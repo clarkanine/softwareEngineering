@@ -61,7 +61,7 @@ public class EndGame implements FinalStateInterface {
 	public synchronized void run(GameStateContext gameStateContext) {
 		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName() + "\n"
 				+ "\nThank you for playing the game\nPROGRAM TERMINATING\n");
-		if (player!=null) {
+		if (player != null) {
 			GamePlayer oldPlayer = SQLiteJDBC.selectProfile(player.getProfileInfo());
 			int oldXP = oldPlayer.getExperience(), newXP = player.getExperience();
 			if (newXP > oldXP)
@@ -77,7 +77,7 @@ public class EndGame implements FinalStateInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		System.exit(0);
 	}
 
@@ -98,17 +98,16 @@ public class EndGame implements FinalStateInterface {
 		this.player = gamePlayer;
 
 	}
-	
-	@Override 
-	public GamePlayer getPlayer()
-	{
+
+	@Override
+	public GamePlayer getPlayer() {
 		return this.player;
 	}
 
 	@Override
 	public void addEnemy(GameCharacter enemy) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

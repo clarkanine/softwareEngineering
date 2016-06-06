@@ -1,80 +1,74 @@
 package gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
 import gamePack.gameEntityPack.gameArtifactPack.NullArtifact;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
-import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
 import gamePack.gameStatePack.gameCombatState.CombatState;
 import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
-public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
-{
+public class ConcretePlayer extends ConcreteCharacter implements GamePlayer {
 	private int experience = 0;
 	private String profileInfo;
 
-	public GameWeapon getWeaponChoice()
-	{
+	public GameWeapon getWeaponChoice() {
 		int choice;
 		int i = 1;
-		MainWindow.updateTextArea("Pick your weapon:"+ "\n");
-		
-		for(GameWeapon w : this.getWeapons())
-			MainWindow.updateTextArea(i++ + ". " + w.getName()+ "\n");
-		
+		MainWindow.updateTextArea("Pick your weapon:" + "\n");
+
+		for (GameWeapon w : this.getWeapons())
+			MainWindow.updateTextArea(i++ + ". " + w.getName() + "\n");
+
 		choice = TextInputState.readInt();
-		
-		/*Scanner in = new Scanner(System.in);
-		choice = in.nextInt();
-		in.close();*/
-		
-		//choice = user.nextInt();
-		
+
+		/*
+		 * Scanner in = new Scanner(System.in); choice = in.nextInt();
+		 * in.close();
+		 */
+
+		// choice = user.nextInt();
+
 		return this.getWeapons().get(choice - 1);
 	}
-	
-	public void getCombatChoice()
-	{
+
+	public void getCombatChoice() {
 		int choice, i = 1;
-		MainWindow.updateTextArea(this.getName() + " combat choice:"+ "\n");
-		
-		for(CombatState combatState : this.getCombatStates())
-		{
+		MainWindow.updateTextArea(this.getName() + " combat choice:" + "\n");
+
+		for (CombatState combatState : this.getCombatStates()) {
 			MainWindow.updateTextArea(i++ + ". " + combatState.getName() + "\n");
 		}
-		
+
 		choice = TextInputState.readInt();
-		
-		/*Scanner in = new Scanner(System.in);
-		choice = in.nextInt();
-		in.close();*/
-		
-		//choice = user.nextInt();
-		this.setState( this.getCombatStates().get(choice - 1) );
+
+		/*
+		 * Scanner in = new Scanner(System.in); choice = in.nextInt();
+		 * in.close();
+		 */
+
+		// choice = user.nextInt();
+		this.setState(this.getCombatStates().get(choice - 1));
 	}
-	
-	public GameArtifact chooseItem()
-	{
+
+	public GameArtifact chooseItem() {
 		int i = 1;
 		int choice;
-		
-		for(GameArtifact item : this.getItems())
-			MainWindow.updateTextArea(i++ + ". " + item.getName()+ "\n");
-		
+
+		for (GameArtifact item : this.getItems())
+			MainWindow.updateTextArea(i++ + ". " + item.getName() + "\n");
+
 		choice = TextInputState.readInt();
-		
-		/*Scanner in = new Scanner(System.in);
-		choice = in.nextInt();
-		in.close();*/
-		
-		//choice = user.nextInt();
-		
-		if(choice < 1 || choice > this.getItems().size() + 1)
+
+		/*
+		 * Scanner in = new Scanner(System.in); choice = in.nextInt();
+		 * in.close();
+		 */
+
+		// choice = user.nextInt();
+
+		if (choice < 1 || choice > this.getItems().size() + 1)
 			return new NullArtifact();
 
 		return this.getItems().get(choice - 1);
@@ -95,7 +89,7 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 	@Override
 	public void setProfileInfo(String info) {
 		this.profileInfo = info;
-		
+
 	}
 
 	@Override
@@ -107,22 +101,18 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 	@Override
 	public void setStats(String stats) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setExperience(int experienceInt) {
 		this.experience = experienceInt;
-		
+
 	}
-	
+
 	@Override
 	public int getExperience() {
 		return experience;
 	}
-
-
-
-
 
 }

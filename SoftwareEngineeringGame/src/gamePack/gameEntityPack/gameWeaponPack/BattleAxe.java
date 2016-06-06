@@ -6,43 +6,39 @@ import gamePack.gameEntityPack.gameCharacterBehavior.AxeDefend;
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.Defend;
 
-public class BattleAxe implements GameWeapon
-{
+public class BattleAxe implements GameWeapon {
 	private int power = 10;
-	private int durability = 20;
-	private int absorbtion = 5;
 	private Attack axeAttack;
 	private Defend axeDefend;
 	private String name = "BattleAxe";
-	
-	public BattleAxe()
-	{
+
+	public BattleAxe() {
 		axeAttack = new AxeAttack();
 		axeDefend = new AxeDefend();
 	}
-	
-	public int getPower()
-	{
+
+	public int getPower() {
 		return power;
 	}
+
 	@Override
-	public void weaponAttack(ConcreteCharacter me, ConcreteCharacter you)
-	{
+	public void weaponAttack(ConcreteCharacter me, ConcreteCharacter you) {
 		axeAttack.attack(me, you);
 	}
+
 	@Override
-	public void weaponDefend(ConcreteCharacter me)
-	{
+	public void weaponDefend(ConcreteCharacter me) {
 		axeDefend.defend(me);
 	}
 
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
 	}
-	
-public String toString() {return this.getName();}
+
+	public String toString() {
+		return this.getName();
+	}
 
 }

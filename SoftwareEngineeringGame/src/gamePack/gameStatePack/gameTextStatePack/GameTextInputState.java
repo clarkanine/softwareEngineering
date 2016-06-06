@@ -11,7 +11,7 @@ import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 public interface GameTextInputState extends GameState {
 	static PrintStream printStream = new PrintStream(System.out);
 	static Scanner scanner = new Scanner(System.in);
-	static File errorLogFile = new File("GameData/ProfileInputErrorLog_"+System.currentTimeMillis());
+	static File errorLogFile = new File("GameData/ProfileInputErrorLog_" + System.currentTimeMillis());
 	static PrintStream gameErrorLog = new PrintStream(System.out);
 
 	default String readWord() {
@@ -19,77 +19,74 @@ public interface GameTextInputState extends GameState {
 		String res = GameTextInputState.scanner.next().trim();
 		return res;
 	}
-	
+
 	default String readWord(Scanner scanner) {
 		MainWindow.updateTextArea("GameTextInputState.readWord(Scanner scanner)\n");
 		String res = scanner.next().trim();
 		return res;
 	}
-	
+
 	default String readLine() {
 		MainWindow.updateTextArea("GameTextInputState.readLine()\n");
 		String res = GameTextInputState.scanner.nextLine().trim();
 		return res;
 	}
-	
+
 	default String readLine(Scanner scanner) {
 		MainWindow.updateTextArea("GameTextInputState.readLine(Scanner scanner)\n");
 		String res = scanner.nextLine().trim();
 		return res;
 	}
-	
-	default int readInt()
-	{
-		int num=0;
+
+	default int readInt() {
+		int num = 0;
 		boolean parsedInt = true;
 		String something = GameTextInputState.scanner.nextLine();
 		try {
 			num = Integer.parseInt(something);
-		} catch(NumberFormatException nfe) {
+		} catch (NumberFormatException nfe) {
 			MainWindow.updateTextArea("something didn't parse to an int\n");
 			parsedInt = false;
 		}
-		while(! parsedInt){
+		while (!parsedInt) {
 			something = GameTextInputState.scanner.nextLine();
 			try {
 				num = Integer.parseInt(something);
 
-				parsedInt = true;       /*nfe skips this*/
-			} catch(NumberFormatException nfe) {
+				parsedInt = true; /* nfe skips this */
+			} catch (NumberFormatException nfe) {
 				MainWindow.updateTextArea("something didn't parse to an int\n");
 				parsedInt = false;
 			}
 		}
 		return num;
 	}
-	
-	default int readInt(Scanner scanner)
-	{
-		int num=0;
+
+	default int readInt(Scanner scanner) {
+		int num = 0;
 		boolean parsedInt = true;
 		String something = scanner.nextLine();
 		try {
 			num = Integer.parseInt(something);
-		} catch(NumberFormatException nfe) {
+		} catch (NumberFormatException nfe) {
 			MainWindow.updateTextArea("something didn't parse to an int\n");
 			parsedInt = false;
 		}
-		while(! parsedInt){
+		while (!parsedInt) {
 			something = scanner.nextLine();
 			try {
 				num = Integer.parseInt(something);
 
-				parsedInt = true;       /*nfe skips this*/
-			} catch(NumberFormatException nfe) {
+				parsedInt = true; /* nfe skips this */
+			} catch (NumberFormatException nfe) {
 				MainWindow.updateTextArea("something didn't parse to an int\n");
 				parsedInt = false;
 			}
 		}
 		return num;
 	}
-	
-	default char readChar()
-	{
+
+	default char readChar() {
 		char res = '?';
 		try {
 			res = GameTextInputState.scanner.nextLine().trim().charAt(0);
@@ -98,9 +95,8 @@ public interface GameTextInputState extends GameState {
 		}
 		return res;
 	}
-	
-	default char readChar(Scanner scanner)
-	{
+
+	default char readChar(Scanner scanner) {
 		char res = '?';
 		try {
 			res = scanner.nextLine().trim().charAt(0);
@@ -109,14 +105,14 @@ public interface GameTextInputState extends GameState {
 		}
 		return res;
 	}
-	
+
 	void openMenu();
+
 	void closeMenu();
-	//etc
+	// etc
 
 	public void setScanner(Scanner scanner);
 
 	public void setPlayer(GamePlayer player);
-
 
 }

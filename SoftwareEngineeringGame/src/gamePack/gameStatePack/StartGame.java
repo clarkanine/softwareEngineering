@@ -8,22 +8,21 @@ import gamePack.gameStatePack.gameTextStatePack.ProfileInputState;
 public class StartGame implements InitialStateInterface {
 
 	GameStateContext gameStateContext;
+
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		MainWindow.updateTextArea(this.gameStateContext.getState().getClass().getSimpleName()+"\n");
+		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName() + "\n");
 		this.gameStateContext = gameStateContext;
 		GameState gameState = new ProfileInputState();
-		this.gameStateContext.setState(gameState);
+		GameStateContext.setState(gameState);
 		this.gameStateContext.run();
 	}
-	
 
 	@Override
 	public void gameRun() {
-		
-	}
 
+	}
 
 	@Override
 	public void nextTurn() {
@@ -73,35 +72,27 @@ public class StartGame implements InitialStateInterface {
 
 	}
 
-
-
 	@Override
 	public void gameBuild() {
 		// TODO Auto-generated method stub
 
 	}
 
-
 	@Override
 	public void setPlayer(GamePlayer gamePlayer) {
-		
-		
-	}
 
+	}
 
 	@Override
 	public void addEnemy(GameCharacter enemy) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	@Override
 	public GamePlayer getPlayer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

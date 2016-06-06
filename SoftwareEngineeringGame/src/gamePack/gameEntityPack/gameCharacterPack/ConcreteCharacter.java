@@ -2,11 +2,8 @@ package gamePack.gameEntityPack.gameCharacterPack;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-
 import gamePack.gameEntityPack.GameEntity;
 import gamePack.gameEntityPack.gameArtifactPack.GameArtifact;
-import gamePack.gameEntityPack.gameArtifactPack.NullArtifact;
 import gamePack.gameEntityPack.gameCharacterBehavior.Attack;
 import gamePack.gameEntityPack.gameWeaponPack.GameWeapon;
 import gamePack.gameEntityPack.gameWeaponPack.NullWeapon;
@@ -14,9 +11,8 @@ import gamePack.gameStatePack.gameCombatState.CombatState;
 import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
-public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEntity
-{
-	//public static final Scanner user = new Scanner(System.in);
+public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEntity {
+	// public static final Scanner user = new Scanner(System.in);
 	public static final Random random = new Random();
 	private CombatState currentState;
 	private GameArtifact currentItem;
@@ -33,413 +29,342 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 	private boolean isDead;
 	private boolean isDefending = false;
 	private ArrayList<GameWeapon> myWeapons;
-	private ArrayList<State> myStates;
 	private ArrayList<GameArtifact> items;
 	private ArrayList<GameCharacter> targets;
-	//private EntityCanvas blah;
-	
-	public ConcreteCharacter()
-	{
+	// private EntityCanvas blah;
+
+	public ConcreteCharacter() {
 		items = new ArrayList<>();
 		myCombatStates = new ArrayList<>();
 		myWeapons = new ArrayList<>();
 		targets = new ArrayList<>();
-		this.setAttackWeapon(new NullWeapon() );
+		this.setAttackWeapon(new NullWeapon());
 	}
-	
+
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return this.name;
 	}
 
 	@Override
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
-		
+
 	}
-	
-	public void setHealth(int health)
-	{
-		if(health <= 0)
-		{
+
+	public void setHealth(int health) {
+		if (health <= 0) {
 			this.health = 0;
 			this.setDead(true);
 			return;
 		}
 
 		this.health = health;
-		if(this.health > this.getMaxHealth())
+		if (this.health > this.getMaxHealth())
 			this.health = this.getMaxHealth();
 	}
-	
+
 	@Override
-	public void takeDamage(int damage)
-	{
+	public void takeDamage(int damage) {
 		int damageTaken = damage;
-		
-		if( this.isDefending() )
-		{
+
+		if (this.isDefending()) {
 			damageTaken -= defense;
-			if(damageTaken < 0)
+			if (damageTaken < 0)
 				damageTaken = 0;
 		}
-		
+
 		this.setHealth(this.getHealth() - damageTaken);
-		
-		if(this.isDead())
+
+		if (this.isDead())
 			MainWindow.updateTextArea(this.getName() + " has fallen\n");
 	}
 
 	@Override
-	public int getHealth()
-	{
+	public int getHealth() {
 		return this.health;
 	}
 
 	@Override
-	public void attack(GameCharacter you)
-	{
-		//MainWindow.updateTextArea("attacking " + you.getName() );
-		if(this.isDead())
+	public void attack(GameCharacter you) {
+		// MainWindow.updateTextArea("attacking " + you.getName() );
+		if (this.isDead())
 			return;
 		myAttack.attack(this, you);
 	}
 
 	@Override
-	public void defend()
-	{
+	public void defend() {
 		this.isDefending = true;
 		MainWindow.updateTextArea(this.getName() + " is defending!\n");
 		myDefendWeapon.weaponDefend(this);
 	}
-	
-	public int getStrength()
-	{
+
+	public int getStrength() {
 		int totalStrength = this.strength;
-		
-		if(this.getAttackWeapon() != null)
+
+		if (this.getAttackWeapon() != null)
 			totalStrength += this.getAttackWeapon().getPower();
 		return totalStrength;
 	}
-	
-	public void setStrength(int strength)
-	{
+
+	public void setStrength(int strength) {
 		this.strength = strength;
 	}
-	
-	public int getDefense()
-	{
+
+	public int getDefense() {
 		return this.defense;
 	}
-	
-	public void setDefense(int defense)
-	{
+
+	public void setDefense(int defense) {
 		this.defense = defense;
 	}
 
 	@Override
-	public void setDead(boolean dead)
-	{
+	public void setDead(boolean dead) {
 		this.isDead = dead;
-		
+
 	}
 
 	@Override
-	public boolean isDead()
-	{
+	public boolean isDead() {
 		return this.isDead;
 	}
 
 	@Override
-	public void checkDead()
-	{
-		if(this.getHealth() <= 0)
+	public void checkDead() {
+		if (this.getHealth() <= 0)
 			this.setDead(true);
 	}
-	
-	
-	public void setAttackWeapon(GameWeapon w)
-	{
+
+	public void setAttackWeapon(GameWeapon w) {
 		this.myAttackWeapon = w;
 	}
-	
-	public void setDefendWeapon(GameWeapon w)
-	{
+
+	public void setDefendWeapon(GameWeapon w) {
 		this.myDefendWeapon = w;
 	}
-	
-	public GameWeapon getAttackWeapon()
-	{
+
+	public GameWeapon getAttackWeapon() {
 		return myAttackWeapon;
 	}
-	
-	public void setDefending(boolean defending)
-	{
+
+	public void setDefending(boolean defending) {
 		this.isDefending = defending;
 	}
-	
-	public boolean isDefending()
-	{
+
+	public boolean isDefending() {
 		return this.isDefending;
 	}
-	
-	public void setAttack(Attack attack)
-	{
+
+	public void setAttack(Attack attack) {
 		this.myAttack = attack;
 	}
-	
-	public void setDefend(Defend defend)
-	{
+
+	public void setDefend(Defend defend) {
 		this.myDefend = defend;
 	}
-	
-	public Attack getAttack()
-	{
+
+	public Attack getAttack() {
 		return myAttack;
 	}
-	
-	public Defend getDefend()
-	{
+
+	public Defend getDefend() {
 		return myDefend;
 	}
-	
-	
-	public void setSpeed(int speed)
-	{
+
+	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	
-	public int getSpeed()
-	{
+
+	public int getSpeed() {
 		return this.speed;
 	}
-	
-	public int compareSpeed(GameCharacter other)
-	{
-		if(this.getSpeed() < other.getSpeed() )
+
+	public int compareSpeed(GameCharacter other) {
+		if (this.getSpeed() < other.getSpeed())
 			return -1;
-		
+
 		return 1;
 	}
 
-	
-	public int getMaxHealth()
-	{
+	public int getMaxHealth() {
 		return this.maxHealth;
 	}
 
-	
-	public void setMaxHealth(int maxHealth)
-	{
+	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
-		
+
 	}
-	
-	public ArrayList<GameWeapon> getWeapons()
-	{
+
+	public ArrayList<GameWeapon> getWeapons() {
 		return myWeapons;
 	}
-	
-	public void addWeapon(GameWeapon w)
-	{
+
+	public void addWeapon(GameWeapon w) {
 		myWeapons.add(w);
 	}
-	
-	public void changeWeapon()
-	{
+
+	public void changeWeapon() {
 		GameWeapon newWeapon = getWeaponChoice();
 		this.setAttackWeapon(newWeapon);
-		
+
 	}
-	
+
 	public abstract GameWeapon getWeaponChoice();
-	
-	public void addCombatState(CombatState combatState)
-	{
+
+	public void addCombatState(CombatState combatState) {
 		myCombatStates.add(combatState);
 	}
-	
-	
-	public void setCurrentCombatBehavior()
-	{
-		//currentState = getCombatChoice();
+
+	public void setCurrentCombatBehavior() {
+		// currentState = getCombatChoice();
 	}
-	
-	
-	public void setState(CombatState newState)
-	{
+
+	public void setState(CombatState newState) {
 		currentState = newState;
 	}
-	
-	public CombatState getCurrentState()
-	{
+
+	public CombatState getCurrentState() {
 		return currentState;
 	}
-	
-	public ArrayList<CombatState> getCombatStates()
-	{
+
+	public ArrayList<CombatState> getCombatStates() {
 		return this.myCombatStates;
 	}
-	
-	public void runState()
-	{
-		if(this.isDead() )
+
+	public void runState() {
+		if (this.isDead())
 			return;
 		currentState.run(this);
 	}
-	
-	public void addItem(GameArtifact item)
-	{
-		if(items == null)
+
+	public void addItem(GameArtifact item) {
+		if (items == null)
 			items = new ArrayList<>();
-		else
-		{
+		else {
 			items.add(item);
 		}
 	}
-	
-	public void useItem(GameArtifact item)
-	{
-		if(item != null)
-		{
-			MainWindow.updateTextArea("using " + item.getName() +"\n");
+
+	public void useItem(GameArtifact item) {
+		if (item != null) {
+			MainWindow.updateTextArea("using " + item.getName() + "\n");
 			item.use(this);
 		}
 	}
-	
-	public GameArtifact chooseItem()
-	{
+
+	public GameArtifact chooseItem() {
 		int i = 1;
 		int choice;
-		
-		
-		if(items.size() < 1)
-		{
-			MainWindow.updateTextArea("No items"+ "\n");
+
+		if (items.size() < 1) {
+			MainWindow.updateTextArea("No items" + "\n");
 			return null;
 		}
-		
-		for(GameArtifact item : items)
-			MainWindow.updateTextArea(i++ + ". " + item.getName()+ "\n");
-		
-		
+
+		for (GameArtifact item : items)
+			MainWindow.updateTextArea(i++ + ". " + item.getName() + "\n");
+
 		choice = TextInputState.readInt();
-		
-		/*Scanner in = new Scanner(System.in);
-		choice = in.nextInt();
-		in.close();*/
-		
-		//choice = user.nextInt();
-		
-		if(choice < 1 || choice > items.size() + 1)
+
+		/*
+		 * Scanner in = new Scanner(System.in); choice = in.nextInt();
+		 * in.close();
+		 */
+
+		// choice = user.nextInt();
+
+		if (choice < 1 || choice > items.size() + 1)
 			return null;
 
 		return items.get(choice - 1);
 	}
 
 	@Override
-	public String getView()
-	{
+	public String getView() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setView(String view)
-	{
+	public void setView(String view) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void updateView()
-	{
+	public void updateView() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void spawn()
-	{
+	public void spawn() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void kill()
-	{
+	public void kill() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void save()
-	{
+	public void save() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void load()
-	{
+	public void load() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	public void enemyCombat(ConcreteCharacter target)
-	{
+
+	public void enemyCombat(ConcreteCharacter target) {
 		this.attack(target);
-		
+
 	}
-	
-	public void restore()
-	{
+
+	public void restore() {
 		this.setHealth(maxHealth);
-		for(GameArtifact artifact : items)
+		for (GameArtifact artifact : items)
 			artifact.restore();
 	}
-	
-	public ArrayList<GameArtifact> getItems()
-	{
+
+	public ArrayList<GameArtifact> getItems() {
 		return items;
 	}
-	
-	public int compareTo(GameEntity other)
-	{
-		return ((GameCharacter)this).getSpeed() - ((GameCharacter)other).getSpeed();
+
+	public int compareTo(GameEntity other) {
+		return ((GameCharacter) this).getSpeed() - ((GameCharacter) other).getSpeed();
 	}
-	
-	public ArrayList<GameCharacter> getTargets()
-	{
+
+	public ArrayList<GameCharacter> getTargets() {
 		return targets;
 	}
-	
-	public void setTargets(ArrayList<GameCharacter> targets)
-	{
+
+	public void setTargets(ArrayList<GameCharacter> targets) {
 		this.targets = new ArrayList<>();
 		this.targets.addAll(targets);
 	}
-	
-	public void chooseTarget(ArrayList<GameCharacter> friends, ArrayList<GameCharacter> foes)
-	{
+
+	public void chooseTarget(ArrayList<GameCharacter> friends, ArrayList<GameCharacter> foes) {
 		this.currentState.setTargets(this, friends, foes);
 	}
-	
-	public GameArtifact getCurrentItem()
-	{
+
+	public GameArtifact getCurrentItem() {
 		return currentItem;
 	}
-	
-	public void setCurrentItem(GameArtifact item)
-	{
+
+	public void setCurrentItem(GameArtifact item) {
 		currentItem = item;
 	}
-	
+
 	@Override
-	public void clearTargets()
-	{
+	public void clearTargets() {
 		this.getTargets().clear();
 	}
 }

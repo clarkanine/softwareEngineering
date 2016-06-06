@@ -1,19 +1,13 @@
 package gamePack.gameStatePack.gameMapStatePack;
 
-import java.applet.Applet;
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,12 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultCaret;
 
-import gamePack.gameEntityPack.GameEntity;
-import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
-import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameStatePack.GameState;
 import gamePack.gameStatePack.GameStateContext;
-import sun.awt.image.ToolkitImage;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
@@ -46,26 +36,23 @@ public class MainWindow {
 	private static JScrollPane scrollPane;
 	private static JScrollPane scrollPane_1;
 	private static JLayeredPane layeredPane;
-	static Thread
-	knight0_Thread, knight1_Thread, knight2_Thread, 
-	snake0_Thread, snake1_Thread, snake2_Thread, 
-	troll0_Thread, troll1_Thread, troll2_Thread, 
-	dragon0_Thread,  dragon1_Thread, dragon2_Thread, 
-	portal0_Thread, portal1_Thread, portal2_Thread;
+	static Thread knight0_Thread, knight1_Thread, knight2_Thread, snake0_Thread, snake1_Thread, snake2_Thread,
+			troll0_Thread, troll1_Thread, troll2_Thread, dragon0_Thread, dragon1_Thread, dragon2_Thread, portal0_Thread,
+			portal1_Thread, portal2_Thread;
 	static ArrayList<Thread> entityThreads = new ArrayList<Thread>();
 
-	
 	static EntityCanvas knight0_Canvas, knight1_Canvas, knight2_Canvas;
 	static EntityCanvas snake0_Canvas, snake1_Canvas, snake2_Canvas;
-	static EntityCanvas dragon0_Canvas, dragon1_Canvas, dragon2_Canvas; // 3 dragons for crazy mode
+	static EntityCanvas dragon0_Canvas, dragon1_Canvas, dragon2_Canvas; // 3
+																		// dragons
+																		// for
+																		// crazy
+																		// mode
 	static EntityCanvas troll0_Canvas, troll1_Canvas, troll2_Canvas;
 
-
-	static ArrayList<EntityCanvas> entityCanvasList = new ArrayList<>(
-			Arrays.asList(knight0_Canvas, snake0_Canvas));
+	static ArrayList<EntityCanvas> entityCanvasList = new ArrayList<>(Arrays.asList(knight0_Canvas, snake0_Canvas));
 
 	static MapCanvas mapCanvas;
-
 
 	private static Integer xClicked = 0;
 	private static Integer yClicked = 0;
@@ -77,43 +64,33 @@ public class MainWindow {
 	public static Boolean mapIsVisible = new Boolean(false);
 
 	private static Integer entityIDCount = 0;
-	
+
 	private static Boolean mapIsNew = true;
 
-	//static GameStateContext gameStateContext;
-
-
-
+	// static GameStateContext gameStateContext;
 
 	public MainWindow() {
-		
-		
 
-		
-		
-		
-		
+		// knight0_Canvas = new EntityCanvas(MainWindow.getNewEntityID());
 
-		//knight0_Canvas = new EntityCanvas(MainWindow.getNewEntityID());
-		
-		
-		
-		//		snake0_Canvas = new EntityCanvas(snake0_ID);
-		//		dragon0_Canvas = new EntityCanvas(dragon0_ID);
-		//		troll0_Canvas = new EntityCanvas(goblin0_ID);
+		// snake0_Canvas = new EntityCanvas(snake0_ID);
+		// dragon0_Canvas = new EntityCanvas(dragon0_ID);
+		// troll0_Canvas = new EntityCanvas(goblin0_ID);
 
-		mapCanvas = new MapCanvas(/*knight0_Canvas, snake0_Canvas, dragon0_Canvas, troll0_Canvas*/);
+		mapCanvas = new MapCanvas(/*
+									 * knight0_Canvas, snake0_Canvas,
+									 * dragon0_Canvas, troll0_Canvas
+									 */);
 
 		// for(int id: entityID) {
 		// entityThreads.add(makeKnight(id));
 		// entityThreads.get(id).start();
 		// }
 
-//		entityThreads.add(knight0_Thread = EntityCanvas.makeKnight(knight0_Canvas));
-//		knight0_Thread.start();
-		
-		
-		
+		// entityThreads.add(knight0_Thread =
+		// EntityCanvas.makeKnight(knight0_Canvas));
+		// knight0_Thread.start();
+
 		if (knight0_Canvas == null) {
 			knight0_Canvas = new EntityCanvas(getNewEntityID());
 			mapCanvas.entities.add(knight0_Canvas);
@@ -133,16 +110,13 @@ public class MainWindow {
 		entityThreads.add(portal1_Thread = this.makeGameMap2SnowMapPortal(knight0_Canvas, 800, 200, MapCanvas.snowMap));
 		portal1_Thread.start();
 
-		entityThreads.add(portal2_Thread = this.makeGameMap2VolcanoMapPortal(knight0_Canvas, 800, 700, MapCanvas.volcanoMap));
+		entityThreads.add(
+				portal2_Thread = this.makeGameMap2VolcanoMapPortal(knight0_Canvas, 800, 700, MapCanvas.volcanoMap));
 		portal2_Thread.start();
-
 
 		initialize();
 
 		frame.setVisible(true);
-
-
-
 
 	}
 
@@ -194,12 +168,8 @@ public class MainWindow {
 		scrollPane_1.setViewportView(layeredPane);
 		layeredPane.setLayout(null);
 
-
-
-
 		layeredPane.setLayer(mapCanvas, 0);
 		mapCanvas.setBounds(0, 0, 1115, 715);
-
 
 		// mapCanvas.setBounds(0, 0,
 		// MapCanvas.mapImgs[mapCanvas.mapState].getWidth(null),
@@ -267,18 +237,17 @@ public class MainWindow {
 		});
 	}
 
-
-
-	Thread makeGameMap2TownMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState/*, EntityCanvas[] newEntities*/) {
+	Thread makeGameMap2TownMapPortal(EntityCanvas actorEntity, int x, int y,
+			int newMapState/* , EntityCanvas[] newEntities */) {
 		return new Thread(new Runnable() {
 			public synchronized void run() {
 				while (true) {
 					try {
-						if (Math.abs(actorEntity.entityCurX - x) < 2*actorEntity.entityCollisionRadius
-								&& Math.abs(actorEntity.entityCurY - y) < 2*actorEntity.entityCollisionRadius
+						if (Math.abs(actorEntity.entityCurX - x) < 2 * actorEntity.entityCollisionRadius
+								&& Math.abs(actorEntity.entityCurY - y) < 2 * actorEntity.entityCollisionRadius
 								&& MapCanvas.mapState == MapCanvas.gameMap) {
 							GameState newState = new TownMapState();
-							//GameStateContext.getGameStateContext();
+							// GameStateContext.getGameStateContext();
 							GameStateContext.setState(newState);
 							GameStateContext.getGameStateContext().run();
 							break;
@@ -288,19 +257,18 @@ public class MainWindow {
 					} catch (java.lang.InterruptedException e) {
 					}
 				}
-				
+
 			}
 		});
 	}
-	
-	
+
 	Thread makeGameMap2SnowMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState) {
 		return new Thread(new Runnable() {
 			public void run() {
 				while (true) {
 					try {
-						if (Math.abs(actorEntity.entityCurX - x) < 2*actorEntity.entityCollisionRadius
-								&& Math.abs(actorEntity.entityCurY - y) < 2*actorEntity.entityCollisionRadius
+						if (Math.abs(actorEntity.entityCurX - x) < 2 * actorEntity.entityCollisionRadius
+								&& Math.abs(actorEntity.entityCurY - y) < 2 * actorEntity.entityCollisionRadius
 								&& MapCanvas.mapState == MapCanvas.gameMap) {
 							MapCanvas.mapState = newMapState;
 
@@ -318,14 +286,14 @@ public class MainWindow {
 			}
 		});
 	}
-	
+
 	Thread makeGameMap2VolcanoMapPortal(EntityCanvas actorEntity, int x, int y, int newMapState) {
 		return new Thread(new Runnable() {
 			public void run() {
 				while (true) {
 					try {
-						if (Math.abs(actorEntity.entityCurX - x) < 2*actorEntity.entityCollisionRadius
-								&& Math.abs(actorEntity.entityCurY - y) < 2*actorEntity.entityCollisionRadius
+						if (Math.abs(actorEntity.entityCurX - x) < 2 * actorEntity.entityCollisionRadius
+								&& Math.abs(actorEntity.entityCurY - y) < 2 * actorEntity.entityCollisionRadius
 								&& MapCanvas.mapState == MapCanvas.gameMap) {
 							MapCanvas.mapState = newMapState;
 
@@ -343,8 +311,6 @@ public class MainWindow {
 			}
 		});
 	}
-	
-	
 
 	public static void updateTextArea(final String text) {
 		if (window == null)
@@ -442,8 +408,8 @@ public class MainWindow {
 				// mapCanvas.getHeight());
 
 				/*
-				 * setEntityCurX(srcId, snake0_InitX);
-				 * setEntityCurY(srcId, snake0_InitY);
+				 * setEntityCurX(srcId, snake0_InitX); setEntityCurY(srcId,
+				 * snake0_InitY);
 				 */
 
 				knight0_Canvas.setEntityCurX(knight0_Canvas.entityInitX);
@@ -455,7 +421,7 @@ public class MainWindow {
 				for (EntityCanvas c : mapCanvas.entities) {
 					if (c.id != knight0_Canvas.id)
 						c.pursueEntity(c, knight0_Canvas);
-						c.thawEntity();
+					c.thawEntity();
 				}
 				// mapCanvas.entities.get(player0_ID).thawEntity();
 				// mapCanvas.entities.get(snake0_ID).thawEntity();
@@ -479,8 +445,6 @@ public class MainWindow {
 		}
 	}
 
-	
-
 	public static boolean getMapIsNew() {
 		synchronized (MainWindow.mapIsNew) {
 			return mapIsNew;
@@ -498,21 +462,17 @@ public class MainWindow {
 			return ++entityIDCount;
 		}
 	}
-	
-	
+
 	public static boolean mapIsVisible() {
-		synchronized(MainWindow.mapIsVisible) {
+		synchronized (MainWindow.mapIsVisible) {
 			return MainWindow.mapIsVisible;
 		}
 	}
 
 	public static void setMapIsVisible(boolean mapIsVisible) {
-		synchronized(MainWindow.mapIsVisible) {
+		synchronized (MainWindow.mapIsVisible) {
 			MainWindow.mapIsVisible = mapIsVisible;
 		}
-	
+
 	}
 }
-
-
-

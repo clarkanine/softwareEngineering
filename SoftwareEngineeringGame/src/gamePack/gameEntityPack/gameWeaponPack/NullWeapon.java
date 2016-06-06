@@ -2,33 +2,31 @@ package gamePack.gameEntityPack.gameWeaponPack;
 
 import gamePack.gameEntityPack.gameCharacterPack.ConcreteCharacter;
 
-public class NullWeapon implements GameWeapon
-{
+public class NullWeapon implements GameWeapon {
 
 	@Override
-	public void weaponAttack(ConcreteCharacter me, ConcreteCharacter you)
-	{
+	public void weaponAttack(ConcreteCharacter me, ConcreteCharacter you) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void weaponDefend(ConcreteCharacter me)
-	{
+	public void weaponDefend(ConcreteCharacter me) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public int getPower()
-	{
+	public int getPower() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	public String getName()
-	{
+
+	public String getName() {
 		return "barehands";
 	}
-	public String toString() {return this.getName();}
+
+	public String toString() {
+		return this.getName();
+	}
 }

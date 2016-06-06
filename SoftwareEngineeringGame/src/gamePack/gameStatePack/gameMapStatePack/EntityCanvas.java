@@ -1,6 +1,5 @@
 package gamePack.gameStatePack.gameMapStatePack;
 
-import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
@@ -21,51 +20,48 @@ import gamePack.gameStatePack.gameCombatState.CombatShenanigans;
 
 public class EntityCanvas {
 
-
-
-
 	int id;
 
 	Boolean isEntityMoving = false;
-	Integer EntityID = 0, entityInitX = 200, entityInitY = 600, entityCurX = entityInitX, entityCurY = entityInitY, entityMoveSleepMillis = 10, entityStepPixels = 2, entityVisibleRadius = 200, entityCollisionRadius = 20;
+	Integer EntityID = 0, entityInitX = 200, entityInitY = 600, entityCurX = entityInitX, entityCurY = entityInitY,
+			entityMoveSleepMillis = 10, entityStepPixels = 2, entityVisibleRadius = 200, entityCollisionRadius = 20;
 	GameCharacter gameCharacter;
-
 
 	public EntityCanvas(int id) {
 		this.id = id;
 	}
 
-
-
-
-	//***********	BEGIN KNIGHT CODE	****************
+	// *********** BEGIN KNIGHT CODE ****************
 	final int knightStopped = 0, knightMoving = 1, knightAttacking = 2;
 	final String knightStoppedPathStr = "image/knightStopped.gif", knightAttackingPathStr = "image/knightAttacking.gif",
 			knightMovingPathStr = "image/knightMoving.gif";
+
 	synchronized void setKnightState(int s) {
-			while (entityFrozen || this.gameCharacter.isDead())
-				try {
-					entityState = knightStopped;
-					MainWindow.mapCanvas.repaint();
-					this.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		while (entityFrozen || this.gameCharacter.isDead())
+			try {
+				entityState = knightStopped;
+				MainWindow.mapCanvas.repaint();
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		entityState = s;
-		//int tx0 = (int) getEntityAffine().getTranslateX(), ty0 = (int) getEntityAffine().getTranslateY();
+		// int tx0 = (int) getEntityAffine().getTranslateX(), ty0 = (int)
+		// getEntityAffine().getTranslateY();
 		AffineTransform newAffine = new AffineTransform();
 		int tx = this.getEntityCurX() - entityImgs[entityState].getWidth(null) / 2;
 		int ty = this.getEntityCurY() - entityImgs[entityState].getHeight(null) / 2;
 		newAffine.translate(tx, ty);
-//		if((tx-tx0)>0)
-//			newAffine.scale(1, -1);
-//		else
-//			newAffine.scale(-1, -1);
+		// if((tx-tx0)>0)
+		// newAffine.scale(1, -1);
+		// else
+		// newAffine.scale(-1, -1);
 		double radians = 2.0 * Math.PI * (1.0 - (double) entityAngle / 360);
 		newAffine.rotate(radians);
 		setEntityAffine(newAffine);
 		notifyAll();
 	}
+
 	static Thread makeKnight(EntityCanvas entity) {
 		entity.gameCharacter = new KnightPlayer();
 		entity.setIsEntityMoving(false);
@@ -79,7 +75,7 @@ public class EntityCanvas {
 		entity.entityCollisionRadius = 20;
 		return new Thread(new Runnable() {
 			public synchronized void run() {
-				if(entity!=null)
+				if (entity != null)
 					while (true) {
 						try {
 							// mapCanvas.entities.get(id).setKnightState(0);
@@ -99,21 +95,22 @@ public class EntityCanvas {
 			}
 		});
 	}
-	//***********	END KNIGHT CODE		****************
+	// *********** END KNIGHT CODE ****************
 
-	//***********	BEGIN SNAKE CODE	****************
+	// *********** BEGIN SNAKE CODE ****************
 	final int snakeStopped = 3, snakeMoving = 4, snakeAttacking = 5;
 	final String snakeStoppedPathStr = "image/snake0.png", snakeAttackingPathStr = "image/snake1.png",
 			snakeMovingPathStr = "image/snake2.png";
+
 	synchronized void setSnakeState(int s) {
-			while (entityFrozen || this.gameCharacter.isDead())
-				try {
-					entityState = snakeStopped;
-					MainWindow.mapCanvas.repaint();
-					this.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		while (entityFrozen || this.gameCharacter.isDead())
+			try {
+				entityState = snakeStopped;
+				MainWindow.mapCanvas.repaint();
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		entityState = s;
 		AffineTransform newAffine = new AffineTransform();
 		int tx = this.getEntityCurX() - entityImgs[entityState].getWidth(null) / 2;
@@ -124,6 +121,7 @@ public class EntityCanvas {
 		setEntityAffine(newAffine);
 		notifyAll();
 	}
+
 	static Thread makeSnake(EntityCanvas entity) {
 		entity.gameCharacter = new Snake();
 		entity.setIsEntityMoving(false);
@@ -137,7 +135,7 @@ public class EntityCanvas {
 		entity.entityCollisionRadius = 10;
 		return new Thread(new Runnable() {
 			public synchronized void run() {
-				if(entity!=null)
+				if (entity != null)
 					while (!entity.gameCharacter.isDead()) {
 						try {
 							// mapCanvas.entities.get(id).setSnakeState(3);
@@ -157,8 +155,9 @@ public class EntityCanvas {
 			}
 		});
 	}
+
 	static void makeSnakes(ArrayList<EntityCanvas> entityCanvases, ArrayList<Thread> entityThreads) {
-		for(int i=0; i<entityCanvases.size(); i++) {
+		for (int i = 0; i < entityCanvases.size(); i++) {
 			EntityCanvas curCanvas = entityCanvases.get(i);
 			Thread curThread = entityThreads.get(i);
 			if (!MainWindow.mapCanvas.entities.contains(curCanvas)) {
@@ -171,25 +170,26 @@ public class EntityCanvas {
 				MainWindow.entityThreads.add(curThread);
 				curThread.start();
 			}
-			curCanvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
-			curCanvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+			curCanvas.setEntityCurX((int) (Math.random() * MainWindow.mapCanvas.getWidth()));
+			curCanvas.setEntityCurY((int) (Math.random() * MainWindow.mapCanvas.getHeight()));
 		}
 	}
-	//***********	END SNAKE CODE		****************
+	// *********** END SNAKE CODE ****************
 
-	//***********	BEGIN DRAGON CODE	****************
+	// *********** BEGIN DRAGON CODE ****************
 	final int dragonStopped = 6, dragonMoving0 = 7, dragonMoving1 = 8, dragonAttacking = 9;
 	final String dragonStoppedPathStr = "image/dragon0.png", dragonAttackingPathStr = "image/dragon1.png",
 			dragonMovingUpFlapPathStr = "image/dragon2.png", dragonMovingDownFlapPathStr = "image/dragon3.png";
+
 	synchronized void setDragonState(int s) {
-			while (entityFrozen || this.gameCharacter.isDead())
-				try {
-					entityState = dragonStopped;
-					MainWindow.mapCanvas.repaint();
-					this.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		while (entityFrozen || this.gameCharacter.isDead())
+			try {
+				entityState = dragonStopped;
+				MainWindow.mapCanvas.repaint();
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		entityState = s;
 		AffineTransform newAffine = new AffineTransform();
 		int tx = this.getEntityCurX() - entityImgs[entityState].getWidth(null) / 2;
@@ -200,6 +200,7 @@ public class EntityCanvas {
 		setEntityAffine(newAffine);
 		notifyAll();
 	}
+
 	static Thread makeDragon(EntityCanvas entity) {
 		entity.gameCharacter = new Dragon();
 		entity.setIsEntityMoving(false);
@@ -213,7 +214,7 @@ public class EntityCanvas {
 		entity.entityCollisionRadius = 30;
 		return new Thread(new Runnable() {
 			public synchronized void run() {
-				if(entity!=null)
+				if (entity != null)
 					while (!entity.gameCharacter.isDead()) {
 						try {
 							// mapCanvas.entities.get(id).setDragonState(6);
@@ -238,8 +239,9 @@ public class EntityCanvas {
 			}
 		});
 	}
+
 	static void makeDragons(ArrayList<EntityCanvas> entityCanvases, ArrayList<Thread> entityThreads) {
-		for(int i=0; i<entityCanvases.size(); i++) {
+		for (int i = 0; i < entityCanvases.size(); i++) {
 			EntityCanvas curCanvas = entityCanvases.get(i);
 			Thread curThread = entityThreads.get(i);
 			if (!MainWindow.mapCanvas.entities.contains(curCanvas)) {
@@ -252,25 +254,26 @@ public class EntityCanvas {
 				MainWindow.entityThreads.add(curThread);
 				curThread.start();
 			}
-			curCanvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
-			curCanvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+			curCanvas.setEntityCurX((int) (Math.random() * MainWindow.mapCanvas.getWidth()));
+			curCanvas.setEntityCurY((int) (Math.random() * MainWindow.mapCanvas.getHeight()));
 		}
 	}
-	//***********	END DRAGON CODE		****************
+	// *********** END DRAGON CODE ****************
 
-	//***********	BEGIN TROLL CODE	****************
+	// *********** BEGIN TROLL CODE ****************
 	final int trollStopped = 10, trollMoving = 11, trollAttacking = 12;
 	final String trollStoppedPathStr = "image/troll0.png", trollAttackingPathStr = "image/troll1.png",
 			trollMovingPathStr = "image/troll2.png";
+
 	synchronized void setTrollState(int s) {
-			while (entityFrozen || this.gameCharacter.isDead())
-				try {
-					entityState = trollStopped;
-					MainWindow.mapCanvas.repaint();
-					this.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		while (entityFrozen || this.gameCharacter.isDead())
+			try {
+				entityState = trollStopped;
+				MainWindow.mapCanvas.repaint();
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		entityState = s;
 		AffineTransform newAffine = new AffineTransform();
 		int tx = this.getEntityCurX() - entityImgs[entityState].getWidth(null) / 2;
@@ -281,6 +284,7 @@ public class EntityCanvas {
 		setEntityAffine(newAffine);
 		notifyAll();
 	}
+
 	static Thread makeTroll(EntityCanvas entity) {
 		entity.gameCharacter = new TrollEnemy();
 		entity.setIsEntityMoving(false);
@@ -294,7 +298,7 @@ public class EntityCanvas {
 		entity.entityCollisionRadius = 30;
 		return new Thread(new Runnable() {
 			public synchronized void run() {
-				if(entity!=null)
+				if (entity != null)
 					while (!entity.gameCharacter.isDead()) {
 						try {
 							// mapCanvas.entities.get(id).settrollState(10);
@@ -314,8 +318,9 @@ public class EntityCanvas {
 			}
 		});
 	}
+
 	static void makeTrolls(ArrayList<EntityCanvas> entityCanvases, ArrayList<Thread> entityThreads) {
-		for(int i=0; i<entityCanvases.size(); i++) {
+		for (int i = 0; i < entityCanvases.size(); i++) {
 			EntityCanvas curCanvas = entityCanvases.get(i);
 			Thread curThread = entityThreads.get(i);
 			if (!MainWindow.mapCanvas.entities.contains(curCanvas)) {
@@ -328,16 +333,17 @@ public class EntityCanvas {
 				MainWindow.entityThreads.add(curThread);
 				curThread.start();
 			}
-			curCanvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
-			curCanvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+			curCanvas.setEntityCurX((int) (Math.random() * MainWindow.mapCanvas.getWidth()));
+			curCanvas.setEntityCurY((int) (Math.random() * MainWindow.mapCanvas.getHeight()));
 		}
 	}
-	//***********	END TROLL CODE		****************
+	// *********** END TROLL CODE ****************
 
-
-	//	final ArrayList<Integer> entityStates = new ArrayList<>(Arrays.asList(knightStopped, knightMoving, knightAttacking,
-	//			snakeStopped, snakeMoving, snakeAttacking, dragonStopped, dragonMoving0, dragonMoving1, dragonAttacking,
-	//			trollStopped, trollMoving, trollAttacking));
+	// final ArrayList<Integer> entityStates = new
+	// ArrayList<>(Arrays.asList(knightStopped, knightMoving, knightAttacking,
+	// snakeStopped, snakeMoving, snakeAttacking, dragonStopped, dragonMoving0,
+	// dragonMoving1, dragonAttacking,
+	// trollStopped, trollMoving, trollAttacking));
 
 	final ArrayList<String> entityImgPaths = new ArrayList<>(Arrays.asList(knightStoppedPathStr, knightMovingPathStr,
 			knightAttackingPathStr, snakeStoppedPathStr, snakeAttackingPathStr, snakeMovingPathStr,
@@ -374,8 +380,11 @@ public class EntityCanvas {
 	}
 
 	void entityPaint() {
-		/*String state = GameStateContext.getState().getClass().getSimpleName();
-		if(!this.gameCharacter.isDead() && state.contains("MapState"))*/
+		/*
+		 * String state =
+		 * GameStateContext.getState().getClass().getSimpleName();
+		 * if(!this.gameCharacter.isDead() && state.contains("MapState"))
+		 */
 		MapCanvas.offGraphics.drawImage(entityImgs[entityState], getEntityAffine(), null);
 	}
 
@@ -396,9 +405,6 @@ public class EntityCanvas {
 		this.entityAffine = entityAffine;
 	}
 
-
-
-
 	void moveEntity(int x, int y) {
 		EntityCanvas entity = this;
 		final Thread mover = new Thread(new Runnable() {
@@ -410,8 +416,8 @@ public class EntityCanvas {
 				double dx = MainWindow.getXClicked() - x0;
 				double dy = MainWindow.getYClicked() - y0;
 				double ds = Math.sqrt(dx * dx + dy * dy);
-				double m = dy / dx;
-				double b = MainWindow.getYClicked() - m * MainWindow.getXClicked();
+				//double m = dy / dx;
+				//double b = MainWindow.getYClicked() - m * MainWindow.getXClicked();
 				int xr = (int) Math.round(x0 + entity.entityStepPixels * (dx / ds)),
 						yr = (int) Math.round(y0 + entity.entityStepPixels * (dy / ds));
 				while (ds > entity.entityStepPixels && !MainWindow.isGamePaused()) {
@@ -423,8 +429,8 @@ public class EntityCanvas {
 					dx = MainWindow.getXClicked() - x0;
 					dy = MainWindow.getYClicked() - y0;
 					ds = Math.sqrt(dx * dx + dy * dy);
-					m = dy / dx;
-					b = MainWindow.getYClicked() - m * MainWindow.getXClicked();
+					//m = dy / dx;
+					//b = MainWindow.getYClicked() - m * MainWindow.getXClicked();
 					xr = (int) Math.round((x0 + entity.entityStepPixels * (dx / ds)));
 					yr = (int) Math.round((y0 + entity.entityStepPixels * (dy / ds)));
 					try {
@@ -441,8 +447,6 @@ public class EntityCanvas {
 			mover.start();
 	}
 
-
-
 	void pursueEntity(EntityCanvas srcEntity, EntityCanvas dstEntity) {
 		Thread pursuer = new Thread(new Runnable() {
 			public void run() {
@@ -456,8 +460,8 @@ public class EntityCanvas {
 						double dx = dstEntity.getEntityCurX() - x0;
 						double dy = dstEntity.getEntityCurY() - y0;
 						ds = Math.sqrt(dx * dx + dy * dy);
-						double m = dy / dx;
-						double b = dstEntity.getEntityCurY() - m * dstEntity.getEntityCurX();
+						//double m = dy / dx;
+						//double b = dstEntity.getEntityCurY() - m * dstEntity.getEntityCurX();
 						int xr = (int) Math.round(x0 + srcEntity.entityStepPixels * (dx / ds)),
 								yr = (int) Math.round(y0 + srcEntity.entityStepPixels * (dy / ds));
 						while (ds < srcEntity.entityVisibleRadius
@@ -471,8 +475,8 @@ public class EntityCanvas {
 							dx = dstEntity.getEntityCurX() - x0;
 							dy = dstEntity.getEntityCurY() - y0;
 							ds = Math.sqrt(dx * dx + dy * dy);
-							m = dy / dx;
-							b = dstEntity.getEntityCurY() - m * dstEntity.getEntityCurX();
+							//m = dy / dx;
+							//b = dstEntity.getEntityCurY() - m * dstEntity.getEntityCurX();
 							xr = (int) Math.round((x0 + srcEntity.entityStepPixels * (dx / ds)));
 							yr = (int) Math.round((y0 + srcEntity.entityStepPixels * (dy / ds)));
 							try {
@@ -485,7 +489,8 @@ public class EntityCanvas {
 						if (ds <= (srcEntity.entityCollisionRadius + dstEntity.entityCollisionRadius)) {
 							synchronized (srcEntity.isEntityMoving) {
 								if (srcEntity.isEntityMoving == true)
-									MainWindow.txtrTextarea_1.append("entity" + srcEntity.id +", "+srcEntity.gameCharacter.getName()+" engaged you.\n");
+									MainWindow.txtrTextarea_1.append("entity" + srcEntity.id + ", "
+											+ srcEntity.gameCharacter.getName() + " engaged you.\n");
 								srcEntity.setIsEntityMoving(false);
 								srcEntity.freezeEntity();
 							}
@@ -493,24 +498,23 @@ public class EntityCanvas {
 							setEntityCurY(dstEntity.entityInitY);
 							MainWindow.setGamePaused(true);
 
-
-							
-
 							MainWindow.btnPause.getAction().putValue("NAME", "PLAY");
 							MainWindow.btnPause.getAction().putValue("SHORT_DESCRIPTION", "PLAY GAME");
 							MainWindow.btnPause.setText("PLAY");
 
-							MainWindow.updateTextArea(" XP="+((GamePlayer) dstEntity.gameCharacter).getExperience()+" profileName="+((GamePlayer) dstEntity.gameCharacter).getProfileInfo()+"\n");
-							ArrayList<GameCharacter> players= new ArrayList<>(Arrays.asList(dstEntity.gameCharacter)), 
-									enemies= new ArrayList<>(Arrays.asList(srcEntity.gameCharacter));
+							MainWindow.updateTextArea(" XP=" + ((GamePlayer) dstEntity.gameCharacter).getExperience()
+									+ " profileName=" + ((GamePlayer) dstEntity.gameCharacter).getProfileInfo() + "\n");
+							ArrayList<GameCharacter> players = new ArrayList<>(Arrays.asList(dstEntity.gameCharacter)),
+									enemies = new ArrayList<>(Arrays.asList(srcEntity.gameCharacter));
 							CombatShenanigans combatShenanigans = new CombatShenanigans(players, enemies);
-							/*combatShenanigans.addPlayer((GamePlayer) (dstEntity.gameCharacter));
-							combatShenanigans.addEnemy(srcEntity.gameCharacter);*/
+							/*
+							 * combatShenanigans.addPlayer((GamePlayer)
+							 * (dstEntity.gameCharacter));
+							 * combatShenanigans.addEnemy(srcEntity.
+							 * gameCharacter);
+							 */
 							GameStateContext.setState(combatShenanigans);
 							GameStateContext.getGameStateContext().run();
-							
-							
-							
 
 							MainWindow.setMapIsVisible(false);
 						}
@@ -533,7 +537,7 @@ public class EntityCanvas {
 
 	private void setIsEntityMoving(Boolean isEntityMoving) {
 		synchronized (this.isEntityMoving) {
-			this.isEntityMoving =isEntityMoving;
+			this.isEntityMoving = isEntityMoving;
 		}
 	}
 
@@ -565,87 +569,65 @@ public class EntityCanvas {
 		return (int) Math.sqrt(Math.pow(playerCurX - enemyCurX, 2) + Math.pow(playerCurY - enemyCurY, 2));
 	}
 
+	// ************************
 
-
-
-
-
-
-
-
-
-
-
-
-	//************************
-
-
-
-
-
-
-	//	static Boolean isPlayer0_Moving = false;
-	//	static Integer player0_ID = 0, 
-	//			player0_InitX = 200, player0_InitY = 600,
-	//			player0_CurX = player0_InitX, player0_CurY = player0_InitY,
-	//			player0_MoveSleepMillis = 10, player0_StepPixels = 2, 
-	//			player0_VisibleRadius = 200, player0_CollisionRadius = 20;
+	// static Boolean isPlayer0_Moving = false;
+	// static Integer player0_ID = 0,
+	// player0_InitX = 200, player0_InitY = 600,
+	// player0_CurX = player0_InitX, player0_CurY = player0_InitY,
+	// player0_MoveSleepMillis = 10, player0_StepPixels = 2,
+	// player0_VisibleRadius = 200, player0_CollisionRadius = 20;
 	//
 	//
 	//
 	//
-	//	static Boolean isSnake0_Moving = false;
-	//	static Integer snake0_ID = 1,
-	//			snake0_InitX = 200, snake0_InitY = 200,
-	//			snake0_CurX = snake0_InitX, snake0_CurY = snake0_InitY,
-	//			snake0_MoveSleepMillis = 30, snake0_StepPixels = 2,
-	//			snake0_VisibleRadius = 200, snake0_CollisionRadius = 10;
+	// static Boolean isSnake0_Moving = false;
+	// static Integer snake0_ID = 1,
+	// snake0_InitX = 200, snake0_InitY = 200,
+	// snake0_CurX = snake0_InitX, snake0_CurY = snake0_InitY,
+	// snake0_MoveSleepMillis = 30, snake0_StepPixels = 2,
+	// snake0_VisibleRadius = 200, snake0_CollisionRadius = 10;
 	//
 	//
 	//
 	//
-	//	static Boolean isDragon0_Moving = false;
-	//	static Integer dragon0_ID = 2, 
-	//			dragon0_InitX = 500, dragon0_InitY = 500,
-	//			dragon0_CurX = dragon0_InitX, dragon0_CurY = dragon0_InitY, 
-	//			dragon0_MoveSleepMillis = 30,dragon0_StepPixels = 2,
-	//			dragon0_VisibleRadius = 400, dragon0_CollisionRadius = 30;
+	// static Boolean isDragon0_Moving = false;
+	// static Integer dragon0_ID = 2,
+	// dragon0_InitX = 500, dragon0_InitY = 500,
+	// dragon0_CurX = dragon0_InitX, dragon0_CurY = dragon0_InitY,
+	// dragon0_MoveSleepMillis = 30,dragon0_StepPixels = 2,
+	// dragon0_VisibleRadius = 400, dragon0_CollisionRadius = 30;
 	//
 	//
-	//	static Boolean istroll0_Moving = false;
-	//	static Integer troll0_ID = 3, troll0_InitX = 100, troll0_InitY = 100, 
-	//			troll0_CurX = troll0_InitX, troll0_CurY = troll0_InitY,
-	//			troll0_MoveSleepMillis = 30, troll0_StepPixels = 2,
-	//			troll0_VisibleRadius = 200, troll0_CollisionRadius = 20;
+	// static Boolean istroll0_Moving = false;
+	// static Integer troll0_ID = 3, troll0_InitX = 100, troll0_InitY = 100,
+	// troll0_CurX = troll0_InitX, troll0_CurY = troll0_InitY,
+	// troll0_MoveSleepMillis = 30, troll0_StepPixels = 2,
+	// troll0_VisibleRadius = 200, troll0_CollisionRadius = 20;
 
-
-
-
-
-	/*	private static ArrayList<Integer> entityID = new ArrayList<>(
-			Arrays.asList(player0_ID, snake0_ID, dragon0_ID, troll0_ID));
-	private static ArrayList<Integer> entityCurX = new ArrayList<>(
-			Arrays.asList(player0_CurX, snake0_CurX, dragon0_CurX, troll0_CurX));
-	private static ArrayList<Integer> entityCurY = new ArrayList<>(
-			Arrays.asList(player0_CurY, snake0_CurY, dragon0_CurY, troll0_CurY));
-	private static ArrayList<Boolean> entityMoving = new ArrayList<>(
-			Arrays.asList(isPlayer0_Moving, isSnake0_Moving, isDragon0_Moving, istroll0_Moving));
-	private static ArrayList<Integer> entityStepPixels = new ArrayList<>(
-			Arrays.asList(player0_StepPixels, snake0_StepPixels, dragon0_StepPixels, troll0_StepPixels));
-	private static ArrayList<Integer> entityMoveSleepMillis = new ArrayList<>(Arrays.asList(player0_MoveSleepMillis,
-			snake0_MoveSleepMillis, dragon0_MoveSleepMillis, troll0_MoveSleepMillis));
-	private static ArrayList<Integer> entityVisibleRadius = new ArrayList<>(
-			Arrays.asList(player0_VisibleRadius, snake0_VisibleRadius, dragon0_VisibleRadius, troll0_VisibleRadius));
-	private static ArrayList<Integer> entityCollisionRadius = new ArrayList<>(Arrays.asList(player0_CollisionRadius,
-			snake0_CollisionRadius, dragon0_CollisionRadius, troll0_CollisionRadius));*/
-
-
-
-
-
-
-
-
-
+	/*
+	 * private static ArrayList<Integer> entityID = new ArrayList<>(
+	 * Arrays.asList(player0_ID, snake0_ID, dragon0_ID, troll0_ID)); private
+	 * static ArrayList<Integer> entityCurX = new ArrayList<>(
+	 * Arrays.asList(player0_CurX, snake0_CurX, dragon0_CurX, troll0_CurX));
+	 * private static ArrayList<Integer> entityCurY = new ArrayList<>(
+	 * Arrays.asList(player0_CurY, snake0_CurY, dragon0_CurY, troll0_CurY));
+	 * private static ArrayList<Boolean> entityMoving = new ArrayList<>(
+	 * Arrays.asList(isPlayer0_Moving, isSnake0_Moving, isDragon0_Moving,
+	 * istroll0_Moving)); private static ArrayList<Integer> entityStepPixels =
+	 * new ArrayList<>( Arrays.asList(player0_StepPixels, snake0_StepPixels,
+	 * dragon0_StepPixels, troll0_StepPixels)); private static
+	 * ArrayList<Integer> entityMoveSleepMillis = new
+	 * ArrayList<>(Arrays.asList(player0_MoveSleepMillis,
+	 * snake0_MoveSleepMillis, dragon0_MoveSleepMillis,
+	 * troll0_MoveSleepMillis)); private static ArrayList<Integer>
+	 * entityVisibleRadius = new ArrayList<>(
+	 * Arrays.asList(player0_VisibleRadius, snake0_VisibleRadius,
+	 * dragon0_VisibleRadius, troll0_VisibleRadius)); private static
+	 * ArrayList<Integer> entityCollisionRadius = new
+	 * ArrayList<>(Arrays.asList(player0_CollisionRadius,
+	 * snake0_CollisionRadius, dragon0_CollisionRadius,
+	 * troll0_CollisionRadius));
+	 */
 
 }
