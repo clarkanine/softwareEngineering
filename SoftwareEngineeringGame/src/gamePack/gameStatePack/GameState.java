@@ -1,6 +1,7 @@
 package gamePack.gameStatePack;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
+import gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack.GameEnemy;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 
 public interface GameState {
@@ -12,4 +13,8 @@ public interface GameState {
 	void exitGame();
 	void exitGame(GamePlayer player);
 	void enterState(GameState state);
+	void run(GameStateContext gameStateContext);
+	void setPlayer(GamePlayer gamePlayer);
+	GamePlayer getPlayer();
+	void addEnemy(GameCharacter enemy);
 }
