@@ -15,6 +15,9 @@ import gamePack.gameStatePack.gameTextStatePack.TextInputState;
 
 public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 {
+	private int experience = 0;
+	private String profileInfo;
+
 	public GameWeapon getWeaponChoice()
 	{
 		int choice;
@@ -86,12 +89,12 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 	@Override
 	public String getProfileInfo() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.profileInfo;
 	}
 
 	@Override
 	public void setProfileInfo(String info) {
-		// TODO Auto-generated method stub
+		this.profileInfo = info;
 		
 	}
 
@@ -106,6 +109,18 @@ public class ConcretePlayer extends ConcreteCharacter implements GamePlayer
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setExperience(int experienceInt) {
+		this.experience = experienceInt;
+		
+	}
+	
+	@Override
+	public int getExperience() {
+		return experience;
+	}
+
 
 
 

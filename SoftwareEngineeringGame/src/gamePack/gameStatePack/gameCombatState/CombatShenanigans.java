@@ -12,6 +12,7 @@ import gamePack.gameStatePack.EndGame;
 import gamePack.gameStatePack.GameState;
 import gamePack.gameStatePack.GameStateContext;
 import gamePack.gameStatePack.gameMapStatePack.MainWindow;
+import gamePack.gameStatePack.gameMapStatePack.MapCanvas;
 import gamePack.gameStatePack.gameTextStatePack.GameTextInputState;
 import gamePack.gameStatePack.gameTextStatePack.StartMenu;
 
@@ -25,8 +26,11 @@ public class CombatShenanigans implements GameTextInputState
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
-		run();		
+		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName()+"\n");
+		
+		MainWindow.updateTextArea(" XP="+((GamePlayer) thePlayers.get(0)).getExperience()+" profileName="+((GamePlayer) thePlayers.get(0)).getProfileInfo()+"\n");
+
+		doCombat();		
 		/*GameTextInputState newState = new StartMenu();
 		newState.setScanner(new Scanner(System.in));
 		newState.setPlayer((GamePlayer)getThePlayers().get(0));
@@ -60,26 +64,39 @@ public class CombatShenanigans implements GameTextInputState
 		
 	}
 	
-	public void run()
+	public void doCombat()
 	{
 		ArrayList<GameCharacter> everyone = new ArrayList<>();
+		GamePlayer thePlayer;
 		while(true)
 		{
 			if(checkDeath(getTheEnemies()) )
 			{
 				MainWindow.updateTextArea("Players are successful!\n");
-				GameTextInputState newState = new StartMenu();
-				newState.setScanner(new Scanner(System.in));
+				for(GameCharacter character : getThePlayers())
+				{
+					thePlayer = (GamePlayer) character;
+					thePlayer.setExperience(thePlayer.getExperience() + getTheEnemies().size());
+				}
+				//String stateStr = GameStateContext.getState().getClass().getSimpleName();
+				GameState newState;
+				//MainWindow.updateTextArea("\"" + stateStr + "\"\n");
+				
+				if(MapCanvas.mapState == MapCanvas.volcanoMap)
+					newState = new EndGame();
+				else
+					newState = new StartMenu();
+				//newState.setScanner(new Scanner(System.in));
 				newState.setPlayer((GamePlayer)getThePlayers().get(0));
-				this.gameStateContext.setState(newState);
-				return;
+				GameStateContext.setState(newState);
+				break;
 			}
 			
 			if( checkDeath(getThePlayers()))
 			{
 				MainWindow.updateTextArea("Players have fallen :-(\n");
-				this.gameStateContext.setState(new EndGame());
-				return;
+				GameStateContext.setState(new EndGame());
+				break;
 			}
 			
 			printStatus();
@@ -97,6 +114,7 @@ public class CombatShenanigans implements GameTextInputState
 				c.chooseTarget(getThePlayers(), getTheEnemies());
 			}
 			
+			
 			everyone.addAll(getThePlayers());
 			everyone.addAll(getTheEnemies());
 			
@@ -109,7 +127,7 @@ public class CombatShenanigans implements GameTextInputState
 				c.clearTargets();
 			}
 		}
-		
+		GameStateContext.getState().setPlayer((GamePlayer) thePlayers.get(0));
 		
 		
 	}
@@ -197,6 +215,8 @@ public class CombatShenanigans implements GameTextInputState
 		this.getThePlayers().add(player);
 		
 	}
+	
+	
 
 	public ArrayList<GameCharacter> getThePlayers() {
 		return thePlayers;
@@ -212,6 +232,18 @@ public class CombatShenanigans implements GameTextInputState
 
 	public void setTheEnemies(ArrayList<GameCharacter> theEnemies) {
 		this.theEnemies = theEnemies;
+	}
+
+	@Override
+	public void addEnemy(GameCharacter enemy) {
+		this.getTheEnemies().add(enemy);
+		
+	}
+
+	@Override
+	public GamePlayer getPlayer() {
+		// TODO Auto-generated method stub
+		return (GamePlayer) thePlayers.get(0);
 	}
 
 	

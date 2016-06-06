@@ -1,45 +1,37 @@
 
 package gamePack.gameStatePack.gameMapStatePack;
 
-import java.awt.Image;
 import java.io.IOException;
-import java.util.Scanner;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameStatePack.GameState;
 import gamePack.gameStatePack.GameStateContext;
-import gamePack.gameStatePack.gameTextStatePack.GameTextInputState;
-import gamePack.gameStatePack.gameTextStatePack.StartMenu;
 
 public class SnowMapState implements GameMapStateInterface {
 	GameStateContext gameStateContext;
 	
 
-	public static GamePlayer player;
+	public GamePlayer player;
 
 	@Override
 	public synchronized void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		MainWindow.updateTextArea(this.gameStateContext.getState().getClass().getSimpleName()+"\n");
-		
+		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName()+"\n");
+		this.player= (GamePlayer) MainWindow.knight0_Canvas.gameCharacter;
+		MainWindow.updateTextArea(" XP="+player.getExperience()+" profileName="+player.getProfileInfo()+"\n");
 		MapCanvas.mapState = MapCanvas.snowMap;
 		
-
-		if (MainWindow.troll0_Canvas == null) {
-			MainWindow.troll0_Canvas = new EntityCanvas(MainWindow.getNewEntityID());
-			MainWindow.mapCanvas.entities.add(MainWindow.troll0_Canvas);
-			MainWindow.troll0_Canvas.initEntity();
-			for (Image entityImage : MainWindow.troll0_Canvas.entityImgs)
-				MainWindow.mapCanvas.mt.addImage(entityImage, MainWindow.mapCanvas.mtCount++);
-			MainWindow.snake0Thread = EntityCanvas.makeTroll(MainWindow.troll0_Canvas);
-			MainWindow.entityThreads.add(MainWindow.snake0Thread);
-			//entityThreads.get(snake0_ID).start();
-			MainWindow.snake0Thread.start();
-		}
-		MainWindow.troll0_Canvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
-		MainWindow.troll0_Canvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
-		
+		ArrayList<EntityCanvas> entityCanvases = new ArrayList<>(Arrays.asList(
+				MainWindow.troll0_Canvas/*, 
+				MainWindow.troll1_Canvas, 
+				MainWindow.troll2_Canvas*/));
+		ArrayList<Thread> entityThreads = new ArrayList<>(Arrays.asList(
+				MainWindow.troll0_Thread/*, 
+				MainWindow.troll1_Thread, 
+				MainWindow.troll2_Thread*/));
+		EntityCanvas.makeTrolls(entityCanvases, entityThreads);
 		
 		MainWindow.knight0_Canvas.setEntityCurX(MainWindow.mapCanvas.getWidth()/2);
 		MainWindow.knight0_Canvas.setEntityCurY(MainWindow.mapCanvas.getHeight()/2);
@@ -48,7 +40,6 @@ public class SnowMapState implements GameMapStateInterface {
 		MainWindow.window.pauseAction.putValue("NAME", "PLAY");
 		MainWindow.window.pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
 		MainWindow.btnPause.setText("PLAY");
-		
 		
 		MainWindow.setMapIsVisible(true);
 		
@@ -60,9 +51,14 @@ public class SnowMapState implements GameMapStateInterface {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		try {
+			System.in.close();//if text was entered during map state this will clear the input stream 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		GameState newState = new ConcreteGameMapState();
-		this.gameStateContext.setState(newState);
+		GameState newState = new GameMapState();
+		GameStateContext.setState(newState);
 		this.gameStateContext.run();
 	}
 
@@ -144,6 +140,19 @@ public class SnowMapState implements GameMapStateInterface {
 	@Override
 	public void setPlayer(GamePlayer player) {
 		this.player = player;		
+	}
+
+
+	@Override
+	public void addEnemy(GameCharacter enemy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public GamePlayer getPlayer() {
+		return this.player;
 	}
 
 }

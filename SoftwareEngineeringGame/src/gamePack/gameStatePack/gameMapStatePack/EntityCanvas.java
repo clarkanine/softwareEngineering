@@ -14,6 +14,7 @@ import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack.Dragon;
 import gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack.Snake;
 import gamePack.gameEntityPack.gameCharacterPack.gameEnemyPack.TrollEnemy;
+import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.KnightPlayer;
 import gamePack.gameStatePack.GameStateContext;
 import gamePack.gameStatePack.gameCombatState.CombatShenanigans;
@@ -156,6 +157,24 @@ public class EntityCanvas {
 			}
 		});
 	}
+	static void makeSnakes(ArrayList<EntityCanvas> entityCanvases, ArrayList<Thread> entityThreads) {
+		for(int i=0; i<entityCanvases.size(); i++) {
+			EntityCanvas curCanvas = entityCanvases.get(i);
+			Thread curThread = entityThreads.get(i);
+			if (!MainWindow.mapCanvas.entities.contains(curCanvas)) {
+				curCanvas = new EntityCanvas(MainWindow.getNewEntityID());
+				MainWindow.mapCanvas.entities.add(curCanvas);
+				curCanvas.initEntity();
+				for (Image entityImage : curCanvas.entityImgs)
+					MainWindow.mapCanvas.mt.addImage(entityImage, MainWindow.mapCanvas.mtCount++);
+				curThread = EntityCanvas.makeSnake(curCanvas);
+				MainWindow.entityThreads.add(curThread);
+				curThread.start();
+			}
+			curCanvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
+			curCanvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+		}
+	}
 	//***********	END SNAKE CODE		****************
 
 	//***********	BEGIN DRAGON CODE	****************
@@ -219,6 +238,24 @@ public class EntityCanvas {
 			}
 		});
 	}
+	static void makeDragons(ArrayList<EntityCanvas> entityCanvases, ArrayList<Thread> entityThreads) {
+		for(int i=0; i<entityCanvases.size(); i++) {
+			EntityCanvas curCanvas = entityCanvases.get(i);
+			Thread curThread = entityThreads.get(i);
+			if (!MainWindow.mapCanvas.entities.contains(curCanvas)) {
+				curCanvas = new EntityCanvas(MainWindow.getNewEntityID());
+				MainWindow.mapCanvas.entities.add(curCanvas);
+				curCanvas.initEntity();
+				for (Image entityImage : curCanvas.entityImgs)
+					MainWindow.mapCanvas.mt.addImage(entityImage, MainWindow.mapCanvas.mtCount++);
+				curThread = EntityCanvas.makeDragon(curCanvas);
+				MainWindow.entityThreads.add(curThread);
+				curThread.start();
+			}
+			curCanvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
+			curCanvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+		}
+	}
 	//***********	END DRAGON CODE		****************
 
 	//***********	BEGIN TROLL CODE	****************
@@ -277,6 +314,24 @@ public class EntityCanvas {
 			}
 		});
 	}
+	static void makeTrolls(ArrayList<EntityCanvas> entityCanvases, ArrayList<Thread> entityThreads) {
+		for(int i=0; i<entityCanvases.size(); i++) {
+			EntityCanvas curCanvas = entityCanvases.get(i);
+			Thread curThread = entityThreads.get(i);
+			if (!MainWindow.mapCanvas.entities.contains(curCanvas)) {
+				curCanvas = new EntityCanvas(MainWindow.getNewEntityID());
+				MainWindow.mapCanvas.entities.add(curCanvas);
+				curCanvas.initEntity();
+				for (Image entityImage : curCanvas.entityImgs)
+					MainWindow.mapCanvas.mt.addImage(entityImage, MainWindow.mapCanvas.mtCount++);
+				curThread = EntityCanvas.makeTroll(curCanvas);
+				MainWindow.entityThreads.add(curThread);
+				curThread.start();
+			}
+			curCanvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
+			curCanvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+		}
+	}
 	//***********	END TROLL CODE		****************
 
 
@@ -319,6 +374,8 @@ public class EntityCanvas {
 	}
 
 	void entityPaint() {
+		/*String state = GameStateContext.getState().getClass().getSimpleName();
+		if(!this.gameCharacter.isDead() && state.contains("MapState"))*/
 		MapCanvas.offGraphics.drawImage(entityImgs[entityState], getEntityAffine(), null);
 	}
 
@@ -437,17 +494,21 @@ public class EntityCanvas {
 							MainWindow.setGamePaused(true);
 
 
-							MapCanvas.mapState = MapCanvas.gameMap;
+							
 
 							MainWindow.btnPause.getAction().putValue("NAME", "PLAY");
 							MainWindow.btnPause.getAction().putValue("SHORT_DESCRIPTION", "PLAY GAME");
 							MainWindow.btnPause.setText("PLAY");
 
-							CombatShenanigans combatShenanigans = new CombatShenanigans();
-							combatShenanigans.setPlayer(ConcreteGameMapState.player);
-							combatShenanigans.getTheEnemies().add(srcEntity.gameCharacter);
+							MainWindow.updateTextArea(" XP="+((GamePlayer) dstEntity.gameCharacter).getExperience()+" profileName="+((GamePlayer) dstEntity.gameCharacter).getProfileInfo()+"\n");
+							ArrayList<GameCharacter> players= new ArrayList<>(Arrays.asList(dstEntity.gameCharacter)), 
+									enemies= new ArrayList<>(Arrays.asList(srcEntity.gameCharacter));
+							CombatShenanigans combatShenanigans = new CombatShenanigans(players, enemies);
+							/*combatShenanigans.addPlayer((GamePlayer) (dstEntity.gameCharacter));
+							combatShenanigans.addEnemy(srcEntity.gameCharacter);*/
 							GameStateContext.setState(combatShenanigans);
 							GameStateContext.getGameStateContext().run();
+							
 							
 							
 
