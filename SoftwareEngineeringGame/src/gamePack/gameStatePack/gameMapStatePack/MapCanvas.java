@@ -101,11 +101,14 @@ public class MapCanvas extends Canvas {
 		}
 		bgPaint();
 
-//		for(EntityCanvas c: entities)
-//			c.entityPaint();
-		bgMaskPaint();
 		for(EntityCanvas c: entities)
-			c.entityPaint();
+			if(c!=null
+			&&c.gameCharacter!=null
+			&&!c.gameCharacter.isDead())
+				c.entityPaint();
+		bgMaskPaint();
+		/*for(EntityCanvas c: entities)
+			c.entityPaint();*/
 
 
 		g.drawImage(offscreen, 0, 0, null);
@@ -122,9 +125,11 @@ public class MapCanvas extends Canvas {
 			Arrays.asList(worldMapPathStr, gameMapPathStr, snowMapPathStr, townMapPathStr, volcanoMapPathStr));
 	static Image mapImgs[] = new Image[mapPaths.size()];
 	
-	static int worldMap = 0, gameMap = 1, snowMap = 2, townMap = 3, volcanoMap = 4;
+	static int worldMap = 0, gameMap = 1, snowMap = 2, townMap = 3;
+
+	public static int volcanoMap = 4;
 	
-	static int mapState = gameMap;
+	public static int mapState = gameMap;
 	
 	ArrayList<Integer> mapStates = new ArrayList<>(
 			Arrays.asList(worldMap, gameMap, snowMap, townMap, volcanoMap));

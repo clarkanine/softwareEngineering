@@ -418,8 +418,8 @@ public abstract class ConcreteCharacter implements GameCharacter, Dead, GameEnti
 	
 	public void setTargets(ArrayList<GameCharacter> targets)
 	{
-		this.targets.clear();
-		this.targets = targets;
+		this.targets = new ArrayList<>();
+		this.targets.addAll(targets);
 	}
 	
 	public void chooseTarget(ArrayList<GameCharacter> friends, ArrayList<GameCharacter> foes)

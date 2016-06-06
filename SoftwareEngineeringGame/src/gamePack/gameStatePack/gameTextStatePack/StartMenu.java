@@ -14,7 +14,7 @@ import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameStatePack.EndGame;
 import gamePack.gameStatePack.GameState;
 import gamePack.gameStatePack.GameStateContext;
-import gamePack.gameStatePack.gameMapStatePack.ConcreteGameMapState;
+import gamePack.gameStatePack.gameMapStatePack.GameMapState;
 import gamePack.gameStatePack.gameMapStatePack.GameMapStateInterface;
 import gamePack.gameStatePack.gameMapStatePack.MainWindow;
 
@@ -59,7 +59,8 @@ public class StartMenu implements GameTextInputState {
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName()+"\n");
+		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName()+"\n");
+		MainWindow.updateTextArea(" XP="+player.getExperience()+" profileName="+player.getProfileInfo()+"\n");
 		this.openMenu();
 		//gameStateContext.setState(new EndGame());
 		gameStateContext.run();
@@ -131,9 +132,9 @@ public class StartMenu implements GameTextInputState {
 			option = readInt();
 			switch(option){
 			case 1:
-				GameMapStateInterface mapState = new ConcreteGameMapState();
+				GameMapStateInterface mapState = new GameMapState();
 				mapState.setPlayer(player);
-				gameStateContext.setState(mapState);
+				GameStateContext.setState(mapState);
 				//gameStateContext.run();
 				//gamePack.gameEntityPack.gameLocalMapPack.DefaultWindow.main(null);
 				
@@ -142,17 +143,17 @@ public class StartMenu implements GameTextInputState {
 				GameTextInputState profileInput = new ProfileInputState();
 				profileInput.setScanner(new Scanner(System.in));
 				profileInput.setPlayer(player);
-				gameStateContext.setState(profileInput);
+				GameStateContext.setState(profileInput);
 				//gameStateContext.run();
 				break;
 			case 0: 
-				gameStateContext.setState(new EndGame());
+				GameStateContext.setState(new EndGame());
 				//System.out.println("\nThank you for playing the game\n\n");
 				break;
 			default:
 			}
 		}
-		while(option != 0 && gameStateContext.getState().getClass().getSimpleName().equals("StartMenu"));
+		while(option != 0 && GameStateContext.getState().getClass().getSimpleName().equals("StartMenu"));
 	}
 
 	public Scanner getScanner() {
@@ -259,6 +260,14 @@ public class StartMenu implements GameTextInputState {
 
 	public void setPlayer(GamePlayer player) {
 		this.player = player;
+	}
+
+
+
+	@Override
+	public void addEnemy(GameCharacter enemy) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

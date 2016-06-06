@@ -82,5 +82,26 @@ public class StartGame implements InitialStateInterface {
 	}
 
 
+	@Override
+	public void setPlayer(GamePlayer gamePlayer) {
+		
+		
+	}
+
+
+	@Override
+	public void addEnemy(GameCharacter enemy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public GamePlayer getPlayer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

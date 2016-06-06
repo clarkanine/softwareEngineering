@@ -58,7 +58,7 @@ public class Combat
 			theCombat = new CombatShenanigans(players, enemies);
 			
 			
-			theCombat.run();
+			theCombat.doCombat();
 			MainWindow.updateTextArea("===============================\n");
 			
 			MainWindow.updateTextArea("Play again? (y/n): \n");

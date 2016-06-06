@@ -3,64 +3,40 @@ package gamePack.gameStatePack.gameMapStatePack;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import gamePack.gameEntityPack.gameCharacterPack.GameCharacter;
 import gamePack.gameEntityPack.gameCharacterPack.gamePlayerPack.GamePlayer;
 import gamePack.gameStatePack.GameState;
 import gamePack.gameStatePack.GameStateContext;
-import gamePack.gameStatePack.gameTextStatePack.GameTextInputState;
-import gamePack.gameStatePack.gameTextStatePack.StartMenu;
 
 public class TownMapState implements GameMapStateInterface {
 	GameStateContext gameStateContext;
-	
+
 
 	public static GamePlayer player;
 
 	@Override
 	public synchronized void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		MainWindow.updateTextArea(this.gameStateContext.getState().getClass().getSimpleName()+"\n");
-		
-		
-		MapCanvas.mapState = MapCanvas.townMap;
-		
-		
-		
-		
-		/*
-		for(EntityCanvas entity: newEntities)
-		if (entity == null) {
-			entity = new EntityCanvas(getNewEntityID());
-			mapCanvas.entities.add(entity);
-			entity.initEntity();
-			for (Image entityImage : entity.entityImgs)
-				mapCanvas.mt.addImage(entityImage, mapCanvas.mtCount++);
-			Thread entityThread = EntityCanvas.makeSnake(snake0_Canvas);
-			entityThreads.add(entityThread);
-			//entityThreads.get(snake0_ID).start();
-			entityThread.start();
-		}
-		snake0_Canvas.setEntityCurX((int) (Math.random()*mapCanvas.getWidth()));
-		snake0_Canvas.setEntityCurY((int) (Math.random()*mapCanvas.getHeight()));
-		*/
+		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName()+"\n");
 
-		if (MainWindow.snake0_Canvas == null) {
-			MainWindow.snake0_Canvas = new EntityCanvas(MainWindow.getNewEntityID());
-			MainWindow.mapCanvas.entities.add(MainWindow.snake0_Canvas);
-			MainWindow.snake0_Canvas.initEntity();
-			for (Image entityImage : MainWindow.snake0_Canvas.entityImgs)
-				MainWindow.mapCanvas.mt.addImage(entityImage, MainWindow.mapCanvas.mtCount++);
-			MainWindow.snake0Thread = EntityCanvas.makeSnake(MainWindow.snake0_Canvas);
-			MainWindow.entityThreads.add(MainWindow.snake0Thread);
-			//entityThreads.get(snake0_ID).start();
-			MainWindow.snake0Thread.start();
-		}
-		MainWindow.snake0_Canvas.setEntityCurX((int) (Math.random()*MainWindow.mapCanvas.getWidth()));
-		MainWindow.snake0_Canvas.setEntityCurY((int) (Math.random()*MainWindow.mapCanvas.getHeight()));
+		MapCanvas.mapState = MapCanvas.townMap;
+
+		ArrayList<EntityCanvas> entityCanvases = new ArrayList<>(Arrays.asList(
+				MainWindow.snake0_Canvas/*, 
+				MainWindow.snake1_Canvas, 
+				MainWindow.snake2_Canvas*/));
+		ArrayList<Thread> entityThreads = new ArrayList<>(Arrays.asList(
+				MainWindow.snake0_Thread/*, 
+				MainWindow.snake1_Thread, 
+				MainWindow.snake2_Thread*/));
 		
 		
+		EntityCanvas.makeSnakes(entityCanvases, entityThreads);
+
+
 		MainWindow.knight0_Canvas.setEntityCurX(MainWindow.mapCanvas.getWidth()/2);
 		MainWindow.knight0_Canvas.setEntityCurY(MainWindow.mapCanvas.getHeight()/2);
 
@@ -68,22 +44,29 @@ public class TownMapState implements GameMapStateInterface {
 		MainWindow.window.pauseAction.putValue("NAME", "PLAY");
 		MainWindow.window.pauseAction.putValue("SHORT_DESCRIPTION", "PLAY GAME");
 		MainWindow.btnPause.setText("PLAY");
-		
+
 		MainWindow.setMapIsVisible(true);
-		
-		
-	
+
+
+
 		while(MainWindow.mapIsVisible())
 			try {
 				wait(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		
-		GameState newState = new ConcreteGameMapState();
-		this.gameStateContext.setState(newState);
+		try {
+			System.in.close();//if text was entered during map state this will clear the input stream 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		GameState newState = new GameMapState();
+		GameStateContext.setState(newState);
 		this.gameStateContext.run();
 	}
+
+
+
 
 
 	@Override
@@ -162,7 +145,26 @@ public class TownMapState implements GameMapStateInterface {
 
 	@Override
 	public void setPlayer(GamePlayer player) {
-		this.player = player;		
+		TownMapState.player = player;		
+	}
+
+
+
+
+
+	@Override
+	public void addEnemy(GameCharacter enemy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public GamePlayer getPlayer() {
+		return this.player;
 	}
 
 }

@@ -46,7 +46,12 @@ public class MainWindow {
 	private static JScrollPane scrollPane;
 	private static JScrollPane scrollPane_1;
 	private static JLayeredPane layeredPane;
-	static Thread knight0_Thread, snake0Thread, troll0_Thread, dragon0Thread, portal0_Thread, portal1_Thread, portal2_Thread;
+	static Thread
+	knight0_Thread, knight1_Thread, knight2_Thread, 
+	snake0_Thread, snake1_Thread, snake2_Thread, 
+	troll0_Thread, troll1_Thread, troll2_Thread, 
+	dragon0_Thread,  dragon1_Thread, dragon2_Thread, 
+	portal0_Thread, portal1_Thread, portal2_Thread;
 	static ArrayList<Thread> entityThreads = new ArrayList<Thread>();
 
 	
@@ -505,7 +510,9 @@ public class MainWindow {
 		synchronized(MainWindow.mapIsVisible) {
 			MainWindow.mapIsVisible = mapIsVisible;
 		}
+	
 	}
+}
 
 
 

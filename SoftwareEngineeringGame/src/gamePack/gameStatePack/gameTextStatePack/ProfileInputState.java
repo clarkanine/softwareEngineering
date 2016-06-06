@@ -112,16 +112,17 @@ public class ProfileInputState implements GameTextInputState {
 	}
 
 	public void createProfile() {
-		boolean profileFound = false;
+		GamePlayer profile = null;
 		MainWindow.updateTextArea("enter new profileName\n");
 		String profileName = readLine();
 		
 		boolean characterFound = false;
+		String characterNameChoiceStr = "";
 		GamePlayer character; 
 		ArrayList<GameCharacter> defaultGameCharactersList = new ArrayList<>(Arrays.asList(new KnightPlayer()));
 		while(!characterFound) {
 			MainWindow.updateTextArea("select a characteer: "+defaultGameCharactersList+"\n");
-			String characterNameChoiceStr = readLine();
+			characterNameChoiceStr = readLine();
 			for(GameCharacter cur: defaultGameCharactersList)
 				if(cur.getName().equals(characterNameChoiceStr)) {
 					player = (GamePlayer) cur;
@@ -134,10 +135,11 @@ public class ProfileInputState implements GameTextInputState {
 
 		
 		boolean weaponFound = false;
+		String weaponNameChoiceStr = "";
 		GameWeapon weapon; 
 		while(!weaponFound) {
 			MainWindow.updateTextArea("select a weapon: "+defaultWeaponsList+"\n");
-			String weaponNameChoiceStr = readLine();
+			weaponNameChoiceStr= readLine();
 			for(GameWeapon cur: defaultWeaponsList)
 				if(cur.getName().equals(weaponNameChoiceStr)) {
 					player.addWeapon(cur);
@@ -148,7 +150,7 @@ public class ProfileInputState implements GameTextInputState {
 		MainWindow.updateTextArea("enter difficulty\n");
 		int difficulty = readInt();
 		int experience = 0;
-		try {
+		/*try {
 			this.profileInputStream = new Scanner(new FileInputStream("GameData/ProfileSource_"+profileName));
 
 			profileFound = true;    //fnfe skips this line
@@ -159,13 +161,14 @@ public class ProfileInputState implements GameTextInputState {
 		finally{
 			if(profileFound)
 				profileInputStream.close();
-		}
-		while(profileFound){
+		}*/
+		
+		while((profile = SQLiteJDBC.selectProfile(profileName))==null){
 			MainWindow.updateTextArea("profile source exists\n"
 					+ "enter new profileName\n");
 			//getPrintStream().print("-->");
-			profileName = getScanner().nextLine();
-			try {
+			profileName = readLine();
+			/*try {
 				this.profileInputStream = new Scanner(new FileInputStream("GameData/ProfileSource_"+profileName));
 
 				profileFound = true;   //fnfe skips this line
@@ -175,20 +178,25 @@ public class ProfileInputState implements GameTextInputState {
 			finally{
 				if(profileFound)
 					profileOutputStream.close();
-			}
+			}*/
+			
 		} 
-		try {
-			this.profileOutputStream = new PrintStream("GameData/ProfileSource_"+profileName);
+		/*try {
+			this.profileOutputStream = new PrintStream("GameData/ProfileSource_"+profileName);*/
 
 			//this.profileOutputStream.println("***begin ProfileSource_"+profileName+"***");
-			MainWindow.updateTextArea("profileName: "+profileName+"\n"
+			/*MainWindow.updateTextArea("profileName: "+profileName+"\n"
 			+"characterName: "+player.getName()+"\n"
 			+"weaponName: "+player.getWeapons().get(0)+"\n"
 			+"difficulty: "+difficulty+"\n"
 			+"experience: "+experience+"\n"
-			);
+			);*/
 			
-			this.profileOutputStream.print("profileName: "+profileName+"\n"
+			SQLiteJDBC.insertProfile(profileName, characterNameChoiceStr, weaponNameChoiceStr, difficulty, experience);
+			this.player=SQLiteJDBC.selectProfile(profileName);
+		
+			
+			/*this.profileOutputStream.print("profileName: "+profileName+"\n"
 					+"characterName: "+player.getName()+"\n"
 					+"weaponName: "+player.getWeapons().get(0)+"\n"
 					+"difficulty: "+difficulty+"\n"
@@ -198,73 +206,27 @@ public class ProfileInputState implements GameTextInputState {
 			this.profileOutputStream.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 
 	}
 
 	public void loadProfile() {
-		boolean profileFound = false;
 		MainWindow.updateTextArea("enter profileName to load\n");
-		//getPrintStream().print("-->");
 		String profileName = readLine();
-		String characterName = "";
-		String weaponName = "";
-		int difficulty = 0;
-		int experience = 0;
-
-		try {
-			this.profileInputStream = new Scanner(new FileInputStream("GameData/ProfileSource_"+profileName));
-
-			profileFound = true;    //fnfe skips this line
-		} catch(FileNotFoundException fnfe) {
-			profileFound = false;
-		}
-		finally{
-			if(profileFound)
-				profileInputStream.close();
-		}
-		while(!profileFound){
-			MainWindow.updateTextArea("profile does not exist. \nEnter a profileName to load\n");
-			//getPrintStream().print("-->");
+		while((this.player = SQLiteJDBC.selectProfile(profileName))==null){
+			MainWindow.updateTextArea("profile source exists\n"
+					+ "enter new profileName\n");
 			profileName = readLine();
-			try {
-				this.profileInputStream = new Scanner(new FileInputStream("GameData/ProfileSource_"+profileName));
-
-				profileFound = true;   //fnfe skips this line
-			} catch(FileNotFoundException fnfe) {
-				profileFound = false;
-			}
-			finally{
-				if(profileFound)
-					profileInputStream.close();
-			}
-		} 
-
-		this.setPlayer(ProfileSourceHandler.profileSourceParser(profileName));
-
-
-		/*
-		try {
-			this.profileInputStream = new Scanner(new FileInputStream("GameData/ProfileSource_"+profileName));
-			String profileSourceString = "";
-			while(this.profileInputStream.hasNextLine())
-				profileSourceString += this.profileInputStream.nextLine()+"\n";
-			printStream.print(profileSourceString);
-			profileInputStream.close();
-			ProfileSourceHandler.profileParser();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}		
-		 */
-
+		}
+		MainWindow.updateTextArea(" XP="+player.getExperience()+" profileName="+player.getProfileInfo()+"\n");
+		this.player.setExperience(0);
+		MainWindow.updateTextArea(" XP="+player.getExperience()+" profileName="+player.getProfileInfo()+"\n");
 
 	}
 
 	@Override
 	public void openMenu() {
-
-		//System.out.println();
 		int option = 999;	
 		do{
 			MainWindow.updateTextArea("\n_____-----Game-----_____\n"
@@ -283,13 +245,13 @@ public class ProfileInputState implements GameTextInputState {
 				GameTextInputState newState = new StartMenu();
 				newState.setPlayer(player);
 				newState.setScanner(new Scanner(System.in));
-				gameStateContext.setState(newState);
+				GameStateContext.setState(newState);
 				break;
 				/*case 3:
 				gameErrorLog.println(readLine());
 				break;*/
 			case 0: 
-				gameStateContext.setState(new EndGame());
+				GameStateContext.setState(new EndGame());
 				break;
 			default:
 			}
@@ -378,7 +340,7 @@ public class ProfileInputState implements GameTextInputState {
 	@Override
 	public void run(GameStateContext gameStateContext) {
 		this.gameStateContext = gameStateContext;
-		MainWindow.updateTextArea(gameStateContext.getState().getClass().getSimpleName());
+		MainWindow.updateTextArea(GameStateContext.getState().getClass().getSimpleName());
 		this.openMenu();
 		gameStateContext.run();
 
@@ -393,8 +355,14 @@ public class ProfileInputState implements GameTextInputState {
 		this.player = player;		
 	}
 
-	GamePlayer getPlayer() {
-		return player;
+	public GamePlayer getPlayer() {
+		return this.player;
+	}
+
+	@Override
+	public void addEnemy(GameCharacter enemy) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
